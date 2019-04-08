@@ -4,7 +4,18 @@
   "description": "> A forward-thinking social networking service for local bands and musicians.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "2.1.8",
+     "mysql": "^2.16.0",
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.2.13"
   },
   "repository": {
     "type": "git",
@@ -13,12 +24,16 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JordanAEstes/bandtogether/issues"
+    "url": "https://github.com/quollstack/bandtogether/issues"
   },
-  "homepage": "https://github.com/JordanAEstes/bandtogether#readme",
-  "dependencies": {
-    "mysql": "^2.16.0",
-    "mysql2": "^1.6.5",
-    "sequelize": "^5.2.13"
-  }
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "homepage": "https://github.com/quollstack/bandtogether#readme"
 }
