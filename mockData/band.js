@@ -10,24 +10,6 @@ const data = [
     },
     {
         id: 1,
-        name: 'Robert Barron',
-        city: 'New Orleans',
-        state: 'LA',
-        genre: 'hip-hop',
-        yearFormed: 2014,
-        idAccount: 1,
-    },
-    {
-        id: 2,
-        name: 'Kelly Harris',
-        city: 'Dallas',
-        state: 'TX',
-        genre: 'singer/songwriter',
-        yearFormed: 2017,
-        idAccount: 3,
-    },
-    {
-        id: 3,
         name: 'Mick Gagger and the Bones',
         city: 'Athens',
         state: 'GA',
@@ -36,7 +18,7 @@ const data = [
         idAccount: 3,
     },
     {
-        id: 4,
+        id: 2,
         name: 'Breeeze',
         city: 'Brooklyn',
         state: 'NY',
