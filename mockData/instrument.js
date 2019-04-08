@@ -8,3 +8,4 @@ const data = [
         name: 'guitar'
     },
 ]
+module.exports.data = data;

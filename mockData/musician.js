@@ -14,3 +14,4 @@ const data = [
         idAccount: 1,
     },
 ]
+module.exports.data = data;

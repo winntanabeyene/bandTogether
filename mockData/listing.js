@@ -55,3 +55,5 @@ const data = [
         idMusician: null,
     },
 ]
+
+module.exports.data = data;
