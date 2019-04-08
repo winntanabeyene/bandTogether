@@ -4,31 +4,24 @@
   "description": "> A forward-thinking social networking service for local bands and musicians.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Queyrouzec/bandtogether.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Queyrouzec/bandtogether/issues"
-  },
-  "homepage": "https://github.com/Queyrouzec/bandtogether#readme"
-=======
-  "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "2.1.8"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quollstack/bandtogether.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/quollstack/bandtogether/issues"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,5 +31,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "homepage": "https://github.com/quollstack/bandtogether#readme"
 }
