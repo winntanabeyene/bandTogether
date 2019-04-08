@@ -1,5 +1,47 @@
 const data = [
     {
-
-    }
+        id: 0,
+        name: 'Jonny and the T-Tops',
+        city: 'Las Vegas',
+        state: 'NV',
+        genre: 'Rockabilly',
+        yearFormed: 1998,
+        idAccount: 0,
+    },
+    {
+        id: 1,
+        name: 'Robert Barron',
+        city: 'New Orleans',
+        state: 'LA',
+        genre: 'hip-hop',
+        yearFormed: 2014,
+        idAccount: 1,
+    },
+    {
+        id: 2,
+        name: 'Kelly Harris',
+        city: 'Dallas',
+        state: 'TX',
+        genre: 'singer/songwriter',
+        yearFormed: 2017,
+        idAccount: 3,
+    },
+    {
+        id: 3,
+        name: 'Mick Gagger and the Bones',
+        city: 'Athens',
+        state: 'GA',
+        genre: 'punk',
+        yearFormed: 2010,
+        idAccount: 3,
+    },
+    {
+        id: 4,
+        name: 'Breeeze',
+        city: 'Brooklyn',
+        state: 'NY',
+        genre: 'chillwave',
+        yearFormed: 2012,
+        idAccount: 4,
+    },
 ]
