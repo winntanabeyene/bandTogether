@@ -29,6 +29,19 @@ CREATE TABLE instrument (
     name varchar(50)
 )
 
+CREATE TABLE musician_instrument (
+    id int NOT NULL AUTO_INCREMENT
+    id_musician int
+    id_instrument int
+    PRIMARY KEY (id)
+    FOREIGN KEY (id_musician)
+        REFERENCES musician (id)
+        ON DELETE CASCADE
+    FOREIGN KEY (id_instrument)
+        REFERENCES instrument (id)
+        ON DELETE CASCADE
+)
+
 CREATE TABLE band (
     id int NOT NULL AUTO_INCREMENT
     name varchar(50)

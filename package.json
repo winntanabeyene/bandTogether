@@ -1,0 +1,24 @@
+{
+  "name": "bandtogether",
+  "version": "1.0.0",
+  "description": "> A forward-thinking social networking service for local bands and musicians.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JordanAEstes/bandtogether.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JordanAEstes/bandtogether/issues"
+  },
+  "homepage": "https://github.com/JordanAEstes/bandtogether#readme",
+  "dependencies": {
+    "mysql": "^2.16.0",
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.2.13"
+  }
+}
