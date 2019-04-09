@@ -56,4 +56,4 @@ const data = [
     },
 ]
 
-module.exports.data = data;
+module.exports = data;
