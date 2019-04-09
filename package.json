@@ -13,9 +13,12 @@
     "mysql": "^2.16.0",
     "mysql2": "^1.6.5",
     "react": "^16.8.6",
+    "react-bandcamp": "^1.1.5",
     "react-dom": "^16.8.6",
     "react-favicon": "0.0.14",
     "react-scripts": "2.1.8",
+    "react-soundcloud-player": "^1.1.0",
+    "react-spotify-player": "^1.0.4",
     "sequelize": "^5.2.13"
   },
   "repository": {

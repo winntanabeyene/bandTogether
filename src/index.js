@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom';
 import Favicon from 'react-favicon';
 
 import Navbar from './components/Navbar.jsx';
+import Profile from './components/Profile.jsx'
 import Home from './components/Home.jsx';
 import listings from '../mockData/listing';
 import accounts from '../mockData/account';
 import bands from '../mockData/band';
 import instruments from '../mockData/instrument';
 import musicians from '../mockData/musician';
-import profiles from '../mockData/musician';
+import profiles from '../mockData/profile';
 
 
 class App extends React.Component {
@@ -26,6 +27,7 @@ class App extends React.Component {
         <Navbar />
         <div className="row">
           <div className="col-md-12">
+            {/* <Profile /> */}
             <Home listings={listings} bands={bands} musicians={musicians}/>
           </div>
         </div>
