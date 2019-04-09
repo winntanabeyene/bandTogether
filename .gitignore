@@ -13,6 +13,7 @@ node_modules
 
 # production
 /build
+/dist/main.js
 
 # misc
 .DS_Store
