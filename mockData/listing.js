@@ -6,9 +6,9 @@ const data = [
         description: 'ut ornare lectus sit amet est placerat in egestas erat imperdiet sed euismod nisi porta lorem mollis aliquam ut porttitor leo a diam sollicitudin tempor id eu nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam eget felis ',
         venue: 'The Purple Cat',
         type: 'open mic',
-        urlImage: 'https://i.imgur.com/75ElGIl.jpg',
-        idBand: null,
-        idMusician: 0,
+        url_image: 'https://i.imgur.com/75ElGIl.jpg',
+        band_id: null,
+        musician_id: 0,
     },
     {
         id: 1,
@@ -17,9 +17,9 @@ const data = [
         description: 'ut ornare lectus sit amet est placerat in egestas erat imperdiet sed euismod nisi porta lorem mollis aliquam ut porttitor leo a diam sollicitudin tempor id eu nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam eget felis ',
         venue: 'Passed Out Lounge',
         type: 'gig',
-        urlImage: 'https://i.imgur.com/NQDMg5r.jpg',
-        idBand: 1,
-        idMusician: null,
+        url_image: 'https://i.imgur.com/NQDMg5r.jpg',
+        band_id: 1,
+        musician_id: null,
     },
     {
         id: 2,
@@ -28,9 +28,9 @@ const data = [
         description: 'ut ornare lectus sit amet est placerat in egestas erat imperdiet sed euismod nisi porta lorem mollis aliquam ut porttitor leo a diam sollicitudin tempor id eu nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam eget felis ',
         venue: 'Sylverlyte',
         type: 'gig',
-        urlImage: 'https://i.imgur.com/cB6g6XR.jpg',
-        idBand: 2,
-        idMusician: null,
+        url_image: 'https://i.imgur.com/cB6g6XR.jpg',
+        band_id: 2,
+        musician_id: null,
     },
     {
         id: 3,
@@ -39,9 +39,9 @@ const data = [
         description: 'ut ornare lectus sit amet est placerat in egestas erat imperdiet sed euismod nisi porta lorem mollis aliquam ut porttitor leo a diam sollicitudin tempor id eu nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam eget felis ',
         venue: 'Warehouse 42',
         type: 'opening act',
-        urlImage: 'https://i.imgur.com/Auy9lIc.jpg',
-        idBand: null,
-        idMusician: 1,
+        url_image: 'https://i.imgur.com/Auy9lIc.jpg',
+        band_id: null,
+        musician_id: 1,
     },
     {
         id: 4,
@@ -50,10 +50,10 @@ const data = [
         description: 'ut ornare lectus sit amet est placerat in egestas erat imperdiet sed euismod nisi porta lorem mollis aliquam ut porttitor leo a diam sollicitudin tempor id eu nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam eget felis ',
         venue: 'Westin Park',
         type: 'outdoor festival',
-        urlImage: 'https://i.imgur.com/QinTXqG.jpg',
-        idBand: 0,
-        idMusician: null,
+        url_image: 'https://i.imgur.com/QinTXqG.jpg',
+        band_id: 0,
+        musician_id: null,
     },
 ]
 
-module.exports.data = data;
+module.exports = data;

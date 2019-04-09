@@ -22,7 +22,7 @@ const data = [
         password: 'thisOldStep',
         salt: 'salt',
 
-    }
+    },
     {
         id: 3,
         solo: 0,

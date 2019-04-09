@@ -3,15 +3,17 @@ const data = [
         id: 0,
         name: 'Kelly Harris',
         city: 'Dallas',
+        genre: 'Singer Songwriter',
         age: 22,
-        idAccount: 2,
+        account_id: 2,
     },
     {
         id: 1,
         name: 'Robert Barron',
         city: 'New Orleans',
+        genre: 'hip-hop',
         age: 23,
-        idAccount: 1,
+        account_id: 1,
     },
 ]
 module.exports.data = data;
