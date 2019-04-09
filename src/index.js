@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Favicon from 'react-favicon';
 
 import Navbar from './components/Navbar.jsx';
 import Home from './components/Home.jsx';
@@ -33,4 +34,8 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(
+<div>
+    <Favicon url="http://www.iconj.com/ico/k/y/ky8gheq1tw.ico" type="image/x-icon"/>
+  <App />
+</div>, document.getElementById('app'));
