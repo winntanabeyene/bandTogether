@@ -1,20 +1,27 @@
 import React from 'react';
 
+import Search from './Search.jsx';
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      // Used to filter out listings by type
+      filterGig: false,
+      filterBand: false,
+      filterMates: false,
+      filterMember: false,
+      // Used to sort listings
+      sort: '',
+    };
   }
+
 
   render() {
     return (
       <div className="jumbotron">
         <div className="row">
-          {/* <Search /> */}
           <div className="col-md-12">
-            <div style={{ border: '1px solid red' }} className="container">
-              <h2 className='text-center'>Search Component Here</h2>
-            </div>
+            <Search />
           </div>
         </div>
         <div className="row">
