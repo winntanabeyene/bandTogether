@@ -3,7 +3,7 @@ import React from 'react';
 const Navbar = (props) => {
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar fixed-top navbar-dark bg-dark">
         <a href="#!" className="navbar-brand">Band Together</a>
 
         <ul className="nav nav-pills">
