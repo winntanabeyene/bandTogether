@@ -5,8 +5,8 @@ const data = [
         city: 'Las Vegas',
         state: 'NV',
         genre: 'Rockabilly',
-        yearFormed: 1998,
-        idAccount: 0,
+        year_formed: 1998,
+        account_id: 0,
     },
     {
         id: 1,
@@ -14,8 +14,8 @@ const data = [
         city: 'Athens',
         state: 'GA',
         genre: 'punk',
-        yearFormed: 2010,
-        idAccount: 3,
+        year_formed: 2010,
+        account_id: 3,
     },
     {
         id: 2,
@@ -23,8 +23,8 @@ const data = [
         city: 'Brooklyn',
         state: 'NY',
         genre: 'chillwave',
-        yearFormed: 2012,
-        idAccount: 4,
+        year_formed: 2012,
+        account_id: 4,
     },
 ]
 module.exports.data = data;
