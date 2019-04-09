@@ -9,7 +9,7 @@ class Search extends React.Component {
 
   render() {
     return (
-      <div style={{ border: '1px solid red' }} className="jumbotron">
+      <div style={{ border: '1px solid red' }} className="jumbotron"> 
         <div className="row">
           <div className="col-md-4">
             <form>
