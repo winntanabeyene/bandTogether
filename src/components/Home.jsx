@@ -12,7 +12,7 @@ class Home extends React.Component {
         <div className="row">
           {/* <Search /> */}
           <div className="col-md-12">
-            <div style={{ border: '1px solid red' }} className="jumbotron">
+            <div style={{ border: '1px solid red' }} className="container">
               <h2 className='text-center'>Search Component Here</h2>
             </div>
           </div>
@@ -20,7 +20,7 @@ class Home extends React.Component {
         <div className="row">
           {/* <Listings /> */}
           <div className="col-md-12">
-            <div style={{ border: '1px solid red' }} className="jumbotron">
+            <div style={{ border: '1px solid red' }} className="container">
               <h2 className='text-center'>Listings Component Here</h2>
             </div>
           </div>
