@@ -12,8 +12,7 @@ node_modules
 /coverage
 
 # production
-/build
-/dist/main.js
+dist/main.js
 
 # misc
 .DS_Store
