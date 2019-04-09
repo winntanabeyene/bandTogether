@@ -6,6 +6,7 @@ USE bandtogether;
 
 CREATE TABLE account (
     id int NOT NULL AUTO_INCREMENT
+    solo BOOLEAN
     username varchar(50)
     password varchar(64)
     salt varchar(255)
