@@ -6,11 +6,15 @@ class Home extends React.Component {
     super(props);
     this.state = {
       // Used to filter out listings by type
-      filter: '',
+      filterGig: false,
+      filterBand: false,
+      filterMates: false,
+      filterMember: false,
       // Used to sort listings
       sort: '',
     };
   }
+
 
   render() {
     return (

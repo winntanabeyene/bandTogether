@@ -71,16 +71,16 @@ class Search extends React.Component {
               <h3>Filter By: </h3>
               <div className="btn-group btn-group-toggle" data-toggle="buttons">
                 <label className="btn btn-dark">
-                  <input type="checkbox" autoComplete="off" />Looking 4 Gig
+                  <input type="checkbox" autoComplete="off" />Looking For Gig
                 </label>
                 <label className="btn btn-dark">
-                  <input type="checkbox" autoComplete="off" />Looking 4 Band
+                  <input type="checkbox" autoComplete="off" />Looking For Fill
                 </label>
                 <label className="btn btn-dark">
-                  <input type="checkbox" autoComplete="off" />Looking 4 Bandmates
+                  <input type="checkbox" autoComplete="off" />Looking For Bandmates
                 </label>
                 <label className="btn btn-dark">
-                  <input type="checkbox" autoComplete="off" />Looking 4 Musicians
+                  <input type="checkbox" autoComplete="off" />Looking For Member
                 </label>
               </div>
             </div>
