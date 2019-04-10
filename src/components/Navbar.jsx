@@ -1,24 +1,22 @@
 import React from 'react';
 
 const Navbar = (props) => {
-  const { changeView } = props;
+  const { changeView, view } = props;
   return (
     <div>
       <nav className="navbar fixed-top navbar-dark bg-dark">
         <a href="#!" onClick={() => {changeView('home')}} className="navbar-brand">Band Together</a>
+        <div class="dropdown show">
+          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             {view}
+            </a>
 
-        <ul className="nav nav-pills">
-          <li className="nav-item">
-          {/* When these links are clicked, it should change the view on the state, changing the view that is rendered*/}
-            <a className="nav-link text-light" onClick={() => {changeView('home')}} href="#!">Home</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link text-light" onClick={() => {changeView('profile')}} href="#!">Profile</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link text-light" onClick={() => { changeView('login') }} href="#!">Login</a>
-          </li>
-        </ul>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a className="dropdown-item" onClick={() => { changeView('home') }} href="#!">Home</a>
+            <a className="dropdown-item" onClick={() => { changeView('profile') }} href="#!">Profile</a>
+            <a className="dropdown-item" onClick={() => { changeView('login') }} href="#!">Login</a>
+          </div>
+        </div>  
       </nav>
     </div>
   )

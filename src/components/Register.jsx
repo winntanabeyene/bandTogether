@@ -58,7 +58,7 @@ const Register = (props) => {
                     Register
         </button>
             </form>
-                <p class="lead mt-4">Have An Account? <a onClick={() => { changeView('login') }} href="#">Login</a></p>
+                <p class="lead mt-4">Have An Account? <a onClick={() => {changeView('login')}} href="#">Login</a></p>
         </div>
     </div>
 </div>
