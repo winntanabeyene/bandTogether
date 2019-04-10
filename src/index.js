@@ -36,7 +36,7 @@ class App extends React.Component {
     const {listings, artists, accounts, view} = this.state
     return (
       <div className="container-fluid">
-        <Navbar changeView={this.changeView} />
+        <Navbar changeView={this.changeView} view={view} />
         <div className="row">
           <div className="col-md-12">
             {view === 'home' && <Home listings={listings} artists={artists} accounts={accounts}/>}
