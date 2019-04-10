@@ -101,7 +101,6 @@ class Profile extends React.Component {
                     </div>
                     <div>
                         <div>
-                            <h1 className="display-4">Events</h1>
                             <ListView listings={events} bands={bands} musicians={musicians} />
                         </div>
                     </div>
