@@ -23,7 +23,7 @@ data = [
         id: 1,
         name: 'Robert Barron',
         city: 'New Orleans',
-        Stae: 'LA'
+        Stae: 'LA',
         genre: 'hip-hop',
         solo: 1,
         account_id: 1,
@@ -96,3 +96,4 @@ data = [
         contact_facebook: 'http://www.facebook.com'
     },
 ]
+module.exports.data = data;

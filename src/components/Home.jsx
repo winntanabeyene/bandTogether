@@ -18,7 +18,7 @@ class Home extends React.Component {
 
 
   render() {
-    const { listings, bands, musicians} = this.props;
+    const { listings, artists, accounts} = this.props;
     return (
       <div className="jumbotron">
         <div className="row">
@@ -27,7 +27,7 @@ class Home extends React.Component {
           </div>
         </div>
         <div className="row">
-          <ListView listings={listings} bands={bands} musicians={musicians} />
+          <ListView listings={listings} artists={artists}/>
         </div>
       </div>
     )

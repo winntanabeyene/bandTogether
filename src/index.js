@@ -7,22 +7,17 @@ import Profile from './components/Profile.jsx'
 import Home from './components/Home.jsx';
 import listings from '../mockData/listing';
 import accounts from '../mockData/account';
-import bands from '../mockData/band';
-import instruments from '../mockData/instrument';
-import musicians from '../mockData/musician';
-import profiles from '../mockData/profile';
+import artists from '../mockData/artist';
+
 
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      listings, 
       accounts, 
-      bands, 
-      instruments, 
-      musicians, 
-      profiles,
+      artists,  
+      listings,
       view: 'home', 
     };
     
@@ -36,13 +31,13 @@ class App extends React.Component {
   }
 
   render() {
-    const {listings, bands, musicians, view} = this.state
+    const {listings, artists, accounts, view} = this.state
     return (
       <div className="container-fluid">
         <Navbar changeView={this.changeView} />
         <div className="row">
           <div className="col-md-12">
-            {view === 'home' && <Home listings={listings} bands={bands} musicians={musicians}/>}
+            {view === 'home' && <Home listings={listings} artists={artists} accounts={accounts}/>}
             {view === 'profile' && <Profile data={this.state} />}
           </div>
         </div>
