@@ -27,7 +27,7 @@ class App extends React.Component {
         <Navbar />
         <div className="row">
           <div className="col-md-12">
-            {/* <Profile /> */}
+            {/* <Profile data={this.state}/> */}
             <Home listings={listings} bands={bands} musicians={musicians}/>
           </div>
         </div>
