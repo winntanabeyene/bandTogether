@@ -21,6 +21,7 @@ class App extends React.Component {
       artists,  
       listings,
       view: 'home', 
+      city: '',
     };
     
     this.changeView = this.changeView.bind(this);
@@ -30,6 +31,10 @@ class App extends React.Component {
     this.setState({
       view: view,
     })
+  }
+
+  changeCity(city) {
+
   }
 
   render() {

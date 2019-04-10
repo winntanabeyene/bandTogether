@@ -15,6 +15,7 @@ class Home extends React.Component {
       // Used to sort listings
       sort: '',
       showForm: false,
+      city: '',
     };
 
     this.toggleForm = this.toggleForm.bind(this);
