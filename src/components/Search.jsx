@@ -54,14 +54,14 @@ class Search extends React.Component {
           <div className="col-md-4">
             <form onSubmit={this.handleCity}>
               <div className="row" style={{ justifyContent: 'center' }}>
-                <input type="text" placeholder="Enter a City Name" id="city" value={valueCity} onChange={this.handleChange}></input>
+                <input type="text" placeholder="Enter a City Name" id="city" value={valueCity} onChange={this.handleChange}></input>&nbsp;
                 <button className="btn btn-sm btn-dark">Change City</button>
               </div>
             </form>
               <br />
             <form onSubmit={this.handleSearch}>
               <div className="row" style={{ justifyContent: 'center' }}>
-                <input type="text" placeholder="Search Here" id="search" value={valueSearch} onChange={this.handleChange}></input>
+                <input type="text" placeholder="Search Here" id="search" value={valueSearch} onChange={this.handleChange}></input>&nbsp;
                 <button className="btn btn-sm btn-dark">Search</button>
               </div>
             </form>
