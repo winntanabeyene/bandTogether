@@ -38,7 +38,7 @@ class App extends React.Component {
         <div className="row">
           <div className="col-md-12">
             {view === 'home' && <Home listings={listings} artists={artists} accounts={accounts}/>}
-            {view === 'profile' && <Profile data={this.state} />}
+            {view === 'profile' && <Profile listings={listings} artists={artists} accounts={accounts} />}
           </div>
         </div>
       </div>

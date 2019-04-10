@@ -8,31 +8,23 @@ class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            profileId: 4,
+            profileId: 1,
         };
     }
 
 
     render() {
         const {profileId} = this.state
-        const { bands, musicians, accounts, profiles, listings } = this.props.data;
-        const profile = profiles.data.filter((profile) =>{
-            return (profile.id === profileId )
+        const { accounts, artists, listings } = this.props;
+        const profile = artists.data.filter((artist) =>{
+            return (artist.id === profileId )
         }).pop();
-        // console.log(profile)
+        console.log(profile)
         let performer;
         let events = [];
-            if (bands.data[profile.band_id]) {
-                performer = bands.data[profile.band_id]
-                events = listings.filter((listing) => {
-                    return (listing.band_id === profile.band_id)
-                })
-            } else {
-                performer = musicians.data[profile.musician_id]
-                events = listings.filter((listing) => {
-                    return (listing.musician_id === profile.musician_id)
-                })
-            }
+        events = listings.filter((listing) => {
+            return (listing.artist_id === profile.id)
+        })
         // console.log(performer)
         
         return (
@@ -40,13 +32,13 @@ class Profile extends React.Component {
                 <div>
                     <div className="row">
                         <div className='col-md-4'>
-                            <img className="img-fluid" alt="" style={{ maxHeight: "300px" }} src={profile.url}/>
+                            <img className="img-fluid" alt="" style={{ maxHeight: "300px" }} src={profile.image_url}/>
                         </div>
                         <div className='col-md-8'>
                             <div className="container">
-                                <div className="row"><h1 className="display-4">{performer.name}</h1></div>
-                                <div className="row"><h6>City:&nbsp;</h6>{performer.city}</div>
-                                <div className="row"><h6>Genre:&nbsp;</h6>{performer.genre}</div>
+                                <div className="row"><h1 className="display-4">{profile.name}</h1></div>
+                                <div className="row"><h6>City:&nbsp;</h6>{profile.city}</div>
+                                <div className="row"><h6>Genre:&nbsp;</h6>{profile.genre}</div>
                                 <div className="row"><h6>Bio:&nbsp;</h6>
                                     <div className="container-fluid">{profile.bio}</div>
                                 </div>
@@ -58,19 +50,19 @@ class Profile extends React.Component {
                             <h1 className="display-4">Links</h1>
                             <div>
                                 <h3>Bandcamp:</h3>
-                                <a href={profile.url_bandcamp}>{profile.url_bandcamp}</a>
+                                <a href={profile.bandcamp_url}>{profile.bandcamp_url}</a>
                             </div>
                             <div>
                                 <h3>Spotify:</h3>
-                                <a href={profile.url_spotify}>{profile.url_spotify}</a>
+                                <a href={profile.spotify_url}>{profile.spotify_url}</a>
                             </div>
                             <div>
                                 <h3>Facebook:</h3>
-                                <a href={profile.url_facebook}>{profile.url_facebook}</a>
+                                <a href={profile.facebook_url}>{profile.facebook_url}</a>
                             </div>
                             <div>
                                 <h3>Homepage:</h3>
-                                <a href={profile.url_homepage}>{profile.url_homepage}</a>
+                                <a href={profile.homepage_url}>{profile.homepage_url}</a>
                             </div>
                         </div>
                         <div className='col-md-8'>
@@ -101,7 +93,7 @@ class Profile extends React.Component {
                     </div>
                     <div>
                         <div>
-                            <ListView listings={events} bands={bands} musicians={musicians} />
+                            <ListView listings={events} artists={artists} />
                         </div>
                     </div>
                 </div>
