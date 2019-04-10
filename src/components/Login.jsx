@@ -1,6 +1,8 @@
 import React from 'react';
 
-const Login = (props) => (
+const Login = (props) => {
+    const { changeView } = props;
+    return (
 <div className="row mt-5">
     <div className="col-md-6 m-auto">
         <div className="card card-body">
@@ -29,10 +31,10 @@ const Login = (props) => (
                 <button type="submit" className="btn btn-primary btn-block">Login</button>
             </form>
             <p className="lead mt-4">
-                No Account? <a href="#">Register</a>
+                    No Account? <a onClick={() => {changeView('register')}}href="#">Register</a>
             </p>
         </div>
     </div>
 </div>
-);
+)};
 export default Login

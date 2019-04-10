@@ -5,7 +5,8 @@ import Favicon from 'react-favicon';
 import Navbar from './components/Navbar.jsx';
 import Profile from './components/Profile.jsx'
 import Home from './components/Home.jsx';
-import Login from './components/Login.jsx'
+import Login from './components/Login.jsx';
+import Register from './components/Register.jsx'
 import listings from '../mockData/listing';
 import accounts from '../mockData/account';
 import artists from '../mockData/artist';
@@ -40,7 +41,8 @@ class App extends React.Component {
           <div className="col-md-12">
             {view === 'home' && <Home listings={listings} artists={artists} accounts={accounts}/>}
             {view === 'profile' && <Profile listings={listings} artists={artists} accounts={accounts} />}
-            {view === 'login' && <Login />}
+            {view === 'login' && <Login changeView={this.changeView} />}
+            {view === 'register' && <Register changeView={this.changeView}/>}
           </div>
         </div>
       </div>
