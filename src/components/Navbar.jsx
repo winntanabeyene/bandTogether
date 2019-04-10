@@ -15,6 +15,9 @@ const Navbar = (props) => {
           <li className="nav-item">
             <a className="nav-link text-light" onClick={() => {changeView('profile')}} href="#!">Profile</a>
           </li>
+          <li className="nav-item">
+            <a className="nav-link text-light" onClick={() => { changeView('login') }} href="#!">Login</a>
+          </li>
         </ul>
       </nav>
     </div>
