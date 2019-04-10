@@ -16,19 +16,34 @@ import profiles from '../mockData/profile';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {listings, accounts, bands, instruments, musicians, profiles };
+    this.state = {
+      listings, 
+      accounts, 
+      bands, 
+      instruments, 
+      musicians, 
+      profiles,
+      view: 'home', 
+    };
     
+    this.changeView = this.changeView.bind(this);
+  }
+
+  changeView(view) {
+    this.setState({
+      view: view,
+    })
   }
 
   render() {
-    const {listings, bands, musicians} = this.state
+    const {listings, bands, musicians, view} = this.state
     return (
       <div className="container-fluid">
-        <Navbar />
+        <Navbar changeView={this.changeView} />
         <div className="row">
           <div className="col-md-12">
-            {/* <Profile data={this.state}/> */}
-            <Home listings={listings} bands={bands} musicians={musicians}/>
+            {view === 'home' && <Home listings={listings} bands={bands} musicians={musicians}/>}
+            {view === 'profile' && <Profile data={this.state} />}
           </div>
         </div>
       </div>
