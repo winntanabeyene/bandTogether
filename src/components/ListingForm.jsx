@@ -13,9 +13,30 @@ class ListingForm extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-
+  handleSubmit(event) {
+    const { valueEName, valueDate, valueDescr, valueVenue, valueImg, valueType } = this.state;
+    const newListing = {
+      title: valueEName,
+      date: valueDate,
+      description: valueDescr,
+      venue: valueVenue,
+      type: valueType,
+      image_url: valueImg
+    }
+    console.log(newListing);
+    this.setState({
+      valueEName: '',
+      valueDate: '',
+      valueDescr: '',
+      valueVenue: '',
+      valueImg: '',
+      valueType: '',
+    });
+    event.preventDefault();
+  }
 
   handleChange(event) {
     const { value } = event.target;
@@ -59,7 +80,7 @@ class ListingForm extends React.Component {
     return (
       <div className="jumbotron text-center text-white bg-secondary" style={{ paddingTop: '10px', paddingBottom: '10px' }}>
         <h3>Create a Listing</h3>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label>
               Event Name:
