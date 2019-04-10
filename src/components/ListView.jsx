@@ -7,7 +7,7 @@ const ListView = ({listings, bands, musicians}) => (
         <div style={{ justifyContent: 'center' }} className="row">
             <h2 className="text-white">Listings for All Cities</h2>
         </div>
-        <div>
+        <div className="list-group">
         {listings.map(listing => <ListItem listing={listing} bands={bands} musicians={musicians} />)}
         </div>
     </div>

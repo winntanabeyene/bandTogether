@@ -15,21 +15,25 @@ const ListItem = ({listing, bands, musicians}) => {
     const bandData = performer.data[listing[perfType]];
     
     return (
-    <div style={{ border: '1px solid black' }} >
-        <div style={{ border: '1px solid black' }}>
-            <img style={{maxHeight: '100px'}} src={listing.url_image} />
-            <div>Event Name: {listing.title}</div>
-            <div>Event Descrpition:{listing.description}</div>
-        </div>
-        <div style={{ border: '1px solid black' }}>
-            <div>Type: {listing.type}</div>
-            <div>City: {bandData.city}</div>
-            <div>Genre: {bandData.genre}</div>
-            <div>Venue: {listing.venue}</div>
-        </div>
-        <div style={{ border: '1px solid black' }}>
-            <button>Bookmark this Listing</button>
-            <button>Respond to this Listing</button>
+    <div className="list-group-item d-flex w-100 justify-content-between bg-light" >
+        <div className="row">
+            <div className="col-md-2">
+                <img alt="" style={{maxHeight: '180px', maxWidth: '180px'}} src={listing.url_image} />
+            </div>
+            <div className="col-md-5">
+                <h3>{listing.title}</h3>
+                <p className="text-body">{listing.description}</p>
+            </div>
+            <div className="col-md-4">
+                <div className="row"><h6>Type:&nbsp;</h6>{listing.type}</div>
+                <div className="row"><h6>City:&nbsp;</h6>{bandData.city}</div>
+                <div className="row"><h6>Genre:&nbsp;</h6>{bandData.genre}</div>
+                <div className="row"><h6>Venue:&nbsp;</h6>{listing.venue}</div>
+                <div className="row"><h6>Date:&nbsp;</h6>{listing.date}</div>
+            </div>
+            <div className="col-md-1">
+                <button type="button" className="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Contact Info Here">Respond to this Listing</button>
+            </div>
         </div>
     </div>
     )
