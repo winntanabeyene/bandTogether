@@ -8,7 +8,7 @@ const ListView = ({listings, artists}) => (
             <h2 className="text-white display-4">Listings for All Cities</h2>
         </div>
         <div className="list-group">
-        {listings.map(listing => <ListItem listing={listing} artists={artists} />)}
+        {listings.map(listing => <ListItem key={listing.id} listing={listing} artists={artists} />)}
         </div>
     </div>
 );

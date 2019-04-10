@@ -88,8 +88,8 @@ class Search extends React.Component {
             <div className="row" style={{ justifyContent: 'center' }}>
               <h3 className="text-white">Sort By:&nbsp;</h3>
               <div className="btn-group btn-group-toggle" data-toggle="buttons">
-                <label className="btn btn-sm btn-dark">
-                  <input type="radio" autoComplete="off" />Date
+                <label className="btn btn-sm btn-dark active">
+                  <input type="radio" autoComplete="off" defaultChecked/>Date
                 </label>
                 <label className="btn btn-sm btn-dark">
                   <input type="radio" autoComplete="off" />Genre
