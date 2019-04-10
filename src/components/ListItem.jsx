@@ -1,24 +1,15 @@
 import React from 'react';
 
-const ListItem = ({listing, bands, musicians}) => {
-    let performer =[];
-    var perfType;
-
-        if(listing.musician_id || listing.musician_id === 0){
-            performer = musicians;
-            perfType = 'musician_id';
-        }else {
-            performer = bands;
-            perfType = 'band_id';
-        }
-
-    const bandData = performer.data[listing[perfType]];
+const ListItem = ({listing, artists}) => {
+    const bandData = artists.data.filter((artist) => {
+        return (artist.id === listing.artist_id);
+    }).pop();
     
     return (
     <div className="list-group-item d-flex w-100 justify-content-between bg-light" >
         <div className="row">
             <div className="col-md-2">
-                <img alt="" style={{maxHeight: '180px', maxWidth: '180px'}} src={listing.url_image} />
+                <img alt="" style={{maxHeight: '180px', maxWidth: '180px'}} src={listing.image_url} />
             </div>
             <div className="col-md-5">
                 <h3>{listing.title}</h3>
