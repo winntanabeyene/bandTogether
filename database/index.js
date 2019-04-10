@@ -1,4 +1,4 @@
-const { Account, Musician, Band, Listing, Profile, Instrument } = require('./config.js/index.js');
+const { Account, Musician, Band, Listing, Profile, Instrument } = require('./config.js');
 
 const account = new Account();
 const musician = new Musician();
