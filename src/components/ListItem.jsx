@@ -25,6 +25,7 @@ const ListItem = ({listing, bands, musicians}) => {
                 <p className="text-body">{listing.description}</p>
             </div>
             <div className="col-md-4">
+                <div className="row"><h6>Poster:&nbsp;</h6>{bandData.name}</div>
                 <div className="row"><h6>Type:&nbsp;</h6>{listing.type}</div>
                 <div className="row"><h6>City:&nbsp;</h6>{bandData.city}</div>
                 <div className="row"><h6>Genre:&nbsp;</h6>{bandData.genre}</div>
