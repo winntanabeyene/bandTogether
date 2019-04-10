@@ -8,7 +8,7 @@ const Navbar = (props) => {
         <a href="#!" onClick={() => {changeView('home')}} className="navbar-brand">Band Together</a>
         <div className="dropdown show">
           <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             {view[0].toUpperCase() + view.slice(1)}
+            {view[0].toUpperCase() + view.slice(1)}
             </a>
 
           <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
