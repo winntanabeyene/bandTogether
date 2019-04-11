@@ -56,19 +56,24 @@ const makeSearchObject = (account) => {
  * @returns {Promise} 
  */
 const makeAccount = (accDetails) => {
-  const {username, password, salt, email, name, solo} = accDetails;
-  if(!username || !password || !salt || !name || !solo || !email) {
-    console.error("Attempted to make an account without required fields.")
-    return;
-  }
-  const artistObj = makeObject(accDetails, ['name', 'solo'].concat(optionalProfileValues))
-  // makes account
-  return Account.create({ username, password, salt, email })
-  // makes artist
-  .then(account => Artist.create(artistObj)
-    // associates the new artist and account
-    .then(artist => artist.setAccount(account.id))
-  )
+  console.log(accDetails)
+  accDetails.salt = bcrypt.genSaltSync(10);
+  accDetails.password = bcrypt.hashSync(accDetails.password, accDetails.salt);
+  return Account.create(accDetails);
+
+  // const {username, password, salt, email, name, solo} = accDetails;
+  // if(!username || !password || !salt || !name || !solo || !email) {
+  //   console.error("Attempted to make an account without required fields.")
+  //   return;
+  // }
+  // const artistObj = makeObject(accDetails, ['name', 'solo'].concat(optionalProfileValues))
+  // // makes account
+  // return Account.create({ username, password, salt, email })
+  // // makes artist
+  // .then(account => Artist.create(artistObj)
+  //   // associates the new artist and account
+  //   .then(artist => artist.setAccount(account.id))
+  // )
 };
 
 

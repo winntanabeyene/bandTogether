@@ -3,10 +3,12 @@ const path = require('path');
 const session = require('express-session');
 const uuid = require('uuid/v4');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcryptjs');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
+const db = require('../database/index');
 const { sequelize, Account } = require('../database/config');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
@@ -14,30 +16,34 @@ passport.use(new LocalStrategy((username, password, done) => {
   Account.findOne({ username: username })
     .then((account) => {
       if (!account) {
-        return done(null, false);
+        return done(null, false, {message: 'Unknown User'});
       }
-
-      if (account.password != password) {
-        return done(null, false);
-      }
-      return done(null, account);
+      bcrypt.compare(password, account.password)
+        .then((isValid) => {
+          if (isValid) {
+            return done(null, account);
+          } else {
+            return done(null, false, {message: 'Invalid password'});
+          }
+        })
     })
 }))
 
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  db.getAccountInformation({id: id})
+    .then((account) => {
+      done(null, account);
+    })
+    .catch((err) => {
+      done(err, false);
+    })
+})
+
 // Does not export anything yet. Just there to test the sequelize database.
-const {
-  makeAccount,
-  updateArtistDetails,
-  deleteArtistData,
-  getAccountInformation,
-  getProfileInformation,
-  makeListing,
-  getListings,
-  updateListings,
-  deleteListingProperties,
-  deleteListing,
-  getListingsByAccountId,
-} = require('../database/index');
 require('dotenv').config();
 
 
@@ -63,6 +69,10 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }));
+
+// Passport Init
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 app.get('/listings', (req, res) => {
@@ -129,19 +139,43 @@ app.post('/artist', (req, res) => {
 })
 
 app.post('/signup', (req, res) => {
-  // makeAccount()
+  const { password1, password2, username, email, solo } = req.body;
+
+  if (password1 === password2) {
+    const newAccount = {
+      username: username,
+      email: email,
+      password: password1,
+      solo: solo,
+    }
+    db.makeAccount(newAccount)
+      .then(() => {
+        res.redirect("/");
+      })
+      .catch((error) => {
+        res.status(500).send("Account already exists!");
+      })
+  } else {
+    res.status(500).send("Passwords don't match!");
+  }
 })
 
-app.get('/login', (req, res) => {
-  console.log('Inside GET /login')
+
+app.post('/login', passport.authenticate('local'), (req, res) => {
+  res.redirect('/');
 })
 
-app.post('/login', (req, res) => {
-  console.log('Inside POST /login')
+app.post('/logout', (req, res) => {
+  req.logout();
+  res.send(null);
 })
 
-app.post('/user/logout', (req, res) => {
-  // End user's session
+app.get('/test', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.send("Yr Logged In");
+  } else {
+    res.send("Yr not logged in");
+  }
 })
 
 const PORT = process.env.PORT || 3000;
