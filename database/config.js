@@ -71,7 +71,7 @@ Artist.init({
   state: Sequelize.STRING,
   genre: Sequelize.STRING,
   solo: Sequelize.BOOLEAN,
-  birtday: Sequelize.INTEGER,
+  birthday: Sequelize.INTEGER,
   url_image: Sequelize.STRING,
   bio: Sequelize.STRING(500), // may need to increase
   url_bandcamp: Sequelize.STRING,
@@ -98,7 +98,7 @@ Listing.init({
   description: Sequelize.STRING(700),
   venue: Sequelize.STRING,
   type: Sequelize.STRING,
-  image_url: Sequelize.STRING,
+  url_image: Sequelize.STRING,
 }, {
   sequelize,
   modelName: 'listing',
