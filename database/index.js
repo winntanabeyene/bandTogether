@@ -15,8 +15,10 @@ const optionalProfileValues = ['city', 'state', 'genre', 'birthdate', 'url_image
 const makeObject = (object, propsToTake, allowNull = false) => {
   let returnObject = {}
   for(let key in object) {
-    if (propsToTake.indexOf(key) !== -1 && !!object[key] !== allowNull) {
-      returnObject[key] = object[key];
+    if(object[key] !== null && object[key] !== undefined || allowNull) {
+      if (propsToTake.indexOf(key) !== -1) {
+        returnObject[key] = object[key];
+      }
     }
   }
   return returnObject;
@@ -56,11 +58,17 @@ const makeSearchObject = (account) => {
  */
 const makeAccount = (accDetails) => {
   const {username, password, salt, email, name, solo} = accDetails;
-  if(!username || !password || !salt || !name || !solo || !email) {
-    console.error("Attempted to make an account without required fields.")
+  if(!username || !password || !salt || !name || solo === undefined || !email) {
+    console.error(`Attempted to make an account without required fields. username: ${username}, password: ${password},
+      salt: ${salt}, name: ${name}, solo: ${solo}, email: ${email}`);
     return;
   }
-  const artistObj = makeObject(accDetails, ['name', 'solo'].concat(optionalProfileValues))
+  const artistObj = makeObject(accDetails, ['name', 'solo'].concat(optionalProfileValues));
+  if(solo === 0) {
+    artistObj.solo = false;
+  } else if (solo === 1) {
+    artistObj.solo = true;
+  }
   // makes account
   return Account.create({ username, password, salt, email })
   // makes artist
@@ -173,7 +181,7 @@ const makeListing = (account, newListing) => {
     return;
   }
   const newListingObject = makeObject(newListing, listingValues);
-  return Account.findOne(acc)
+  return Account.findOne({where: acc})
     .then(account => account.getArtist())
     .then(artist => Listing.create(newListingObject)
       .then(listing => artist.addListing(listing.id))

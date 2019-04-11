@@ -1,6 +1,6 @@
 const data = [
     {
-        id: 0,
+        id: 5,
         username: 'JonnyT',
         password: 'pword',
         email: 'jonny@gmail.com',
@@ -37,7 +37,6 @@ const data = [
         password: '2cool',
         email: 'chillgirl420@gmail.com',
         salt: 'salt',
-
     }
 ]
-module.exports.data = data;
+module.exports = data;

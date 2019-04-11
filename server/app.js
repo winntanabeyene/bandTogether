@@ -17,6 +17,7 @@ const {
   deleteListing,
   getListingsByAccountId,
 } = require('../database/index');
+require('../mockData/addMochData'); // uncommenting this adds moch data to your database if it is empty.
 require('dotenv').config();
 
 const app = express();
