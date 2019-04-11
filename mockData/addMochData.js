@@ -20,16 +20,15 @@ const addData = () => {
     return Object.assign(artist[index], acc);
   });
 
-  makeAccount(profileArr[0])
-
   // profileArr.forEach(profile => {
   //   return makeAccount(profile);
   // });
 
-  // listing.forEach(listing => {
-  //   makeListing(listing.id, listing);
-  // });
+  listing.forEach(listing => {
+    listing.date = 01012000;
+    makeListing({id: listing.artist_id}, listing);
+  });
 }
-addData();
+// addData();
 
 module.exports = addData;
