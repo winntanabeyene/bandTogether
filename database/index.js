@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const { Account, Artist, Listing } = require('./config.js');
 
 

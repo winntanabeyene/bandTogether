@@ -1,7 +1,28 @@
 const express = require('express');
 const path = require('path');
+const session = require('express-session');
+const uuid = require('uuid/v4');
 const bodyParser = require('body-parser');
 
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
+const { sequelize, Account } = require('../database/config');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
+passport.use(new LocalStrategy((username, password, done) => {
+  Account.findOne({ username: username })
+    .then((account) => {
+      if (!account) {
+        return done(null, false);
+      }
+
+      if (account.password != password) {
+        return done(null, false);
+      }
+      return done(null, account);
+    })
+}))
 
 // Does not export anything yet. Just there to test the sequelize database.
 const {
@@ -23,7 +44,25 @@ require('dotenv').config();
 const app = express();
 
 app.use(express.static(path.join(__dirname, '../dist')));
-app.user(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
+
+// sets up the session storage in sequelize database
+const sessionStorage = new SequelizeStore({
+  db: sequelize,
+});
+
+app.use(session({
+  genid: (req) => {
+    console.log(req.sessionID);
+    return uuid()
+  },
+  store: sessionStorage,
+  secret: 'papa watzke sucks',
+  // need to change this secret in production to a rand string as an env variable
+  resave: false,
+  saveUninitialized: true
+}));
 
 
 app.get('/listings', (req, res) => {
@@ -89,13 +128,16 @@ app.post('/artist', (req, res) => {
   // })
 })
 
-app.post('/user/signup', (req, res) => {
+app.post('/signup', (req, res) => {
   // makeAccount()
 })
 
-app.post('/user/login', (req, res) => {
-  // Verify the user info
-  // Give the user a session token
+app.get('/login', (req, res) => {
+  console.log('Inside GET /login')
+})
+
+app.post('/login', (req, res) => {
+  console.log('Inside POST /login')
 })
 
 app.post('/user/logout', (req, res) => {
