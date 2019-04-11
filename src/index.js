@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Favicon from 'react-favicon';
+import axios from 'axios';
 
 import Navbar from './components/Navbar.jsx';
 import Profile from './components/Profile.jsx'
@@ -24,6 +25,16 @@ class App extends React.Component {
     };
     
     this.changeView = this.changeView.bind(this);
+  }
+
+  componentDidMount(){
+    console.log('mounted')
+    axios.get('/listings')
+    .then((listings) => {
+      console.log(listings)
+    }).catch((err) => {
+      console.error(err)
+    });
   }
 
   changeView(view) {

@@ -19,8 +19,6 @@ class Profile extends React.Component {
         const profile = artists.data.filter((artist) =>{
             return (artist.id === profileId )
         }).pop();
-        console.log(profile)
-        let performer;
         let events = [];
         events = listings.filter((listing) => {
             return (listing.artist_id === profile.id)
