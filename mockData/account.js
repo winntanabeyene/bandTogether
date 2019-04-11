@@ -1,7 +1,7 @@
 const data = [
     {
         id: 0,
-        solo: 0,
+        musician: 0,
         username: 'JonnyT',
         password: 'pword',
         salt: 'salt',
@@ -9,7 +9,7 @@ const data = [
     },
     {
         id: 1,
-        solo: 1,
+        musician: 1,
         username: 'BobbyB',
         password: 'BigB123',
         salt: 'salt',
@@ -17,7 +17,7 @@ const data = [
     }, 
     {
         id: 2,
-        solo: 1,
+        musician: 1,
         username: 'KellyH',
         password: 'thisOldStep',
         salt: 'salt',
@@ -25,7 +25,7 @@ const data = [
     }
     {
         id: 3,
-        solo: 0,
+        musician: 0,
         username:'MickeyG',
         password: 'heyyyyy',
         salt: 'salt',
@@ -33,7 +33,7 @@ const data = [
     },
     {
         id: 4,
-        solo: 0,
+        musician: 0,
         username:'JennyK',
         password: '2cool',
         salt: 'salt',
