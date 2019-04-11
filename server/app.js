@@ -44,12 +44,30 @@ passport.deserializeUser((id, done) => {
 })
 
 // Does not export anything yet. Just there to test the sequelize database.
+<<<<<<< HEAD
+=======
+const {
+  makeAccount,
+  updateArtistDetails,
+  deleteArtistData,
+  getAccountInformation,
+  getProfileInformation,
+  makeListing,
+  getListings,
+  updateListings,
+  deleteListingProperties,
+  deleteListing,
+  getListingsByAccountId,
+} = require('../database/index');
+// require('../mockData/addMochData')(); // uncommenting this adds moch data to your database if it is empty. Make sure to run the code once to build the tables before you run this.
+>>>>>>> 08ab87c7390d514a2157040490ba6e3cfebb6917
 require('dotenv').config();
 
 
 const app = express();
 
 app.use(express.static(path.join(__dirname, '../dist')));
+<<<<<<< HEAD
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
@@ -73,6 +91,9 @@ app.use(session({
 // Passport Init
 app.use(passport.initialize());
 app.use(passport.session());
+=======
+app.use(bodyParser.json());
+>>>>>>> 08ab87c7390d514a2157040490ba6e3cfebb6917
 
 
 app.get('/listings', (req, res) => {

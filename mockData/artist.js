@@ -1,13 +1,12 @@
 data = [
-
     {
-        id: 0,
+        id: 5,
         name: 'Jonny and the T-Tops',
         city: 'Las Vegas',
         state: 'NV',
         genre: 'Rockabilly',
         solo: 0,
-        account_id: 0,
+        account_id: 5,
         birthdate: 1998,
         image_url: 'https://i.imgur.com/jyBYHt5.jpg',
         bio: 'ut ornare lectus sit amet est placerat in egestas erat imperdiet sed euismod nisi porta lorem mollis aliquam ut porttitor leo a diam sollicitudin tempor id eu nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam eget felis',
@@ -96,4 +95,4 @@ data = [
         contact_facebook: 'http://www.facebook.com'
     },
 ]
-module.exports.data = data;
+module.exports = data;

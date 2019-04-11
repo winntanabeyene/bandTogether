@@ -43,7 +43,7 @@ Account.init({
   },
   salt: {
     type:Sequelize.STRING,
-    unique: true,
+    unique: false,
     allowNull: false,
   },
   email: {
@@ -71,15 +71,15 @@ Artist.init({
   state: Sequelize.STRING,
   genre: Sequelize.STRING,
   solo: Sequelize.BOOLEAN,
-  birthday: Sequelize.INTEGER,
-  url_image: Sequelize.STRING,
+  birthday: Sequelize.BIGINT(8),
+  image_url: Sequelize.STRING,
   bio: Sequelize.STRING(500), // may need to increase
-  url_bandcamp: Sequelize.STRING,
-  url_facebook: Sequelize.STRING,
-  url_spotify: Sequelize.STRING,
-  url_homepage: Sequelize.STRING,
+  bandcamp_url: Sequelize.STRING,
+  facebook_url: Sequelize.STRING,
+  spotify_url: Sequelize.STRING,
+  homepage_url: Sequelize.STRING,
   contact_email: Sequelize.STRING, // need to make one of the last three required
-  contact_num: Sequelize.INTEGER, 
+  contact_num: Sequelize.BIGINT(12), 
   contact_facebook: Sequelize.STRING,
 }, {
   sequelize,
@@ -94,11 +94,11 @@ Artist.init({
 class Listing extends Model {};
 Listing.init({
   title: Sequelize.STRING,
-  date: Sequelize.INTEGER,
+  date: Sequelize.BIGINT(8),
   description: Sequelize.STRING(700),
   venue: Sequelize.STRING,
   type: Sequelize.STRING,
-  url_image: Sequelize.STRING,
+  image_url: Sequelize.STRING,
 }, {
   sequelize,
   modelName: 'listing',
