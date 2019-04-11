@@ -17,7 +17,10 @@ const {
 } = require('../database/index');
 // require('../mockData/addMochData')(); // uncommenting this adds moch data to your database if it is empty. Make sure to run the code once to build the tables before you run this.
 require('dotenv').config();
-
+getProfileInformation({name: 'Kelly Harris'})
+  .then(ret => {
+    console.log(ret);
+  })
 const app = express();
 
 app.use(express.static(path.join(__dirname, '../dist')));
