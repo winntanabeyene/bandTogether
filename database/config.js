@@ -71,7 +71,7 @@ Artist.init({
   state: Sequelize.STRING,
   genre: Sequelize.STRING,
   solo: Sequelize.BOOLEAN,
-  birtday: Sequelize.INTEGER,
+  birthday: Sequelize.INTEGER,
   url_image: Sequelize.STRING,
   bio: Sequelize.STRING(500), // may need to increase
   url_bandcamp: Sequelize.STRING,
