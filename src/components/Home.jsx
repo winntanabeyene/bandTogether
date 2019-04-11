@@ -1,29 +1,46 @@
 import React from 'react';
+import ListView from './ListView.jsx'
+import Search from './Search.jsx';
+import ListingForm from './ListingForm';
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      // Used to filter out listings by type
+      filterGig: false,
+      filterBand: false,
+      filterMates: false,
+      filterMember: false,
+      // Used to sort listings
+      sort: '',
+      showForm: false,
+    };
+
+    this.toggleForm = this.toggleForm.bind(this);
+  }
+
+  toggleForm() {
+    const currentState = this.state.showForm;
+    this.setState({
+      showForm: !currentState,
+    });
   }
 
   render() {
+    const { listings, artists } = this.props;
+    const { showForm } = this.state;
     return (
       <div className="jumbotron">
         <div className="row">
-          {/* <Search /> */}
           <div className="col-md-12">
-            <div style={{ border: '1px solid red' }} className="container">
-              <h2 className='text-center'>Search Component Here</h2>
-            </div>
+            <Search />
           </div>
         </div>
+        {!showForm && <button className="btn btn-dark btn-lg btn-block" type="button" onClick={this.toggleForm}>Create a Listing</button>}
+        {showForm && <ListingForm toggleForm={this.toggleForm} />}
         <div className="row">
-          {/* <Listings /> */}
-          <div className="col-md-12">
-            <div style={{ border: '1px solid red' }} className="container">
-              <h2 className='text-center'>Listings Component Here</h2>
-            </div>
-          </div>
+          <ListView listings={listings} artists={artists}/>
         </div>
       </div>
     )
