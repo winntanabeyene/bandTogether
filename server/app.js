@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser');
 // Does not export anything yet. Just there to test the sequelize database.
 const {
   makeAccount,
@@ -19,12 +20,17 @@ require('dotenv').config();
 const app = express();
 
 app.use(express.static(path.join(__dirname, '../dist')));
+app.user(bodyParser.json());
 
-app.get('/listings', () => {
+app.get('/listings', (req, res) => {
   getListings()
     .then((listings) => {
-      console.log(listings);
+      res.send(listings);
     })
+})
+
+app.post('/user/signup', (req, res) => {
+  makeAccount()
 })
 
 const PORT = process.env.PORT || 3000;
