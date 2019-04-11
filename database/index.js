@@ -198,7 +198,10 @@ const makeListing = (account, newListing) => {
  * @param {object} filter - fields include title, date, description, venue, type, and image_url. leaving this object empty
  * or undefined returns all listings.
  */
-const getListings = (filter = {}) => {
+const getListings = (filter) => {
+  if(!filter) {
+    return Listing.findAll();
+  }
   const listingFilters = makeObject(filter, listingValues.concat(['id', 'artist_id']));
   return Listing.findAll({where: listingFilters});
 };
@@ -253,9 +256,9 @@ const deleteListing = (id) => {
  * @returns array of sequalize objects.
  */
 const getListingsByAccountId = (id) => {
-  return Account.findOne({id})
+  return Account.findOne({where: {id}})
     .then(account => account.getArtist())
-    .then(artist => getListings());
+    .then(artist => artist.getListings());
 };
 
 
