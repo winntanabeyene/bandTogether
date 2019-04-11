@@ -1,6 +1,6 @@
 const data = [
     {
-        id: 0,
+        id: 5,
         title: 'Singer/Songwriter night' ,
         date: '2019-06-22 20:30:00',
         artist_id: 2,
@@ -43,7 +43,7 @@ const data = [
         id: 4,
         title: `Lil Momma's Swingin' BBQ cookcoff ` ,
         date: '2019-07-05 02:30:00' ,
-        artist_id: 0,
+        artist_id: 5,
         description: 'ut ornare lectus sit amet est placerat in egestas erat imperdiet sed euismod nisi porta lorem mollis aliquam ut porttitor leo a diam sollicitudin tempor id eu nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam eget felis ',
         venue: 'Westin Park',
         type: 'band looking for more bands',

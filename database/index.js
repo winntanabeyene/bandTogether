@@ -2,8 +2,8 @@ const { Account, Artist, Listing } = require('./config.js');
 
 
 // start of profile and account Middleware
-const optionalProfileValues = ['city', 'state', 'genre', 'birthdate', 'url_image', 'bio', 'url_bandcamp', 'url_facebook', 
-  'url_spotify', 'url_homepage', 'contact_email', 'contact_num', 'contact_facebook'];
+const optionalProfileValues = ['city', 'state', 'genre', 'birthday', 'image_url', 'bio', 'bandcamp_url', 'facebook_url', 
+  'spotify_url', 'homepage_url', 'contact_email', 'contact_num', 'contact_facebook'];
 
 /**
  * makes an object with certain variables, ignoring ones that are undefined by default.
@@ -15,8 +15,10 @@ const optionalProfileValues = ['city', 'state', 'genre', 'birthdate', 'url_image
 const makeObject = (object, propsToTake, allowNull = false) => {
   let returnObject = {}
   for(let key in object) {
-    if (propsToTake.indexOf(key) !== -1 && !!object[key] !== allowNull) {
-      returnObject[key] = object[key];
+    if(object[key] !== null && object[key] !== undefined || allowNull) {
+      if (propsToTake.indexOf(key) !== -1) {
+        returnObject[key] = object[key];
+      }
     }
   }
   return returnObject;
@@ -33,13 +35,16 @@ const makeSearchObject = (account) => {
   const { id, username } = account;
   const acc = {};
   // makes an object to use for search
+  if(!username && !id) {
+    console.error("please give id or username property in the account argument");
+    return;
+  }
   if(!username) {
     acc.id = id;
   } else if (!id) {
     acc.username = username;
   } else {
-    console.error("please give id or username property in the account argument");
-    return;
+    acc.id = id;
   }
   return acc;
 };
@@ -50,17 +55,23 @@ const makeSearchObject = (account) => {
  * creates an account and an associated band or musician. I haven't worked out the kinks for returning an error yet, so for now,
  * it just console.errors an error message.
  * @param {object} accDetails - requires the properties of username, password, salt, name, solo, and email are all required.
- * city, state, genre, birthdate, image_url, url_image, bio, url_bandcamp, url_facebook, url_spotify, url_homepage, 
+ * city, state, genre, birthday, image_url, image_url, bio, bandcamp_url, facebook_url, spotify_url, homepage_url, 
  * contact_email, contact_num, or contact_facebook.
  * @returns {Promise} 
  */
 const makeAccount = (accDetails) => {
   const {username, password, salt, email, name, solo} = accDetails;
-  if(!username || !password || !salt || !name || !solo || !email) {
-    console.error("Attempted to make an account without required fields.")
+  if(!username || !password || !salt || !name || solo === undefined || !email) {
+    console.error(`Attempted to make an account without required fields. username: ${username}, password: ${password},
+      salt: ${salt}, name: ${name}, solo: ${solo}, email: ${email}`);
     return;
   }
-  const artistObj = makeObject(accDetails, ['name', 'solo'].concat(optionalProfileValues))
+  const artistObj = makeObject(accDetails, ['name', 'solo'].concat(optionalProfileValues));
+  if(solo === 0) {
+    artistObj.solo = false;
+  } else if (solo === 1) {
+    artistObj.solo = true;
+  }
   // makes account
   return Account.create({ username, password, salt, email })
   // makes artist
@@ -76,8 +87,8 @@ const makeAccount = (accDetails) => {
  * Updates an account by id or username. If both are given will use id. Only adds or changes information. Does not remove it.
  * Does not allow for updating name or solo. 
  * @param {object} account - must have an account by id or username listed in the account table. If both are given will use id.
- * @param {object} update - properties to change. All are optional: city, state, genre, birthdate, url_image, bio, 
- * url_bandcamp, url_facebook, url_spotify, url_homepage, contact_email, contact_num, contact_facebook.
+ * @param {object} update - properties to change. All are optional: city, state, genre, birthday, image_url, bio, 
+ * bandcamp_url, facebook_url, spotify_url, homepage_url, contact_email, contact_num, contact_facebook.
  */
 const updateArtistDetails = (account, update) => {
   const acc = makeSearchObject(account);
@@ -95,8 +106,8 @@ const updateArtistDetails = (account, update) => {
 /**
  * deletes values from the database.
  * @param {object} account - must have an account by id or username listed in the account table. If both are given will use id.
- * @param {array} removeValues - array of values as strings to delete. Includes:city, state, genre, birthdate, url_image, bio, 
- * url_bandcamp, url_facebook, url_spotify, url_homepage, contact_email, contact_num, contact_facebook.
+ * @param {array} removeValues - array of values as strings to delete. Includes:city, state, genre, birthday, image_url, bio, 
+ * bandcamp_url, facebook_url, spotify_url, homepage_url, contact_email, contact_num, contact_facebook.
  */
 const deleteArtistData = (account, removeValues) => {
   if(!Array.isArray(removeValues)){
@@ -173,7 +184,7 @@ const makeListing = (account, newListing) => {
     return;
   }
   const newListingObject = makeObject(newListing, listingValues);
-  return Account.findOne(acc)
+  return Account.findOne({where: acc})
     .then(account => account.getArtist())
     .then(artist => Listing.create(newListingObject)
       .then(listing => artist.addListing(listing.id))

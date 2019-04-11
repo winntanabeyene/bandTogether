@@ -17,13 +17,14 @@ const {
   deleteListing,
   getListingsByAccountId,
 } = require('../database/index');
+// require('../mockData/addMochData')(); // uncommenting this adds moch data to your database if it is empty. Make sure to run the code once to build the tables before you run this.
 require('dotenv').config();
 
 
 const app = express();
 
 app.use(express.static(path.join(__dirname, '../dist')));
-app.user(bodyParser.json());
+app.use(bodyParser.json());
 
 
 app.get('/listings', (req, res) => {
