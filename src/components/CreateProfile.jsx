@@ -170,7 +170,7 @@ render() {
                 <div className="form-group">
                     <label>
                         City:
-              <input value={valueCity} onChange={this.handleChange} className="form-control form-control-sm" type="date" id="city" placeholder="Enter city"/>
+              <input value={valueCity} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="city" placeholder="Enter city"/>
                     </label>
                 </div>
                 <div className="form-group">
