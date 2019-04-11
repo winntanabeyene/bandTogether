@@ -1,8 +1,5 @@
 const express = require('express');
 const path = require('path');
-const musician = require('./musician');
-const band = require('./band');
-const listing = require('./listing');
 // Does not export anything yet. Just there to test the sequelize database.
 const {
   makeAccount,
@@ -23,9 +20,12 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, '../dist')));
 
-app.use('/musician', musician);
-app.use('/band', band);
-app.use('/listing', listing);
+app.get('/listings', () => {
+  getListings()
+    .then((listings) => {
+      console.log(listings);
+    })
+})
 
 const PORT = process.env.PORT || 3000;
 

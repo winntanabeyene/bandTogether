@@ -98,7 +98,7 @@ Listing.init({
   description: Sequelize.STRING(700),
   venue: Sequelize.STRING,
   type: Sequelize.STRING,
-  image_url: Sequelize.STRING,
+  url_image: Sequelize.STRING,
 }, {
   sequelize,
   modelName: 'listing',
