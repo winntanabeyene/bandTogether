@@ -3,17 +3,27 @@ import SCPlayer from 'react-soundcloud-player';
 import BandcampPlayer from 'react-bandcamp';
 import SpotifyPlayer from 'react-spotify-player';
 import ListView from './ListView';
+import CreateProfile from './CreateProfile';
 
 class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             profileId: 1,
+            showForm: false,
         };
+        this.toggleForm = this.toggleForm.bind(this);
     }
+    toggleForm() {
+    const currentState = this.state.showForm;
+    this.setState({
+      showForm: !currentState,
+    });
+  }
 
 
     render() {
+        const { showForm } = this.state;
         const {profileId} = this.state
         const { accounts, artists, listings } = this.props;
         const profile = artists.filter((artist) =>{
@@ -28,6 +38,10 @@ class Profile extends React.Component {
         return (
             <div className="jumbotron">
                 <div>
+                    <div>
+                        {!showForm && <button className="btn btn-dark btn-lg btn-block" type="button" onClick={this.toggleForm}>Create Profile</button>}
+                        {showForm && <CreateProfile toggleForm={this.toggleForm} />}
+                    </div>
                     <div className="row">
                         <div className='col-md-4'>
                             <img className="img-fluid" alt="" style={{ maxHeight: "300px" }} src={profile.image_url}/>
