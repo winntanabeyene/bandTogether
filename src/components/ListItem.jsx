@@ -1,4 +1,12 @@
 import React from 'react';
+import Popover from 'react-bootstrap/Popover';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+
+const popover = (
+    <Popover id="popover-basic">
+        Must be logged in to view contact info!
+    </Popover>
+)
 
 const ListItem = ({listing, artists}) => {
     const bandData = artists.data.filter((artist) => {
@@ -24,7 +32,9 @@ const ListItem = ({listing, artists}) => {
                 <div className="row"><h6>Date:&nbsp;</h6>{listing.date}</div>
             </div>
             <div className="col-md-1">
-                <button type="button" className="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Contact Info Here">Respond to this Listing</button>
+                <OverlayTrigger trigger="click" placement="top" overlay={popover}>
+                    <button type="button" className="btn btn-secondary">Respond to this Listing</button>
+                </OverlayTrigger>
             </div>
         </div>
     </div>
