@@ -17,8 +17,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      artists: [],
-      listings: [],
+      artists: artists,
+      listings: listings,
       view: 'home', 
     };
     
