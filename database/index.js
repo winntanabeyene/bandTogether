@@ -148,9 +148,9 @@ const getAccountInformation = (account) => {
  * @param {object} account - must have an account by id or username listed in the account table. If both are given will use id.
  * @returns {Promise} - with an object containing account id, account email, and all other artist table columns.
  */
-const getProfileInformation = (account) => {
-  const acc = makeSearchObject(account);
-  if (!acc) return;
+const getProfileInformation = (filter) => {
+  makeObject(filter, optionalProfileValues.concat(["id", "username", "email", "name", "solo"]), true);
+  
   return Account.findOne(acc)
   .then(account => account.getArtist()
     .then(artist => {

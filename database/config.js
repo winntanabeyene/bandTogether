@@ -38,7 +38,6 @@ Account.init({
   },
   password: {
     type:Sequelize.STRING,
-    unique: true,
     allowNull: false,
   },
   salt: {
