@@ -82,6 +82,7 @@ Artist.init({
   modelName: 'artist',
   freezeTableName: true,
   underscored: true,
+  timestamps: false,
 });
 
 // holds the listings for bands to get together. Has a one-to-many relationship as the target with Artist. Col name of
