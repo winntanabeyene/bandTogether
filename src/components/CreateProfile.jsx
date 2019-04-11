@@ -129,7 +129,7 @@ class CreateProfile extends React.Component {
         break;
       case 'homepage':
         this.setState({
-          valueHomepage: value
+          valueHomepageUrl: value
         });
         break;
       case 'email':
@@ -164,7 +164,7 @@ render() {
                 <div className="form-group">
                     <label>
                         Artist Name:
-              <input value={valueName} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="event" placeholder="Enter artist name" />
+              <input value={valueName} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="name" placeholder="Enter artist name"/>
                     </label>
                 </div>
                 <div className="form-group">
@@ -176,13 +176,13 @@ render() {
                 <div className="form-group">
                     <label>
                         State:
-              <input value={valueState} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="state" placeholder="Enter state" />
+              <input value={valueState} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="state" placeholder="Enter state"/>
                     </label>
                 </div>
                 <div className="form-group">
                     <label>
                         Genre:
-              <input value={valueGenre} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="genre" placeholder="Enter genre" />
+              <input value={valueGenre} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="genre" placeholder="Enter genre"/>
                     </label>
                 </div>
                <div className="form-group">
@@ -248,7 +248,7 @@ render() {
                 <div className="form-group">
                     <label>
                         Facebook Contact Info:
-              <input value={valueFacebookContact} onChange={this.handleChange} className="form-control form-control-sm" type="fbcontact" id="img" placeholder="Enter Facebook contact" />
+              <input value={valueFacebookContact} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="fbcontact" placeholder="Enter Facebook contact" />
                     </label>
                 </div>
                 <button className="btn btn-dark" type="submit">Submit Your Profile</button>
