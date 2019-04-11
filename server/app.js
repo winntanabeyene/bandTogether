@@ -4,9 +4,19 @@ const musician = require('./musician');
 const band = require('./band');
 const listing = require('./listing');
 // Does not export anything yet. Just there to test the sequelize database.
-const { makeAccount, updateArtistDetails, 
-  deleteArtistData, getAccountInformation, 
-  getProfileInformation } = require('../database/index');
+const {
+  makeAccount,
+  updateArtistDetails,
+  deleteArtistData,
+  getAccountInformation,
+  getProfileInformation,
+  makeListing,
+  getListings,
+  updateListings,
+  deleteListingProperties,
+  deleteListing,
+  getListingsByAccountId,
+} = require('../database/index');
 require('dotenv').config();
 
 const app = express();
