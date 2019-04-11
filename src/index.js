@@ -33,6 +33,13 @@ class App extends React.Component {
       console.log(listings.data)
       this.setState({listings: listings.data})
     })
+    .then (()=> {
+      axios.get('/artist')
+      .then((artists)=> {
+        console.log(artists.data);
+        this.setState({artists: artists.data})
+      })
+    })
       .catch((err) => {
       console.error(err)
     });

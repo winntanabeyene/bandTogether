@@ -207,6 +207,15 @@ const getListings = (filter) => {
 };
 
 
+/**
+ * 
+ * a function to get all the artists in the db
+ * @returns {Promise}
+ */
+const getAllArtists = () => {
+  return Artist.findAll()
+}
+
 
 /**
  * 
@@ -271,6 +280,7 @@ module.exports = {
   getProfileInformation,
   makeListing,
   getListings,
+  getAllArtists,
   updateListings,
   deleteListingProperties,
   deleteListing,

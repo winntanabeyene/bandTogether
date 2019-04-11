@@ -12,6 +12,7 @@ const {
   getProfileInformation,
   makeListing,
   getListings,
+  getAllArtists,
   updateListings,
   deleteListingProperties,
   deleteListing,
@@ -83,6 +84,14 @@ app.get('/artist/:artistname', (req, res) => {
   //   .then((profile) => {
   //      res.send(profile);
   // })
+})
+
+app.get('/artist', (reg, res) => {
+    getAllArtists()
+    .then((artists) => {
+      res.send(artists)
+    })
+
 })
 
 app.post('/artist', (req, res) => {
