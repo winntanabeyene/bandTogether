@@ -22,15 +22,81 @@ const app = express();
 app.use(express.static(path.join(__dirname, '../dist')));
 app.user(bodyParser.json());
 
+
 app.get('/listings', (req, res) => {
-  getListings()
-    .then((listings) => {
-      res.send(listings);
-    })
+  const { artistId } = req.query;
+  if (!artistId) {
+    // getListingsByArtistId()
+    //   .then((listings) => {
+    //     res.send(listings);
+    // })
+  } else {
+    // getListings()
+    //   .then((listings) => {
+    //     res.send(listings);
+    // })
+  }
+})
+
+app.get('/listings/:city', (req, res) => {
+  const { city } = req.params;
+  // getListingsByCity(city)
+  //   .then((listings) => {
+  //     res.send(listings);
+  // })
+})
+
+app.get('/listings/search', (req, res) => {
+  const search = req.query.q;
+  // getListingsBySearch(search)
+  //  .then((listings) => {
+  //    res.send(listings)
+  //})
+})
+
+app.get('/listings/contact', (req, res) => {
+  const listingId = req.query.id;
+  // getContactInfo(listingId)
+  //   .then((contactInfo) => {
+  //     res.send(contactInfo)
+  // })
+})
+
+app.post('/listings', (req, res) => {
+  const newListing = req.body;
+  // createListing(newListing)
+  //   .then(() => {
+  //   res.sendStatus(201);
+  // })
+})
+
+app.get('/artist/:artistname', (req, res) => {
+  const { artistName } = req.params;
+  // getProfileInfo(artistName)
+  //   .then((profile) => {
+  //      res.send(profile);
+  // })
+})
+
+app.post('/artist', (req, res) => {
+  const newProfile = req.body;
+  // createProfile(newProfile)
+  //   .then(() => {
+  //     res.sendStatus(201)
+  // })
 })
 
 app.post('/user/signup', (req, res) => {
-  makeAccount()
+  // makeAccount()
+})
+
+app.post('/user/login', (req, res) => {
+  // Verify the user info
+  // Give the user a session token
+})
+
+app.post('/user/logout', (req, res) => {
+  // End user's session
 })
 
 const PORT = process.env.PORT || 3000;
