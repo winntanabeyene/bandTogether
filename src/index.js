@@ -9,7 +9,6 @@ import Home from './components/Home.jsx';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx'
 import listings from '../mockData/listing';
-import accounts from '../mockData/account';
 import artists from '../mockData/artist';
 
 
@@ -18,9 +17,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      accounts, 
-      artists,  
-      listings,
+      artists: [],
+      listings: [],
       view: 'home', 
     };
     

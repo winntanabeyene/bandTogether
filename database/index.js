@@ -55,32 +55,18 @@ const makeSearchObject = (account) => {
 /**
  * creates an account and an associated band or musician. I haven't worked out the kinks for returning an error yet, so for now,
  * it just console.errors an error message.
- * @param {object} accDetails - requires the properties of username, password, salt, name, solo, and email are all required.
- * city, state, genre, birthday, image_url, image_url, bio, bandcamp_url, facebook_url, spotify_url, homepage_url, 
- * contact_email, contact_num, or contact_facebook.
+ * @param {object} accDetails - requires the properties of username, password, salt, solo, and email are all required.
  * @returns {Promise} 
  */
 const makeAccount = (accDetails) => {
-  console.log(accDetails)
   accDetails.salt = bcrypt.genSaltSync(10);
   accDetails.password = bcrypt.hashSync(accDetails.password, accDetails.salt);
   return Account.create(accDetails);
-
-  // const {username, password, salt, email, name, solo} = accDetails;
-  // if(!username || !password || !salt || !name || !solo || !email) {
-  //   console.error("Attempted to make an account without required fields.")
-  //   return;
-  // }
-  // const artistObj = makeObject(accDetails, ['name', 'solo'].concat(optionalProfileValues))
-  // // makes account
-  // return Account.create({ username, password, salt, email })
-  // // makes artist
-  // .then(account => Artist.create(artistObj)
-  //   // associates the new artist and account
-  //   .then(artist => artist.setAccount(account.id))
-  // )
 };
 
+const makeProfile = (profile) => {
+  Artist.create(profile);
+}
 
 
 /**
@@ -285,4 +271,5 @@ module.exports = {
   deleteListingProperties,
   deleteListing,
   getListingsByAccountId,
+  makeProfile,
 };

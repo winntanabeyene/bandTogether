@@ -9,8 +9,10 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 const db = require('../database/index');
-const { sequelize, Account } = require('../database/config');
+const { sequelize, Account, Listing, Artist } = require('../database/config');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
+// require('../mockData/addMochData')();
 
 passport.use(new LocalStrategy((username, password, done) => {
   Account.findOne({ username: username })
@@ -83,7 +85,7 @@ app.get('/listings', (req, res) => {
     //     res.send(listings);
     // })
   } else {
-    getListings()
+    db.getListings()
       .then((listings) => {
         res.send(listings);
     })
@@ -134,7 +136,7 @@ app.get('/artist/:artistname', (req, res) => {
 })
 
 app.get('/artist', (reg, res) => {
-    getAllArtists()
+    db.getAllArtists()
     .then((artists) => {
       res.send(artists)
     })
