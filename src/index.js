@@ -28,11 +28,12 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    console.log('mounted')
     axios.get('/listings')
     .then((listings) => {
-      console.log(listings)
-    }).catch((err) => {
+      console.log(listings.data)
+      this.setState({listings: listings.data})
+    })
+      .catch((err) => {
       console.error(err)
     });
   }

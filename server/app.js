@@ -17,7 +17,7 @@ const {
   deleteListing,
   getListingsByAccountId,
 } = require('../database/index');
-require('../mockData/addMochData')(); // uncommenting this adds moch data to your database if it is empty. Make sure to run the code once to build the tables before you run this.
+// require('../mockData/addMochData')(); // uncommenting this adds moch data to your database if it is empty. Make sure to run the code once to build the tables before you run this.
 require('dotenv').config();
 
 
@@ -30,7 +30,6 @@ app.use(bodyParser.json());
 app.get('/listings', (req, res) => {
   const { artistId } = req.query;
   if (artistId) {
-    console.log('no artist id')
     // getListingsByArtistId()
     //   .then((listings) => {
     //     res.send(listings);
@@ -38,7 +37,6 @@ app.get('/listings', (req, res) => {
   } else {
     getListings()
       .then((listings) => {
-        console.log(listings)
         res.send(listings);
     })
     .catch((err) => {

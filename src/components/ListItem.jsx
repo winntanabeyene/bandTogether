@@ -10,7 +10,7 @@ const popover = (
 
 const ListItem = ({listing, artists}) => {
     const bandData = artists.filter((artist) => {
-        return (artist.id === listing.artist_id);
+        return (artist.id === listing.artistId);
     }).pop();
     
     return (

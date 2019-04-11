@@ -16,12 +16,12 @@ class Profile extends React.Component {
     render() {
         const {profileId} = this.state
         const { accounts, artists, listings } = this.props;
-        const profile = artists.data.filter((artist) =>{
+        const profile = artists.filter((artist) =>{
             return (artist.id === profileId )
         }).pop();
         let events = [];
         events = listings.filter((listing) => {
-            return (listing.artist_id === profile.id)
+            return (listing.artistId === profile.id)
         })
         // console.log(performer)
         
