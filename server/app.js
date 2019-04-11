@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+
+
 // Does not export anything yet. Just there to test the sequelize database.
 const {
   makeAccount,
@@ -16,6 +18,7 @@ const {
   getListingsByAccountId,
 } = require('../database/index');
 require('dotenv').config();
+
 
 const app = express();
 
