@@ -9,13 +9,13 @@ const Login = (props) => {
             <h1 className="text-center mb-3"><i className="fas fa-sign-in-alt"></i>  Login</h1>
             <form action="/users/login" method="POST">
                 <div className="form-group">
-                    <label for="email">Email</label>
+                    <label for="username">Username</label>
                     <input
-                        type="email"
-                        id="email"
-                        name="email"
+                        type="text"
+                        id="username"
+                        name="username"
                         className="form-control"
-                        placeholder="Enter Email"
+                        placeholder="Enter Username"
                     />
                 </div>
                 <div className="form-group">
