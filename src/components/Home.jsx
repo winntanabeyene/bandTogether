@@ -57,7 +57,7 @@ class Home extends React.Component {
           (showForm && <ListingForm toggleForm={this.toggleForm} />))
         }
         <div className="row">
-          <ListView listings={listings} artists={artists}/>
+          <ListView isLoggedIn={isLoggedIn} listings={listings} artists={artists}/>
         </div>
       </div>
     )
