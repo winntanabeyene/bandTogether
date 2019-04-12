@@ -93,7 +93,7 @@ Artist.init({
 class Listing extends Model {};
 Listing.init({
   title: Sequelize.STRING,
-  date: Sequelize.BIGINT(8),
+  date: Sequelize.STRING,
   description: Sequelize.STRING(700),
   venue: Sequelize.STRING,
   type: Sequelize.STRING,
@@ -120,4 +120,5 @@ module.exports = {
   Account,
   Artist,
   Listing,
+  sequelize
 };

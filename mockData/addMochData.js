@@ -1,33 +1,21 @@
-const account = require('./account');
-const listing = require('./listing');
-const artist = require('./artist');
-const {
-  makeAccount,
-  updateArtistDetails,
-  deleteArtistData,
-  getAccountInformation,
-  getProfileInformation,
-  makeListing,
-  getListings,
-  updateListings,
-  deleteListingProperties,
-  deleteListing,
-  getListingsByAccountId,
-} = require('../database/index');
+const accounts = require('./account');
+const listings = require('./listing');
+const artists = require('./artist');
+const db = require('../database/index');
+const Listing = require('../database/config').Listing;
 
 const addData = () => {
-  const profileArr = account.map((acc, index) => {
-    return Object.assign(artist[index], acc);
-  });
+  accounts.forEach((account) => {
+    db.makeAccount(account);
+  })
 
-  // profileArr.forEach(profile => {
-  //   return makeAccount(profile);
-  // });
+  artists.forEach((artist) => {
+    db.makeProfile(artist);
+  })
 
-  listing.forEach(listing => {
-    listing.date = 01012000;
-    makeListing({id: listing.artist_id}, listing);
-  });
+  listings.forEach((listing) => {
+    Listing.create(listing);
+  })
 }
 // addData();
 

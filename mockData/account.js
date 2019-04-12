@@ -4,7 +4,6 @@ const data = [
         username: 'JonnyT',
         password: 'pword',
         email: 'jonny@gmail.com',
-        salt: 'salt',
 
     },
     {
@@ -12,7 +11,6 @@ const data = [
         username: 'BobbyB',
         password: 'BigB123',
         email: 'bobby@gmail.com',
-        salt: 'salt',
 
     }, 
     {
@@ -20,7 +18,6 @@ const data = [
         username: 'KellyH',
         password: 'thisOldStep',
         email: 'kellyh@gmail.com',
-        salt: 'salt',
 
     },
     {
@@ -28,7 +25,6 @@ const data = [
         username:'MickeyG',
         password: 'heyyyyy',
         email: 'Vomit@gmail.com',
-        salt: 'salt',
 
     },
     {
@@ -36,7 +32,6 @@ const data = [
         username:'JennyK',
         password: '2cool',
         email: 'chillgirl420@gmail.com',
-        salt: 'salt',
     }
 ]
 module.exports = data;
