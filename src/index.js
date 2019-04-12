@@ -65,7 +65,8 @@ class App extends React.Component {
               this.changeView('home');
             })
         } else if (info === 'Failed to log in') {
-          console.error('Failed to log in');
+          const error = { info: 'Failed to log in' };
+          throw error;
         }
       })
   }
