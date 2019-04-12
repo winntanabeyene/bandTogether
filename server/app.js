@@ -9,13 +9,13 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 const db = require('../database/index');
-const { sequelize, Account, Listing, Artist } = require('../database/config');
+const { sequelize, Account } = require('../database/config');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 // require('../mockData/addMochData')();
 
 passport.use(new LocalStrategy((username, password, done) => {
-  Account.findOne({ username: username })
+  Account.findOne({ where: { username: username }})
     .then((account) => {
       if (!account) {
         return done(null, false, {message: 'Unknown User'});
@@ -36,7 +36,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  db.getAccountInformation({id: id})
+  Account.findOne({ where: {id: id}})
     .then((account) => {
       done(null, account);
     })
@@ -62,7 +62,6 @@ const sessionStorage = new SequelizeStore({
 
 app.use(session({
   genid: (req) => {
-    console.log(req.sessionID);
     return uuid()
   },
   store: sessionStorage,
@@ -78,37 +77,13 @@ app.use(passport.session());
 
 
 app.get('/listings', (req, res) => {
-  const { artistId } = req.query;
-  if (artistId) {
-    // getListingsByArtistId()
-    //   .then((listings) => {
-    //     res.send(listings);
-    // })
-  } else {
-    db.getListings()
-      .then((listings) => {
-        res.send(listings);
-    })
-    .catch((err) => {
-      res.send(err);
-    })
-  }
-})
-
-app.get('/listings/:city', (req, res) => {
-  const { city } = req.params;
-  // getListingsByCity(city)
-  //   .then((listings) => {
-  //     res.send(listings);
-  // })
-})
-
-app.get('/listings/search', (req, res) => {
-  const search = req.query.q;
-  // getListingsBySearch(search)
-  //  .then((listings) => {
-  //    res.send(listings)
-  //})
+  db.getListings()
+    .then((listings) => {
+      res.send(listings);
+  })
+  .catch((err) => {
+    res.send(err);
+  })
 })
 
 app.get('/listings/contact', (req, res) => {
@@ -175,6 +150,7 @@ app.post('/signup', (req, res) => {
 
 
 app.post('/login', passport.authenticate('local'), (req, res) => {
+  console.log(req);
   res.redirect('/');
 })
 
