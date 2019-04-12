@@ -2,20 +2,19 @@ const accounts = require('./account');
 const listings = require('./listing');
 const artists = require('./artist');
 const db = require('../database/index');
-const Listing = require('../database/config').Listing;
 
 const addData = () => {
-  accounts.forEach((account) => {
-    db.makeAccount(account);
-  })
-
-  artists.forEach((artist) => {
-    db.makeArtist(artist.account_id, artist);
-  })
-
-  listings.forEach((listing) => {
-    Listing.create(listing);
-  })
+  setTimeout(() => {
+    accounts.forEach((account, index) => {
+      return db.makeAccount(account)
+        .then(() => db.makeArtist(artists[index].account_id, artists[index]))
+    })
+    setTimeout(() => {
+      listings.forEach((listing) => {
+        db.makeListing(listing.artistId, listing)
+      })
+    }, 300)
+  }, 300)
 }
 // addData();
 
