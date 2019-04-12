@@ -26,6 +26,7 @@ class CreateProfile extends React.Component {
     }
 
     handleSubmit(event) {
+      const {changeView} = this.props;
      const { 
         valueName, valueCity, valueState, valueGenre, 
         valueSolo, valueBirthdate, valueImageUrl, valueBio, 
@@ -48,7 +49,7 @@ class CreateProfile extends React.Component {
         contact_num: valuePhoneNum,
         contact_facebook: valueFacebookContact
     }
-    console.log(newArtistgit s);
+    console.log(newArtist);
     this.setState({
       valueName: '', 
       valueCity: '', 
@@ -67,6 +68,7 @@ class CreateProfile extends React.Component {
       valueFacebookContact: ''
     });
     event.preventDefault();
+    changeView('profile');
   }
 
   handleChange(event) {

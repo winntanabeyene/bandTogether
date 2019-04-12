@@ -25,7 +25,7 @@ class Profile extends React.Component {
     render() {
         const { showForm } = this.state;
         const {profileId} = this.state
-        const { accounts, artists, listings } = this.props;
+        const { changeView, accounts, artists, listings } = this.props;
         const profile = artists.filter((artist) =>{
             return (artist.id === profileId )
         }).pop();
@@ -54,7 +54,7 @@ class Profile extends React.Component {
                         </div>
                     </div>
                     <div className='row'>
-                        <div className='col-md-4'>
+                        <div className='col-md-3'>
                             <h1 className="display-4">Links</h1>
                             <div>
                                 <h3>Bandcamp:</h3>
@@ -73,36 +73,12 @@ class Profile extends React.Component {
                                 <a href={profile.homepage_url}>{profile.homepage_url}</a>
                             </div>
                         </div>
-                        <div className='col-md-8'>
-                            <h1 className="display-4">Music</h1>
-                            <div>
-                                <SCPlayer 
-                                    client_id="c5a171200f3a0a73a523bba14a1e0a29"
-                                    audio_id="193179003"
-                                    title="Easyfun - Fanta"
-                                />
-                            </div>
-                            <div>
-                                <BandcampPlayer 
-                                album='552086667'
-                               />
-                            </div>
-                            <div>
-                                <SpotifyPlayer   
-                                    uri="spotify:album:1TIUsv8qmYLpBEhvmBmyBk"
-                                    size={{
-                                        width: '35%',
-                                        height: 120,
-                                        }}
-                                    view={'list'}
-                                    theme={'black'}/> 
-                            </div>
+                        <div className='col-md-9'>
+                            <ListView listings={events} artists={artists} />
                         </div>
                     </div>
                     <div>
-                        <div>
-                            <ListView listings={events} artists={artists} />
-                        </div>
+                        <button type="button" className="btn btn-secondary" onClick={() => {changeView('createprofile')}}>Edit Profile</button>
                     </div>
                 </div>
             </div>

@@ -9,13 +9,13 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 const db = require('../database/index');
-const { sequelize, Account, Listing, Artist } = require('../database/config');
+const { sequelize, Account } = require('../database/config');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 // 
 // require('../mockData/addMochData')();
 
 passport.use(new LocalStrategy((username, password, done) => {
-  Account.findOne({ username: username })
+  Account.findOne({ where: { username: username }})
     .then((account) => {
       if (!account) {
         return done(null, false, {message: 'Unknown User'});
@@ -36,7 +36,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  db.getAccountInformation({id: id})
+  Account.findOne({ where: {id: id}})
     .then((account) => {
       done(null, account);
     })
@@ -62,7 +62,6 @@ const sessionStorage = new SequelizeStore({
 
 app.use(session({
   genid: (req) => {
-    console.log(req.sessionID);
     return uuid()
   },
   store: sessionStorage,
@@ -186,21 +185,26 @@ app.patch('/artist', (req, res) => {
   }
 });
 
-
-app.post('/login', passport.authenticate('local'), (req, res) => {
-  res.redirect('/');
-});
+app.post('/login', passport.authenticate('local', { successRedirect: "/success", failureRedirect: "/failure" }));
 
 app.post('/logout', (req, res) => {
   req.logout();
-  res.send(null);
-});
+  res.send('success');
+})
 
-app.get('/test', (req, res) => {
+app.get('/success', (req, res) => {
+  res.send('Logged in!');
+})
+
+app.get('/failure', (req, res) => {
+  res.send('Failed to log in');
+})
+
+app.get('/checkauth', (req, res) => {
   if (req.isAuthenticated()) {
-    res.send("Yr Logged In");
+    res.send("true");
   } else {
-    res.send("Yr not logged in");
+    res.send("false");
   }
 });
 

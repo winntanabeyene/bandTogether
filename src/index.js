@@ -8,6 +8,7 @@ import Profile from './components/Profile.jsx'
 import Home from './components/Home.jsx';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx'
+import CreateProfile from './components/CreateProfile.jsx'
 import listings from '../mockData/listing';
 import artists from '../mockData/artist';
 
@@ -20,27 +21,65 @@ class App extends React.Component {
       artists: artists,
       listings: listings,
       view: 'home', 
+      isLoggedIn: false,
     };
     
     this.changeView = this.changeView.bind(this);
+    this.checkAuth = this.checkAuth.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   componentDidMount(){
-    axios.get('/listings')
-    .then((listings) => {
-      console.log(listings.data)
-      this.setState({listings: listings.data})
-    })
-    .then (()=> {
-      axios.get('/artist')
-      .then((artists)=> {
-        console.log(artists.data);
-        this.setState({artists: artists.data})
+    return this.checkAuth()
+      .then(() => {
+        return axios.get('/artist')
+          .then((artists)=> { this.setState({artists: artists.data}) })
+          .then(() => {
+            return axios.get('/listings')
+            .then((listings) => { this.setState({listings: listings.data}) })
+          })
+            .catch((err) => {
+            console.error(err)
+          });
       })
+  }
+
+  checkAuth() {
+    return axios.get('/checkauth')
+    .then((response) => {
+      if (response.data) {
+        this.setState({ isLoggedIn: true });
+      } else {
+        this.setState({ isLoggedIn: false });
+      }
     })
-      .catch((err) => {
-      console.error(err)
-    });
+  }
+
+  handleLogin(loginObj) {
+    return axios.post('/login', loginObj)
+      .then((response) => {
+        const info = response.data;
+        if (info === 'Logged in!') {
+          return this.checkAuth()
+            .then(() => {
+              this.changeView('home');
+            })
+        } else if (info === 'Failed to log in') {
+          const error = { info: 'Failed to log in' };
+          throw error;
+        }
+      })
+  }
+
+  handleLogout() {
+    return axios.post('/logout')
+      .then(() => {
+        return this.checkAuth()
+          .then(() => {
+            this.changeView('login');
+          })
+      })
   }
 
   changeView(view) {
@@ -50,16 +89,17 @@ class App extends React.Component {
   }
 
   render() {
-    const {listings, artists, accounts, view} = this.state
+    const {listings, artists, view, isLoggedIn} = this.state
     return (
       <div className="container-fluid">
-        <Navbar changeView={this.changeView} view={view} />
+        <Navbar handleLogout={this.handleLogout} isLoggedIn={isLoggedIn} changeView={this.changeView} view={view} />
         <div className="row">
           <div className="col-md-12">
-            {view === 'home' && <Home listings={listings} artists={artists} accounts={accounts}/>}
-            {view === 'profile' && <Profile listings={listings} artists={artists} accounts={accounts} />}
-            {view === 'login' && <Login changeView={this.changeView} />}
-            {view === 'register' && <Register changeView={this.changeView}/>}
+            {view === 'home' && <Home isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
+            {view === 'profile' && <Profile isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
+            {view === 'login' && <Login isLoggedIn={isLoggedIn} handleLogin={this.handleLogin} changeView={this.changeView} />}
+            {view === 'register' && <Register isLoggedIn={isLoggedIn} changeView={this.changeView}/>}
+            {view === 'createprofile' && <CreateProfile changeView={this.changeView} />}
           </div>
         </div>
       </div>
