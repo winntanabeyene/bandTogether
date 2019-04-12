@@ -8,6 +8,7 @@ import Profile from './components/Profile.jsx'
 import Home from './components/Home.jsx';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx'
+import CreateProfile from './components/CreateProfile.jsx'
 import listings from '../mockData/listing';
 import artists from '../mockData/artist';
 
@@ -57,9 +58,10 @@ class App extends React.Component {
         <div className="row">
           <div className="col-md-12">
             {view === 'home' && <Home listings={listings} artists={artists} accounts={accounts}/>}
-            {view === 'profile' && <Profile listings={listings} artists={artists} accounts={accounts} />}
+            {view === 'profile' && <Profile changeView={this.changeView} listings={listings} artists={artists} accounts={accounts} />}
             {view === 'login' && <Login changeView={this.changeView} />}
             {view === 'register' && <Register changeView={this.changeView}/>}
+            {view === 'createprofile' && <CreateProfile changeView={this.changeView} />}
           </div>
         </div>
       </div>
