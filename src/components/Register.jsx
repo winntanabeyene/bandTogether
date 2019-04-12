@@ -19,28 +19,37 @@ class Register extends React.Component {
 
     handleSubmit(event) {
      const { username, email, city, solo, artist, password1, password2} = this.state;
-    const newAccount = {
-        username,
-        email,
-        password1,
-        password2,
-    }
-    const newProfile = {
-        name: artist,
-        city,
-        solo,
-    }
-    console.log(newAccount, newProfile);
-    this.setState({
-        username: '', 
-        email: '', 
-        city: '', 
-        solo: '', 
-        artist: '', 
-        password1: '', 
-        password2:''
-      
-    });
+     if (password1 === password2){
+         const newAccount = {
+             username,
+             email,
+             password1,
+             password2,
+         }
+         const newProfile = {
+             name: artist,
+             city,
+             solo,
+         }
+         console.log(newAccount, newProfile);
+         this.setState({
+             username: '', 
+             email: '', 
+             city: '', 
+             solo: '', 
+             artist: '', 
+             password1: '', 
+             password2:''
+           
+         });
+
+     }else {
+        this.setState({
+            password1: '',
+            password2: '',
+        }) 
+        alert('Passwords did not match.')
+     }
     event.preventDefault();
   }
 
