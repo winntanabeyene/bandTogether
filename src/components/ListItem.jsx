@@ -16,14 +16,14 @@ const ListItem = ({listing, artists}) => {
     return (
     <div className="list-group-item d-flex w-100 justify-content-between bg-light" >
         <div className="row">
-            <div className="col-md-2">
+            <div className="col-md-3">
                 <img alt="" style={{maxHeight: '180px', maxWidth: '180px'}} src={listing.image_url} />
             </div>
-            <div className="col-md-5">
+            <div className="col-md-4">
                 <h3>{listing.title}</h3>
                 <p className="text-body">{listing.description}</p>
             </div>
-            <div className="col-md-4">
+            <div className="col-md-3">
                 <div className="row"><h6>Poster:&nbsp;</h6>{bandData.name}</div>
                 <div className="row"><h6>Type:&nbsp;</h6>{listing.type}</div>
                 <div className="row"><h6>City:&nbsp;</h6>{bandData.city}</div>
@@ -31,7 +31,7 @@ const ListItem = ({listing, artists}) => {
                 <div className="row"><h6>Venue:&nbsp;</h6>{listing.venue}</div>
                 <div className="row"><h6>Date:&nbsp;</h6>{listing.date}</div>
             </div>
-            <div className="col-md-1">
+            <div className="col-md-2">
                 <OverlayTrigger trigger="click" placement="top" overlay={popover}>
                     <button type="button" className="btn btn-secondary">Respond to this Listing</button>
                 </OverlayTrigger>
