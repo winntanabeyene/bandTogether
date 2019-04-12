@@ -20,27 +20,32 @@ class App extends React.Component {
       artists: artists,
       listings: listings,
       view: 'home', 
+      isLoggedIn: false,
     };
     
     this.changeView = this.changeView.bind(this);
   }
 
   componentDidMount(){
-    axios.get('/listings')
-    .then((listings) => {
-      console.log(listings.data)
-      this.setState({listings: listings.data})
-    })
-    .then (()=> {
-      axios.get('/artist')
-      .then((artists)=> {
-        console.log(artists.data);
-        this.setState({artists: artists.data})
+    axios.get('/checkauth')
+      .then((response) => {
+        if (response.body === "true") {
+          this.setState({ isLoggedIn: true });
+        } else {
+          this.setState({ isLoggedIn: false });
+        }
       })
-    })
-      .catch((err) => {
-      console.error(err)
-    });
+      .then (()=> {
+        return axios.get('/artist')
+        .then((artists)=> { this.setState({artists: artists.data}) })
+      })
+      .then(() => {
+        return axios.get('/listings')
+        .then((listings) => { this.setState({listings: listings.data}) })
+      })
+        .catch((err) => {
+        console.error(err)
+      });
   }
 
   changeView(view) {
@@ -50,16 +55,16 @@ class App extends React.Component {
   }
 
   render() {
-    const {listings, artists, accounts, view} = this.state
+    const {listings, artists, view, isLoggedIn} = this.state
     return (
       <div className="container-fluid">
-        <Navbar changeView={this.changeView} view={view} />
+        <Navbar isLoggedIn={isLoggedIn} changeView={this.changeView} view={view} />
         <div className="row">
           <div className="col-md-12">
-            {view === 'home' && <Home listings={listings} artists={artists} accounts={accounts}/>}
-            {view === 'profile' && <Profile listings={listings} artists={artists} accounts={accounts} />}
-            {view === 'login' && <Login changeView={this.changeView} />}
-            {view === 'register' && <Register changeView={this.changeView}/>}
+            {view === 'home' && <Home isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
+            {view === 'profile' && <Profile isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
+            {view === 'login' && <Login isLoggedIn={isLoggedIn} changeView={this.changeView} />}
+            {view === 'register' && <Register isLoggedIn={isLoggedIn} changeView={this.changeView}/>}
           </div>
         </div>
       </div>

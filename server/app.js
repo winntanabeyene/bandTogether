@@ -150,7 +150,6 @@ app.post('/signup', (req, res) => {
 
 
 app.post('/login', passport.authenticate('local'), (req, res) => {
-  console.log(req);
   res.redirect('/');
 })
 
@@ -159,11 +158,11 @@ app.post('/logout', (req, res) => {
   res.send(null);
 })
 
-app.get('/test', (req, res) => {
+app.get('/checkauth', (req, res) => {
   if (req.isAuthenticated()) {
-    res.send("Yr Logged In");
+    res.send("true");
   } else {
-    res.send("Yr not logged in");
+    res.send("false");
   }
 })
 
