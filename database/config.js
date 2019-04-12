@@ -38,12 +38,10 @@ Account.init({
   },
   password: {
     type:Sequelize.STRING,
-    unique: true,
     allowNull: false,
   },
   salt: {
     type:Sequelize.STRING,
-    unique: false,
     allowNull: false,
   },
   email: {
@@ -64,21 +62,31 @@ Account.init({
 class Artist extends Model {};
 Artist.init({
   name: {
-    type:Sequelize.STRING,
+    type: Sequelize.STRING,
+    unique: true,
     allowNull: false,
   },
-  city: Sequelize.STRING,
+  city: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
   state: Sequelize.STRING,
   genre: Sequelize.STRING,
-  solo: Sequelize.BOOLEAN,
+  solo: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+  },
   birthday: Sequelize.BIGINT(8),
   image_url: Sequelize.STRING,
-  bio: Sequelize.STRING(500), // may need to increase
+  bio: Sequelize.STRING(1000),
   bandcamp_url: Sequelize.STRING,
   facebook_url: Sequelize.STRING,
   spotify_url: Sequelize.STRING,
   homepage_url: Sequelize.STRING,
-  contact_email: Sequelize.STRING, // need to make one of the last three required
+  contact_email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  }, 
   contact_num: Sequelize.BIGINT(12), 
   contact_facebook: Sequelize.STRING,
 }, {

@@ -10,7 +10,7 @@ const addData = () => {
   })
 
   artists.forEach((artist) => {
-    db.makeProfile(artist);
+    db.makeArtist(artist.account_id, artist);
   })
 
   listings.forEach((listing) => {

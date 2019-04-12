@@ -3,8 +3,11 @@ const { Account, Artist, Listing } = require('./config.js');
 
 
 // start of profile and account Middleware
-const optionalProfileValues = ['city', 'state', 'genre', 'birthday', 'image_url', 'bio', 'bandcamp_url', 'facebook_url', 
-  'spotify_url', 'homepage_url', 'contact_email', 'contact_num', 'contact_facebook'];
+const optionalArtistValues = ['state', 'genre', 'birthday', 'image_url', 'bio', 'bandcamp_url', 'facebook_url', 
+  'spotify_url', 'homepage_url', 'contact_num', 'contact_facebook'];
+
+const allArtistValues = ['name', 'solo', 'city', 'state', 'genre', 'birthday', 'image_url', 'bio', 'bandcamp_url', 
+  'facebook_url', 'spotify_url', 'homepage_url', 'contact_email', 'contact_num', 'contact_facebook'];
 
 /**
  * makes an object with certain variables, ignoring ones that are undefined by default.
@@ -59,28 +62,66 @@ const makeSearchObject = (account) => {
  * @returns {Promise} 
  */
 const makeAccount = (accDetails) => {
-  accDetails.salt = bcrypt.genSaltSync(10);
-  accDetails.password = bcrypt.hashSync(accDetails.password, accDetails.salt);
-  return Account.create(accDetails);
+  let {username, password, salt, email} = accDetails;
+  if(!username || !password || !email) {
+    console.error(`Attempted to make an account without required fields. Current fields: username: ${username}, password: ${password},
+      , email: ${email}`);
+    return;
+  }
+  salt = bcrypt.genSaltSync(10);
+  password = bcrypt.hashSync(password, salt);
+  return Account.create({ username, password, salt, email });
 };
 
-const makeProfile = (profile) => {
-  Artist.create(profile);
-}
 
 
 /**
- * Updates an account by id or username. If both are given will use id. Only adds or changes information. Does not remove it.
+ * makes an artist object in association with a account object
+ * @param {Object} account - takes an id or username value. Can optionally take a number as the account id.
+ * @param {Object} artist - requires name, city, solo, contact_email.
+ * @returns {Promise} sequalize promise
+ */
+const makeArtist = (account, artist) => {
+  // checks for valid and required information
+  const { name, city, solo, contact_email} = artist;
+  if(!name || !city || solo === undefined || !contact_email ) {
+    console.error(`Attempted to make an account without required fields. Current fields: name: ${name}, city: ${city}, solo: 
+      ${solo}, contact_email: ${contact_email}`);
+  }
+  const filteredArtistObject = makeObject(artist, allArtistValues);
+  let acc
+  if (typeof account === "number") {
+    acc = {id: account}
+  } else {
+    acc = makeSearchObject(account);
+    if(!acc) {
+      console.error(`need account information in make Artist function. Artist object attempted: ${artist}, Account attempted:
+        ${account}`);
+      return;
+    }
+  }
+  // finds related account
+  return Account.findOne({where: acc})
+    // makes an artist row
+    .then(account => Artist.create(filteredArtistObject)
+      // associates the artist and account
+      .then(artist => account.setArtist(artist.id))
+    );
+};
+
+
+
+
+/**
+ * Updates an artist by account_id. If both are given will use id. Only adds or changes information. Does not remove it.
  * Does not allow for updating name or solo. 
- * @param {object} account - must have an account by id or username listed in the account table. If both are given will use id.
- * @param {object} update - properties to change. All are optional: city, state, genre, birthday, image_url, bio, 
+ * @param {Number} id - must have an artist by account_id.
+ * @param {object} update - properties to change. All are optional: name, solo, city, state, genre, birthday, image_url, bio, 
  * bandcamp_url, facebook_url, spotify_url, homepage_url, contact_email, contact_num, contact_facebook.
  */
-const updateArtistDetails = (account, update) => {
-  const acc = makeSearchObject(account);
-  if (!acc) return; 
-  const updateObject = makeObject(update, optionalProfileValues);
-  return Account.findOne(acc)
+const updateArtistDetails = (id, update) => {
+  const updateObject = makeObject(update, allArtistValues);
+  return Account.findOne({where: {id}})
   // gets the associated artist
   .then(account => account.getArtist())
   // updates that artist
@@ -91,24 +132,22 @@ const updateArtistDetails = (account, update) => {
 
 /**
  * deletes values from the database.
- * @param {object} account - must have an account by id or username listed in the account table. If both are given will use id.
- * @param {array} removeValues - array of values as strings to delete. Includes:city, state, genre, birthday, image_url, bio, 
- * bandcamp_url, facebook_url, spotify_url, homepage_url, contact_email, contact_num, contact_facebook.
+ * @param {Number} id - must have an artist by account_id.
+ * @param {array} removeValues - array of values as strings to delete. Includes: state, genre, birthday, image_url, bio, 
+ * bandcamp_url, facebook_url, spotify_url, homepage_url, contact_num, contact_facebook.
  */
-const deleteArtistData = (account, removeValues) => {
+const deleteArtistData = (id, removeValues) => {
   if(!Array.isArray(removeValues)){
     removeValues = [removeValues];
-  }
-  const acc = makeSearchObject(account);
-  if (!acc) return;
+  };
   // makes an object to delete
   const updateObject = removeValues.reduce((seed, value) => {
-    if(optionalProfileValues.indexOf(value) !== -1) {
+    if(optionalArtistValues.indexOf(value) !== -1) {
       seed[value] = null;
     }
     return seed;
   }, {});
-  return Account.findOne(acc)
+  return Account.findOne({where: {id}})
   // gets the associated artist
   .then(account => account.getArtist())
   // updates that artist
@@ -131,22 +170,18 @@ const getAccountInformation = (account) => {
 
 
 /**
- * @param {object} account - must have an account by id or username listed in the account table. If both are given will use id.
- * @returns {Promise} - with an object containing account id, account email, and all other artist table columns.
+ * gets Artist by filter. Will ignore all non-exsitant table columns  
+ * @param {object} account - valid properties: name, solo, city, state, genre, birthday, image_url, bio, 
+ * bandcamp_url, facebook_url, spotify_url, homepage_url, contact_email, contact_num, contact_facebook.
+ * @returns {Promise} promise with array of sequelize objects.
  */
-const getProfileInformation = (account) => {
-  const acc = makeSearchObject(account);
-  if (!acc) return;
-  return Account.findOne(acc)
-  .then(account => account.getArtist()
-    .then(artist => {
-      // builds object to be returned in promis
-      const profileObject = {id: account.id, email: account.email, name: artist.name};
-      optionalProfileValues.forEach(value => {
-        profileObject[value] = artist[value];
-      });
-      return profileObject;
-    }));
+const getArtist = (filter) => {
+  if(!filter) {
+    return Artist.findAll();
+  }
+  // gets data by all matching profile property searches.
+  const newFilter = makeObject(filter, allArtistValues);
+  return Artist.findAll({where: newFilter});
 };
 
 
@@ -157,21 +192,18 @@ const listingValues = ['title', 'date', 'description', 'venue', 'type', 'image_u
 
 /**
  * Makes a new listing.
- * @param {Object} account - must have an account by id or username listed in the account table. If both are given will use id.
+ * @param {Object} id - account id.
  * @param {object} newListing - must have title, date, description, and venue.
  * @returns {object} - sequelize promise with the artist of the listing.
  */
-const makeListing = (account, newListing) => {
-  const acc = makeSearchObject(account);
-  if (!acc) return;
+const makeListing = (id, newListing) => {
   const {title, date, description, venue} = newListing;
   if (!title || !date || !description || !venue) {
-    console.error("Attempted to make a listing without required fields.")
+    console.error("Attempted to make a listing without required fields.");
     return;
   }
   const newListingObject = makeObject(newListing, listingValues);
-  return Account.findOne({where: acc})
-    .then(account => account.getArtist())
+  return Artist.findOne({where: {account_id: id}})
     .then(artist => Listing.create(newListingObject)
       .then(listing => artist.addListing(listing.id))
     );
@@ -200,7 +232,7 @@ const getListings = (filter) => {
  */
 const getAllArtists = () => {
   return Artist.findAll()
-}
+};
 
 
 /**
@@ -211,7 +243,7 @@ const getAllArtists = () => {
  */
 const updateListings = (id, update) => {
   const updateObject = makeObject(update, listingValues);
-  return Listing.update(updateObject, {where: {id}})
+  return Listing.update(updateObject, {where: {id}});
 };
 
 
@@ -250,9 +282,8 @@ const deleteListing = (id) => {
  * @param {NUMBER} id - number
  * @returns array of sequalize objects.
  */
-const getListingsByAccountId = (id) => {
-  return Account.findOne({where: {id}})
-    .then(account => account.getArtist())
+const getListingsByArtistId = (id) => {
+  return Artist.findOne({where: {id}})
     .then(artist => artist.getListings());
 };
 
@@ -263,13 +294,13 @@ module.exports = {
   updateArtistDetails,
   deleteArtistData,
   getAccountInformation,
-  getProfileInformation,
+  getArtist,
   makeListing,
   getListings,
   getAllArtists,
   updateListings,
   deleteListingProperties,
   deleteListing,
-  getListingsByAccountId,
-  makeProfile,
+  getListingsByArtistId,
+  makeArtist,
 };
