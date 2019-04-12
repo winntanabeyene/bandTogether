@@ -2,17 +2,20 @@ import React from 'react';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
-const popover = (
-    <Popover id="popover-basic">
-        Must be logged in to view contact info!
-    </Popover>
-)
 
-const ListItem = ({listing, artists}) => {
+
+const ListItem = ({listing, artists, isLoggedIn}) => {
     const bandData = artists.filter((artist) => {
         return (artist.id === listing.artistId);
     }).pop();
     
+    const popover = (
+        <Popover id="popover-basic">
+            {isLoggedIn && "Contact info here!"}
+            {!isLoggedIn && "Must be logged in to view contact info!"}
+        </Popover>
+    )
+
     return (
     <div className="list-group-item d-flex w-100 justify-content-between bg-light" >
         <div className="row">
