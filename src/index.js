@@ -96,7 +96,7 @@ class App extends React.Component {
         <div className="row">
           <div className="col-md-12">
             {view === 'home' && <Home isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
-            {view === 'profile' && <Profile isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
+            {view === 'profile' && <Profile changeView={this.changeView} isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
             {view === 'login' && <Login isLoggedIn={isLoggedIn} handleLogin={this.handleLogin} changeView={this.changeView} />}
             {view === 'register' && <Register isLoggedIn={isLoggedIn} changeView={this.changeView}/>}
             {view === 'createprofile' && <CreateProfile changeView={this.changeView} />}

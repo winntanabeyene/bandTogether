@@ -1,5 +1,7 @@
 import React from 'react';
 
+
+
 const Navbar = (props) => {
   const { changeView, view, isLoggedIn, handleLogout } = props;
   return (
