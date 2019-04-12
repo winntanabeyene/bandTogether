@@ -131,23 +131,71 @@ const getAccountInformation = (account) => {
 
 
 /**
- * @param {object} account - must have an account by id or username listed in the account table. If both are given will use id.
+ * Searches an account by object parameters. If an id, username, or email is given, because they are unique it will only handle 
+ * one with the order of precedence being id, username, and email. Can any other values passed through will be searched together.  
+ * @param {object} account - valid properties: id, username, email, name, solo, city, state, genre, birthday, image_url, bio, 
+ * bandcamp_url, facebook_url, spotify_url, homepage_url, contact_email, contact_num, contact_facebook.
  * @returns {Promise} - with an object containing account id, account email, and all other artist table columns.
  */
 const getProfileInformation = (account) => {
-  const acc = makeSearchObject(account);
-  if (!acc) return;
-  return Account.findOne(acc)
-  .then(account => account.getArtist()
-    .then(artist => {
-      // builds object to be returned in promis
-      const profileObject = {id: account.id, email: account.email, name: artist.name};
-      optionalProfileValues.forEach(value => {
-        profileObject[value] = artist[value];
-      });
-      return profileObject;
-    }));
+  const {id, username, email} = account;
+  if(!!id) {
+    // gets data by id search
+    return Account.findOne({where: {id}})
+    .then(account => account.getArtist()
+      .then(artist => {
+        // builds object to be returned in promis
+        const profileObject = {id: account.id, email: account.email, name: artist.name, solo: artist.solo};
+        optionalProfileValues.forEach(value => {
+          profileObject[value] = artist[value];
+        });
+        return profileObject;
+      }));
+  } else if (!!username) {
+    // gets data by username search
+    return Account.findOne({where: {username}})
+    .then(account => account.getArtist()
+      .then(artist => {
+        // builds object to be returned in promis
+        const profileObject = {id: account.id, email: account.email, name: artist.name, solo: artist.solo};
+        optionalProfileValues.forEach(value => {
+          profileObject[value] = artist[value];
+        });
+        return profileObject;
+      }));
+  } else if (!!email) {
+    // gets data by email search
+    return Account.findOne({where: {email}})
+    .then(account => account.getArtist()
+      .then(artist => {
+        // builds object to be returned in promise
+        const profileObject = {id: account.id, email: account.email, name: artist.name, solo: artist.solo};
+        optionalProfileValues.forEach(value => {
+          profileObject[value] = artist[value];
+        });
+        return profileObject;
+      }));
+  } else {
+    // gets data by all matching profile property searches.
+    const profileSearchObject = makeObject(account, optionalProfileValues.concat(["solo", "name"]));
+    return Artist.findAll({where: profileSearchObject})
+    // returns a promise with an array of artists objects.
+    .then(artists => Promise.all(artists.map(artist => artist.getAccount()
+      .then(account => {
+        // builds object to be returned in promise
+        const profileObject = {id: account.id, email: account.email, name: artist.name, solo: artist.solo};
+        optionalProfileValues.forEach(value => {
+          profileObject[value] = artist[value];
+        });
+        return profileObject;
+      })))
+    );
+  }
 };
+getProfileInformation({name: "Breeeze"})
+  .then(object => {
+    console.log(object);
+  });
 
 
 
