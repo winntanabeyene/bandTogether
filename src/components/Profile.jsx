@@ -3,17 +3,27 @@ import SCPlayer from 'react-soundcloud-player';
 import BandcampPlayer from 'react-bandcamp';
 import SpotifyPlayer from 'react-spotify-player';
 import ListView from './ListView';
+import CreateProfile from './CreateProfile';
 
 class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             profileId: 1,
+            showForm: false,
         };
+        this.toggleForm = this.toggleForm.bind(this);
     }
+    toggleForm() {
+    const currentState = this.state.showForm;
+    this.setState({
+      showForm: !currentState,
+    });
+  }
 
 
     render() {
+        const { showForm } = this.state;
         const {profileId} = this.state
         const { accounts, artists, listings } = this.props;
         const profile = artists.filter((artist) =>{
