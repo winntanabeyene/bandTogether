@@ -92,8 +92,8 @@ app.get('/listings/contact', (req, res) => {
   const {id} = req.query;
   db.getListings({id})
     .then(listing => db.getArtist({id: listing[0].artistId}))
-    .then((aritst) => {
-      res.send(aritst)
+    .then((artist) => {
+      res.send(artist);
   })
   .catch(err => {
     console.error(err);
@@ -142,8 +142,8 @@ app.get('/artist', (reg, res) => {
 });
 
 app.post('/signup', (req, res) => {
-  const { password1, password2, username, email, solo, contact_email } = req.body;
-  if(!passport1 || !username || !email || solo === undefined || !contact_email){
+  const { password1, password2, username, email, solo, contact_email, city, name } = req.body;
+  if(!password1 || !username || !email || solo === undefined || !contact_email || !city || !name){
     res.status(500).send("Please give all required information");
   } else if (password1 === password2) {
     const newAccount = {
