@@ -25,7 +25,7 @@ class Profile extends React.Component {
     render() {
         const { showForm } = this.state;
         const {profileId} = this.state
-        const { accounts, artists, listings } = this.props;
+        const { changeView, accounts, artists, listings } = this.props;
         const profile = artists.filter((artist) =>{
             return (artist.id === profileId )
         }).pop();
@@ -78,7 +78,7 @@ class Profile extends React.Component {
                         </div>
                     </div>
                     <div>
-                        <button type="button" className="btn btn-secondary">Edit Profile</button>
+                        <button type="button" className="btn btn-secondary" onClick={() => {changeView('createprofile')}}>Edit Profile</button>
                     </div>
                 </div>
             </div>

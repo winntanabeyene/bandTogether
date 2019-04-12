@@ -8,6 +8,7 @@ import Profile from './components/Profile.jsx'
 import Home from './components/Home.jsx';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx'
+import CreateProfile from './components/CreateProfile.jsx'
 import listings from '../mockData/listing';
 import artists from '../mockData/artist';
 
@@ -98,6 +99,7 @@ class App extends React.Component {
             {view === 'profile' && <Profile isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
             {view === 'login' && <Login isLoggedIn={isLoggedIn} handleLogin={this.handleLogin} changeView={this.changeView} />}
             {view === 'register' && <Register isLoggedIn={isLoggedIn} changeView={this.changeView}/>}
+            {view === 'createprofile' && <CreateProfile changeView={this.changeView} />}
           </div>
         </div>
       </div>

@@ -19,6 +19,7 @@ class Register extends React.Component {
 
     handleSubmit(event) {
      const { username, email, city, solo, artist, password1, password2} = this.state;
+     const{ changeView} = this.props;
      if (password1 === password2){
          const newAccount = {
              username,
@@ -42,7 +43,8 @@ class Register extends React.Component {
              password2:''
            
          });
-
+         event.preventDefault();
+         changeView('createprofile')
      }else {
         this.setState({
             password1: '',

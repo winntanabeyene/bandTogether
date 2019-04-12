@@ -26,6 +26,7 @@ class CreateProfile extends React.Component {
     }
 
     handleSubmit(event) {
+      const {changeView} = this.props;
      const { 
         valueName, valueCity, valueState, valueGenre, 
         valueSolo, valueBirthdate, valueImageUrl, valueBio, 
@@ -67,6 +68,7 @@ class CreateProfile extends React.Component {
       valueFacebookContact: ''
     });
     event.preventDefault();
+    changeView('profile');
   }
 
   handleChange(event) {
