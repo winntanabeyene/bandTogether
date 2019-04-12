@@ -48,7 +48,7 @@ class CreateProfile extends React.Component {
         contact_num: valuePhoneNum,
         contact_facebook: valueFacebookContact
     }
-    console.log(newArtist);
+    console.log(newArtistgit s);
     this.setState({
       valueName: '', 
       valueCity: '', 

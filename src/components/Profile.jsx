@@ -38,10 +38,6 @@ class Profile extends React.Component {
         return (
             <div className="jumbotron">
                 <div>
-                    <div>
-                        {!showForm && <button className="btn btn-dark btn-lg btn-block" type="button" onClick={this.toggleForm}>Create Profile</button>}
-                        {showForm && <CreateProfile toggleForm={this.toggleForm} />}
-                    </div>
                     <div className="row">
                         <div className='col-md-4'>
                             <img className="img-fluid" alt="" style={{ maxHeight: "300px" }} src={profile.image_url}/>
