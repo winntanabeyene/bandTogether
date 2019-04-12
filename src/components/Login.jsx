@@ -31,16 +31,22 @@ class Login extends React.Component {
 
 
     handleSubmit(event) {
-     const { username, password} = this.state;
+    const { handleLogin } = this.props;
+    const { username, password} = this.state;
     const newLogin = {
         username,
         password,
     }
-    console.log(newLogin);
-    this.setState({
-        username: '', 
-        password:''
-    });
+    handleLogin(newLogin)
+    .then(() => {
+        this.setState({
+            username: '', 
+            password:''
+        });
+    })
+    .catch((err) => {
+        console.error(err);
+    })
     event.preventDefault();
   }
 
@@ -55,7 +61,7 @@ class Login extends React.Component {
                 <h1 className="text-center mb-3"><i className="fas fa-sign-in-alt"></i>  Login</h1>
                 <form onSubmit={this.handleSubmit} href="#">
                     <div className="form-group">
-                        <label for="username">Username</label>
+                        <label>Username</label>
                         <input
                             onChange={this.handleChange}
                             type="text"
@@ -67,7 +73,7 @@ class Login extends React.Component {
                         />
                     </div>
                     <div className="form-group">
-                        <label for="password">Password</label>
+                        <label>Password</label>
                         <input
                             onChange={this.handleChange}
                             type="password"

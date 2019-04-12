@@ -24,28 +24,49 @@ class App extends React.Component {
     };
     
     this.changeView = this.changeView.bind(this);
+    this.checkAuth = this.checkAuth.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   componentDidMount(){
-    axios.get('/checkauth')
+    return this.checkAuth()
+      .then(() => {
+        return axios.get('/artist')
+          .then((artists)=> { this.setState({artists: artists.data}) })
+          .then(() => {
+            return axios.get('/listings')
+            .then((listings) => { this.setState({listings: listings.data}) })
+          })
+            .catch((err) => {
+            console.error(err)
+          });
+      })
+  }
+
+  checkAuth() {
+    return axios.get('/checkauth')
+    .then((response) => {
+      if (response.data) {
+        this.setState({ isLoggedIn: true });
+      } else {
+        this.setState({ isLoggedIn: false });
+      }
+    })
+  }
+
+  handleLogin(loginObj) {
+    return axios.post('/login', loginObj)
       .then((response) => {
-        if (response.body === "true") {
-          this.setState({ isLoggedIn: true });
-        } else {
-          this.setState({ isLoggedIn: false });
+        const info = response.data;
+        if (info === 'Logged in!') {
+          return this.checkAuth()
+            .then(() => {
+              this.changeView('home');
+            })
+        } else if (info === 'Failed to log in') {
+          console.error('Failed to log in');
         }
       })
-      .then (()=> {
-        return axios.get('/artist')
-        .then((artists)=> { this.setState({artists: artists.data}) })
-      })
-      .then(() => {
-        return axios.get('/listings')
-        .then((listings) => { this.setState({listings: listings.data}) })
-      })
-        .catch((err) => {
-        console.error(err)
-      });
   }
 
   changeView(view) {
@@ -63,7 +84,7 @@ class App extends React.Component {
           <div className="col-md-12">
             {view === 'home' && <Home isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
             {view === 'profile' && <Profile isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
-            {view === 'login' && <Login isLoggedIn={isLoggedIn} changeView={this.changeView} />}
+            {view === 'login' && <Login isLoggedIn={isLoggedIn} handleLogin={this.handleLogin} changeView={this.changeView} />}
             {view === 'register' && <Register isLoggedIn={isLoggedIn} changeView={this.changeView}/>}
           </div>
         </div>
