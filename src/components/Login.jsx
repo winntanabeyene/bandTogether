@@ -1,4 +1,5 @@
 import React from 'react';
+import Alert from 'react-bootstrap/Alert';
 
 class Login extends React.Component {
     constructor(props) {
@@ -6,7 +7,7 @@ class Login extends React.Component {
         this.state = {
             username: '',
             password: '',
-
+            passFail: false,
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,31 +32,47 @@ class Login extends React.Component {
 
 
     handleSubmit(event) {
-     const { username, password} = this.state;
+    const { handleLogin } = this.props;
+    const { username, password} = this.state;
     const newLogin = {
         username,
         password,
     }
-    console.log(newLogin);
-    this.setState({
-        username: '', 
-        password:''
-    });
+    handleLogin(newLogin)
+    .then(() => {
+        this.setState({
+            username: '', 
+            password:''
+        });
+    })
+    .catch((err) => {
+        console.error(err);
+        this.setState({ passFail: true });
+        setTimeout(() => {
+            this.setState({ passFail: false });
+        }, 7000)
+    })
     event.preventDefault();
   }
 
 
     render(){
         const { changeView } = this.props;
-        const { username, password } = this.state;
+        const { username, password, passFail } = this.state;
         return (
     <div className="row mt-5">
         <div className="col-md-6 m-auto">
             <div className="card card-body">
                 <h1 className="text-center mb-3"><i className="fas fa-sign-in-alt"></i>  Login</h1>
+                {passFail && (
+                <Alert dismissable variant="danger">
+                    <Alert.Heading>Failure to log in</Alert.Heading>
+                    <p>Check your username or password</p>
+                </Alert>
+                )}
                 <form onSubmit={this.handleSubmit} href="#">
                     <div className="form-group">
-                        <label for="username">Username</label>
+                        <label>Username</label>
                         <input
                             onChange={this.handleChange}
                             type="text"
@@ -67,7 +84,7 @@ class Login extends React.Component {
                         />
                     </div>
                     <div className="form-group">
-                        <label for="password">Password</label>
+                        <label>Password</label>
                         <input
                             onChange={this.handleChange}
                             type="password"

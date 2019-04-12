@@ -78,9 +78,9 @@ app.use(passport.session());
 
 app.get('/listings', (req, res) => {
   db.getListings()
-    .then((listings) => {
+  .then((listings) => {
       res.send(listings);
-  })
+    })
   .catch((err) => {
     res.send(err);
   })
@@ -149,21 +149,26 @@ app.post('/signup', (req, res) => {
 })
 
 
-app.post('/login', passport.authenticate('local'), (req, res) => {
-  console.log(req);
-  res.redirect('/');
-})
+app.post('/login', passport.authenticate('local', { successRedirect: "/success", failureRedirect: "/failure" }));
 
 app.post('/logout', (req, res) => {
   req.logout();
-  res.send(null);
+  res.send('success');
 })
 
-app.get('/test', (req, res) => {
+app.get('/success', (req, res) => {
+  res.send('Logged in!');
+})
+
+app.get('/failure', (req, res) => {
+  res.send('Failed to log in');
+})
+
+app.get('/checkauth', (req, res) => {
   if (req.isAuthenticated()) {
-    res.send("Yr Logged In");
+    res.send("true");
   } else {
-    res.send("Yr not logged in");
+    res.send("false");
   }
 })
 

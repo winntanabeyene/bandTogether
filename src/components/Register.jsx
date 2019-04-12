@@ -6,7 +6,7 @@ class Register extends React.Component {
             username: '',
             email: '',
             city: '',
-            solo: '',
+            solo: '1',
             artist: '',
             password1: '',
             password2: '',
@@ -162,9 +162,9 @@ render() {
                 <div>
                     <p>Solo Artist or Band?</p>
                     <div>
-                        <input onClick={this.handleChange} type='radio' id='solo' name="soloOrBand" value={solo} defaultChecked />
+                        <input onClick={this.handleChange} type='radio' id='solo' name="soloOrBand" value={"1"} defaultChecked />
                         <label style={{margin: '0 10px 0 10px'}} for='solo'>Solo Artist</label>
-                        <input onClick={this.handleChange} type='radio' id='band' name="soloOrBand" value={solo} />
+                        <input onClick={this.handleChange} type='radio' id='band' name="soloOrBand" value={"0"} />
                         <label style={{margin: '0 10px 0 10px'}} for='band'>Band</label>
                     </div>
                 </div>
