@@ -6,8 +6,11 @@ const { Account, Artist, Listing } = require('./config.js');
 const optionalArtistValues = ['state', 'genre', 'birthday', 'image_url', 'bio', 'bandcamp_url', 'facebook_url', 
   'spotify_url', 'homepage_url', 'contact_num', 'contact_facebook'];
 
-const allArtistValues = ['name', 'solo', 'city', 'state', 'genre', 'birthday', 'image_url', 'bio', 'bandcamp_url', 
+const allArtistValues = ['id', 'account_id', 'name', 'solo', 'city', 'state', 'genre', 'birthday', 'image_url', 'bio', 'bandcamp_url', 
   'facebook_url', 'spotify_url', 'homepage_url', 'contact_email', 'contact_num', 'contact_facebook'];
+
+const editArtistValues = ['name', 'solo', 'city', 'state', 'genre', 'birthday', 'image_url', 'bio', 'bandcamp_url', 
+'facebook_url', 'spotify_url', 'homepage_url', 'contact_email', 'contact_num', 'contact_facebook'];
 
 /**
  * makes an object with certain variables, ignoring ones that are undefined by default.
@@ -17,7 +20,7 @@ const allArtistValues = ['name', 'solo', 'city', 'state', 'genre', 'birthday', '
  * @returns {Object}
  */
 const makeObject = (object, propsToTake, allowNull = false) => {
-  let returnObject = {}
+  let returnObject = {};
   for(let key in object) {
     if(object[key] !== null && object[key] !== undefined || allowNull) {
       if (propsToTake.indexOf(key) !== -1) {
@@ -88,7 +91,7 @@ const makeArtist = (account, artist) => {
     console.error(`Attempted to make an account without required fields. Current fields: name: ${name}, city: ${city}, solo: 
       ${solo}, contact_email: ${contact_email}`);
   }
-  const filteredArtistObject = makeObject(artist, allArtistValues);
+  const filteredArtistObject = makeObject(artist, editArtistValues);
   let acc
   if (typeof account === "number") {
     acc = {id: account}
@@ -120,7 +123,7 @@ const makeArtist = (account, artist) => {
  * bandcamp_url, facebook_url, spotify_url, homepage_url, contact_email, contact_num, contact_facebook.
  */
 const updateArtistDetails = (id, update) => {
-  const updateObject = makeObject(update, allArtistValues);
+  const updateObject = makeObject(update, editArtistValues);
   return Account.findOne({where: {id}})
   // gets the associated artist
   .then(account => account.getArtist())
@@ -176,9 +179,6 @@ const getAccountInformation = (account) => {
  * @returns {Promise} promise with array of sequelize objects.
  */
 const getArtist = (filter) => {
-  if(!filter) {
-    return Artist.findAll();
-  }
   // gets data by all matching profile property searches.
   const newFilter = makeObject(filter, allArtistValues);
   return Artist.findAll({where: newFilter});
@@ -188,11 +188,11 @@ const getArtist = (filter) => {
 
 // start of listing Middleware
 
-const listingValues = ['title', 'date', 'description', 'venue', 'type', 'image_url'];
+const listingValues = ['title', 'date', 'description', 'venue', 'type', 'image_url', 'city'];
 
 /**
  * Makes a new listing.
- * @param {Object} id - account id.
+ * @param {number} id - artist id.
  * @param {object} newListing - must have title, date, description, and venue.
  * @returns {object} - sequelize promise with the artist of the listing.
  */
@@ -203,7 +203,7 @@ const makeListing = (id, newListing) => {
     return;
   }
   const newListingObject = makeObject(newListing, listingValues);
-  return Artist.findOne({where: {account_id: id}})
+  return Artist.findOne({where: {id}})
     .then(artist => Listing.create(newListingObject)
       .then(listing => artist.addListing(listing.id))
     );
@@ -221,7 +221,7 @@ const getListings = (filter) => {
     return Listing.findAll();
   }
   const listingFilters = makeObject(filter, listingValues.concat(['id', 'artist_id']));
-  return Listing.findAll({where: listingFilters});
+  return Listing.findAll({where: listingFilters})
 };
 
 

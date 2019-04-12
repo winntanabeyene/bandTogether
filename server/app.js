@@ -11,7 +11,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const db = require('../database/index');
 const { sequelize, Account, Listing, Artist } = require('../database/config');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-
+// 
 // require('../mockData/addMochData')();
 
 passport.use(new LocalStrategy((username, password, done) => {
@@ -78,90 +78,85 @@ app.use(passport.session());
 
 
 app.get('/listings', (req, res) => {
-  const { artistId } = req.query;
-  if (artistId) {
-    // getListingsByArtistId()
-    //   .then((listings) => {
-    //     res.send(listings);
-    // })
-  } else {
-    db.getListings()
-      .then((listings) => {
-        res.send(listings);
-    })
-    .catch((err) => {
-      res.send(err);
-    })
-  }
-})
-
-app.get('/listings/:city', (req, res) => {
-  const { city } = req.params;
-  // getListingsByCity(city)
-  //   .then((listings) => {
-  //     res.send(listings);
-  // })
-})
-
-app.get('/listings/search', (req, res) => {
-  const search = req.query.q;
-  // getListingsBySearch(search)
-  //  .then((listings) => {
-  //    res.send(listings)
-  //})
-})
+  db.getListings()
+    .then((listings) => {
+      res.send(listings);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.send(500);
+  })
+});
 
 app.get('/listings/contact', (req, res) => {
-  const listingId = req.query.id;
-  // getContactInfo(listingId)
-  //   .then((contactInfo) => {
-  //     res.send(contactInfo)
-  // })
-})
+  const {id} = req.query;
+  db.getListings({id})
+    .then(listing => db.getArtist({id: listing[0].artistId}))
+    .then((aritst) => {
+      res.send(aritst)
+  })
+  .catch(err => {
+    console.error(err);
+    res.sendStatus(500);
+  })
+});
 
 app.post('/listings', (req, res) => {
   const newListing = req.body;
-  // createListing(newListing)
-  //   .then(() => {
-  //   res.sendStatus(201);
-  // })
-})
+  if(req.isAuthenticated()) {
+    db.getAccountInformation({id: req.user.id})
+      .then(account => account.getArtist())
+      .then(artist => db.makeListing(artist.id, newListing))
+      .then(() => {
+        res.sendStatus(201);
+      })
+      .catch(err => {
+        console.error(err);
+        res.sendStatus(500);
+      })
+  } else {
+    res.redirect('/login');
+  }
+});
 
 app.get('/artist/:artistname', (req, res) => {
-  const { artistName } = req.params;
-  // getProfileInfo(artistName)
-  //   .then((profile) => {
-  //      res.send(profile);
-  // })
-})
+  const { artistname } = req.params;
+  db.getArtist({name: artistname})
+    .then(profile => {
+      res.send(profile);
+    })
+    .catch(err => {
+      res.sendStatus(500);
+    })
+});
 
 app.get('/artist', (reg, res) => {
-    db.getAllArtists()
-    .then((artists) => {
-      res.send(artists)
-    })
-
-})
-
-app.post('/artist', (req, res) => {
-  const newProfile = req.body;
-  // createProfile(newProfile)
-  //   .then(() => {
-  //     res.sendStatus(201)
-  // })
-})
+  db.getArtists()
+  .then((artists) => {
+    res.send(artists)
+  })
+  .catch(err => {
+    console.error(err);
+    res.send(500);
+  })
+});
 
 app.post('/signup', (req, res) => {
-  const { password1, password2, username, email, solo } = req.body;
-
-  if (password1 === password2) {
+  const { password1, password2, username, email, solo, contact_email } = req.body;
+  if(!passport1 || !username || !email || solo === undefined || !contact_email){
+    res.status(500).send("Please give all required information");
+  } else if (password1 === password2) {
     const newAccount = {
-      username: username,
-      email: email,
+      username,
+      email,
       password: password1,
-      solo: solo,
-    }
+      solo,
+      city,
+      name,
+      contact_email,
+    };
     db.makeAccount(newAccount)
+      .then(account => db.makeArtist(account.id, newAccount))
       .then(() => {
         res.redirect("/");
       })
@@ -170,18 +165,36 @@ app.post('/signup', (req, res) => {
       })
   } else {
     res.status(500).send("Passwords don't match!");
+  };
+});
+
+app.patch('/artist', (req, res) => {
+  const details = req.body;
+  if(req.isAuthenticated()) {
+    db.getAccountInformation({id: req.user.id})
+      .then(account => account.getArtist())
+      .then(artist => db.updateArtistDetails(artist.id, details))
+      .then(() => {
+        res.sendStatus(201);
+      })
+      .catch(err => {
+        console.error(err);
+        res.send(500);
+      })
+  } else {
+    res.redirect('/login');
   }
-})
+});
 
 
 app.post('/login', passport.authenticate('local'), (req, res) => {
   res.redirect('/');
-})
+});
 
 app.post('/logout', (req, res) => {
   req.logout();
   res.send(null);
-})
+});
 
 app.get('/test', (req, res) => {
   if (req.isAuthenticated()) {
@@ -189,7 +202,7 @@ app.get('/test', (req, res) => {
   } else {
     res.send("Yr not logged in");
   }
-})
+});
 
 const PORT = process.env.PORT || 3000;
 
