@@ -26,6 +26,7 @@ class App extends React.Component {
     this.changeView = this.changeView.bind(this);
     this.checkAuth = this.checkAuth.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   componentDidMount(){
@@ -69,6 +70,16 @@ class App extends React.Component {
       })
   }
 
+  handleLogout() {
+    return axios.post('/logout')
+      .then(() => {
+        return this.checkAuth()
+          .then(() => {
+            this.changeView('login');
+          })
+      })
+  }
+
   changeView(view) {
     this.setState({
       view: view,
@@ -79,7 +90,7 @@ class App extends React.Component {
     const {listings, artists, view, isLoggedIn} = this.state
     return (
       <div className="container-fluid">
-        <Navbar isLoggedIn={isLoggedIn} changeView={this.changeView} view={view} />
+        <Navbar handleLogout={this.handleLogout} isLoggedIn={isLoggedIn} changeView={this.changeView} view={view} />
         <div className="row">
           <div className="col-md-12">
             {view === 'home' && <Home isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}

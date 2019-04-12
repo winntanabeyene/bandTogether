@@ -153,7 +153,7 @@ app.post('/login', passport.authenticate('local', { successRedirect: "/success",
 
 app.post('/logout', (req, res) => {
   req.logout();
-  res.send(null);
+  res.send('success');
 })
 
 app.get('/success', (req, res) => {

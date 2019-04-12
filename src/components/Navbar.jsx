@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Navbar = (props) => {
-  const { changeView, view, isLoggedIn } = props;
+  const { changeView, view, isLoggedIn, handleLogout } = props;
   return (
     <div>
       <nav className="navbar fixed-top navbar-dark bg-dark">
@@ -15,7 +15,7 @@ const Navbar = (props) => {
             <a className="dropdown-item" onClick={() => { changeView('home') }} href="#!">Home</a>
             <a className="dropdown-item" onClick={() => { changeView('profile') }} href="#!">Profile</a>
             {!isLoggedIn && <a className="dropdown-item" onClick={() => { changeView('login') }} href="#!">Login</a>}
-            {isLoggedIn && <a className="dropdown-item" href="#!">Logout</a>}
+            {isLoggedIn && <a className="dropdown-item" onClick={handleLogout} href="#!">Logout</a>}
           </div>
         </div>  
       </nav>
