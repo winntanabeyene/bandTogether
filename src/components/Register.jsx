@@ -104,57 +104,57 @@ render() {
     const { changeView } = this.props;
     const{ username, email, city, solo, artist, password1, password2} = this.state
     return (
-<div class="row mt-5">
-    <div class="col-md-6 m-auto">
-        <div class="card card-body">
-            <h1 class="text-center mb-3">
+<div className="row mt-5">
+    <div className="col-md-6 m-auto">
+        <div className="card card-body">
+            <h1 className="text-center mb-3">
                Register
             </h1>
             <form onSubmit={this.handleSubmit} href="#">
-                <div class="form-group">
+                <div className="form-group">
                     <label for="name">Username</label>
                     <input
                         onChange={this.handleChange}
                         type="name"
                         id="name"
                         name="name"
-                        class="form-control"
+                        className="form-control"
                         placeholder="Enter Name"
                         value={username}
                     />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                     <label for="email">Email</label>
                     <input
                         onChange={this.handleChange}
                         type="email"
                         id="email"
                         name="email"
-                        class="form-control"
+                        className="form-control"
                         placeholder="Enter Email"
                         value={email}
                     />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                     <label for="city">City</label>
                     <input
                         onChange={this.handleChange}
                         type="text"
                         id="city"
                         name="city"
-                        class="form-control"
+                        className="form-control"
                         placeholder="Enter City"
                         value={city}
                     />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                     <label for="artist">Artist Name</label>
                     <input
                         onChange={this.handleChange}
                         type="text"
                         id="artist"
                         name="artist"
-                        class="form-control"
+                        className="form-control"
                         placeholder="Enter Artist Name"
                         value={artist}
                     />
@@ -162,41 +162,41 @@ render() {
                 <div>
                     <p>Solo Artist or Band?</p>
                     <div>
-                        <input onClick={this.handleChange} type='radio' id='solo' name="soloOrBand" value='solo' checked />
+                        <input onClick={this.handleChange} type='radio' id='solo' name="soloOrBand" value={solo} defaultChecked />
                         <label style={{margin: '0 10px 0 10px'}} for='solo'>Solo Artist</label>
-                        <input onClick={this.handleChange} type='radio' id='band' name="soloOrBand" value='band' />
+                        <input onClick={this.handleChange} type='radio' id='band' name="soloOrBand" value={solo} />
                         <label style={{margin: '0 10px 0 10px'}} for='band'>Band</label>
                     </div>
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                     <label for="password">Password</label>
                     <input
                         onChange={this.handleChange}
                         type="password"
                         id="password1"
                         name="password"
-                        class="form-control"
+                        className="form-control"
                         placeholder="Create Password"
                         value={password1}
                     />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                     <label for="password2">Confirm Password</label>
                     <input
                         onChange={this.handleChange}
                         type="password"
                         id="password2"
                         name="password2"
-                        class="form-control"
+                        className="form-control"
                         placeholder="Confirm Password"
                         value={password2}
                     />
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">
+                <button type="submit" className="btn btn-primary btn-block">
                     Register
         </button>
             </form>
-                <p class="lead mt-4">Have An Account? <a onClick={() => {changeView('login')}} href="#">Login</a></p>
+                <p className="lead mt-4">Have An Account? <a onClick={() => {changeView('login')}} href="#">Login</a></p>
         </div>
     </div>
 </div>
