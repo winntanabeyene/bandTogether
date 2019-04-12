@@ -86,22 +86,6 @@ app.get('/listings', (req, res) => {
   })
 })
 
-// app.get('/listings/:city', (req, res) => {
-//   const { city } = req.params;
-//   // getListingsByCity(city)
-//   //   .then((listings) => {
-//   //     res.send(listings);
-//   // })
-// })
-
-// app.get('/listings/search', (req, res) => {
-//   const search = req.query.q;
-//   // getListingsBySearch(search)
-//   //  .then((listings) => {
-//   //    res.send(listings)
-//   //})
-// })
-
 app.get('/listings/contact', (req, res) => {
   const listingId = req.query.id;
   // getContactInfo(listingId)
