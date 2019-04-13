@@ -1,46 +1,85 @@
 import React from 'react';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import axios from 'axios';
 
 
 
-const ListItem = ({listing, artists, isLoggedIn}) => {
-    const bandData = artists.filter((artist) => {
-        return (artist.id === listing.artistId);
-    }).pop();
+class ListItem extends React.Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            shown: false,
+            contactInfo: {},
+        };
+
+        this.handleClick = this.handleClick.bind(this);
+    }
     
-    const popover = (
-        <Popover id="popover-basic">
-            {isLoggedIn && "Contact info here!"}
-            {!isLoggedIn && "Must be logged in to view contact info!"}
-        </Popover>
-    )
+    
+    handleClick() {
+        if (!this.state.shown) {
+            const { listing } = this.props;
+            return axios.get(`/listings/contact?id=${listing.id}`)
+                .then((response) => {
+                    const artistData = response.data;
+                    const contactInfo = {
+                        email: artistData.contact_email,
+                        number: artistData.contact_num,
+                    }
+                    this.setState({contactInfo, shown: true});
+                })
+        } else {
+            this.setState({contactInfo: {}, shown: false});
+        }
+    }
 
-    return (
-    <div className="list-group-item d-flex w-100 justify-content-between bg-light" >
-        <div className="row">
-            <div className="col-md-3">
-                <img alt="" style={{maxHeight: '180px', maxWidth: '180px'}} src={listing.image_url} />
-            </div>
-            <div className="col-md-4">
-                <h3>{listing.title}</h3>
-                <p className="text-body">{listing.description}</p>
-            </div>
-            <div className="col-md-3">
-                <div className="row"><h6>Poster:&nbsp;</h6>{bandData.name}</div>
-                <div className="row"><h6>Type:&nbsp;</h6>{listing.type}</div>
-                <div className="row"><h6>City:&nbsp;</h6>{bandData.city}</div>
-                <div className="row"><h6>Genre:&nbsp;</h6>{bandData.genre}</div>
-                <div className="row"><h6>Venue:&nbsp;</h6>{listing.venue}</div>
-                <div className="row"><h6>Date:&nbsp;</h6>{listing.date}</div>
-            </div>
-            <div className="col-md-2">
-                <OverlayTrigger trigger="click" placement="top" overlay={popover}>
-                    <button type="button" className="btn btn-secondary">Respond to this Listing</button>
-                </OverlayTrigger>
+
+    render() {
+        const {listing, artists, isLoggedIn} = this.props;
+        const { contactInfo } = this.state;
+        const bandData = artists.filter((artist) => {
+            return (artist.id === listing.artistId);
+        }).pop();
+        const popover = (
+            <Popover id="popover-basic">
+                {isLoggedIn && (
+                    <div>
+                        <ul>
+                            {contactInfo.email && <li>Email:&nbsp;{contactInfo.email}</li>}
+                            {contactInfo.number && <li>Number:&nbsp;{contactInfo.number}</li>}
+                        </ul>
+                    </div>
+                )}
+                {!isLoggedIn && "Must be logged in to view contact info!"}
+            </Popover>
+        )
+        return (
+        <div className="list-group-item d-flex w-100 justify-content-between bg-light" >
+            <div className="row">
+                <div className="col-md-3">
+                    <img alt="" style={{maxHeight: '180px', maxWidth: '180px'}} src={listing.image_url} />
+                </div>
+                <div className="col-md-4">
+                    <h3>{listing.title}</h3>
+                    <p className="text-body">{listing.description}</p>
+                </div>
+                <div className="col-md-3">
+                    <div className="row"><h6>Poster:&nbsp;</h6>{bandData.name}</div>
+                    <div className="row"><h6>Type:&nbsp;</h6>{listing.type}</div>
+                    <div className="row"><h6>City:&nbsp;</h6>{bandData.city}</div>
+                    <div className="row"><h6>Genre:&nbsp;</h6>{bandData.genre}</div>
+                    <div className="row"><h6>Venue:&nbsp;</h6>{listing.venue}</div>
+                    <div className="row"><h6>Date:&nbsp;</h6>{listing.date}</div>
+                </div>
+                <div className="col-md-2">
+                    <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+                        <button type="button" onClick={this.handleClick} className="btn btn-secondary">Respond to this Listing</button>
+                    </OverlayTrigger>
+                </div>
             </div>
         </div>
-    </div>
-    )
-}
+        )
+    }
+} 
 export default ListItem;
