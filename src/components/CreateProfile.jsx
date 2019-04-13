@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import Alert from 'react-bootstrap/Alert';
 
 class CreateProfile extends React.Component {
     constructor(props) {
@@ -18,20 +20,30 @@ class CreateProfile extends React.Component {
             valueEmail: '',
             valuePhoneNum: '',
             valueFacebookContact: '',
+
+            validEmail: false,
+            validNum: false,
         
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.validateEmail = this.validateEmail.bind(this);
+    }
+
+    validateEmail() {
+      const { valueEmail } = this.state;
+      console.log('Checking valid email!')
+
     }
 
     handleSubmit(event) {
       const {changeView, handlePatchProfile } = this.props;
-     const { 
+      const { 
         valueName, valueCity, valueState, valueGenre, 
         valueBirthdate, valueImageUrl, valueBio, 
         valueBandcampUrl, valueSpotifyUrl, valueFacebookUrl, 
         valueHomepageUrl, valueEmail, valuePhoneNum, valueFacebookContact } = this.state;
-    const newArtist = {
+      const newArtist = {
         name: valueName,
         city: valueCity,
         state: valueState,
@@ -150,7 +162,7 @@ render() {
         valueName, valueCity, valueState, valueGenre, 
        valueBirthdate, valueImageUrl, valueBio, 
         valueBandcampUrl, valueSpotifyUrl, valueFacebookUrl, 
-        valueHomepageUrl, valueEmail, valuePhoneNum, valueFacebookContact } = this.state;
+        valueHomepageUrl, valueEmail, valuePhoneNum, valueFacebookContact, validEmail } = this.state;
     return (
         <div className="jumbotron text-center text-white bg-secondary" style={{ paddingTop: '10px', paddingBottom: '10px' }}>
             <h3>Create a Listing</h3>
@@ -224,7 +236,7 @@ render() {
                 <div className="form-group">
                     <label>
                         Contact Email:
-              <input value={valueEmail} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="email" placeholder="Enter contact email" />
+              <input value={valueEmail} onBlur={this.validateEmail} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="email" placeholder="Enter contact email" />
                     </label>
                 </div>
                 <div className="form-group">
