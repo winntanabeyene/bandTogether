@@ -74,7 +74,7 @@ class Profile extends React.Component {
                             </div>
                         </div>
                         <div className='col-md-9'>
-                            <ListView listings={events} artists={artists} />
+                            <ListView listings={events} artists={artists} isLoggedIn={isLoggedIn} />
                         </div>
                     </div>
                     <div>
