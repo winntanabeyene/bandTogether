@@ -114,7 +114,7 @@ app.post('/listings', (req, res) => {
         res.sendStatus(500);
       })
   } else {
-    res.redirect('/login');
+    res.sendStatus(403);
   }
 });
 
@@ -185,7 +185,7 @@ app.patch('/artist', (req, res) => {
         res.send(500);
       })
   } else {
-    res.redirect('/login');
+    res.sendStatus(403);
   }
 });
 
