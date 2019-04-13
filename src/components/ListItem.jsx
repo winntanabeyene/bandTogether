@@ -11,9 +11,23 @@ class ListItem extends React.Component {
         this.state = {
             shown: false,
             contactInfo: {},
+            bandData: {},
         };
-
+        
         this.handleClick = this.handleClick.bind(this);
+        this.profileClick = this.profileClick.bind(this);
+    }
+
+    componentDidMount() {
+        const bandData = this.props.artists.filter((artist) => {
+            return (artist.id === this.props.listing.artistId);
+        }).pop();
+        this.setState({bandData});
+    }
+
+    profileClick(e) {
+        e.preventDefault();
+        this.props.changeProfile(this.state.bandData);
     }
     
     
@@ -35,11 +49,8 @@ class ListItem extends React.Component {
     }
 
     render() {
-        const {listing, artists, isLoggedIn} = this.props;
-        const { contactInfo } = this.state;
-        const bandData = artists.filter((artist) => {
-            return (artist.id === listing.artistId);
-        }).pop();
+        const {listing, isLoggedIn} = this.props;
+        const { contactInfo, bandData } = this.state;
         const popover = (
             <Popover id="popover-basic">
                 {isLoggedIn && (
@@ -64,7 +75,7 @@ class ListItem extends React.Component {
                     <p className="text-body">{listing.description}</p>
                 </div>
                 <div className="col-md-3 flex-grow-1">
-                    <div className="row"><h6>Poster:&nbsp;</h6>{bandData.name}</div>
+                    <div className="row"><h6>Poster:&nbsp;</h6><a href="#!" onClick={this.profileClick}>{bandData.name}</a></div>
                     <div className="row"><h6>Type:&nbsp;</h6>{listing.type}</div>
                     <div className="row"><h6>City:&nbsp;</h6>{bandData.city}</div>
                     <div className="row"><h6>Genre:&nbsp;</h6>{bandData.genre}</div>
