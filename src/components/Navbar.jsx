@@ -3,7 +3,7 @@ import React from 'react';
 
 
 const Navbar = (props) => {
-  const { changeView, view, isLoggedIn, handleLogout } = props;
+  const { changeView, view, isLoggedIn, handleLogout, userProfile, changeProfile } = props;
   return (
     <div>
       <nav className="navbar fixed-top navbar-dark bg-dark">
@@ -15,7 +15,7 @@ const Navbar = (props) => {
 
           <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <a className="dropdown-item" onClick={() => { changeView('home') }} href="#!">Home</a>
-            <a className="dropdown-item" onClick={() => { changeView('profile') }} href="#!">Profile</a>
+            <a className="dropdown-item" onClick={() => { changeView('profile'); changeProfile(userProfile); }} href="#!">Profile</a>
             {!isLoggedIn && <a className="dropdown-item" onClick={() => { changeView('login') }} href="#!">Login</a>}
             {isLoggedIn && <a className="dropdown-item" onClick={handleLogout} href="#!">Logout</a>}
           </div>

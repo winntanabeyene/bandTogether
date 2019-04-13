@@ -1,9 +1,5 @@
 import React from 'react';
-import SCPlayer from 'react-soundcloud-player';
-import BandcampPlayer from 'react-bandcamp';
-import SpotifyPlayer from 'react-spotify-player';
 import ListView from './ListView';
-import CreateProfile from './CreateProfile';
 
 class Profile extends React.Component {
     constructor(props) {

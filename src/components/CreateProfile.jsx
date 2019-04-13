@@ -25,7 +25,7 @@ class CreateProfile extends React.Component {
     }
 
     handleSubmit(event) {
-      const {changeView, handlePatchProfile, getCurrentProfile} = this.props;
+      const {changeView, handlePatchProfile } = this.props;
      const { 
         valueName, valueCity, valueState, valueGenre, 
         valueBirthdate, valueImageUrl, valueBio, 
