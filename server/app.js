@@ -103,7 +103,7 @@ app.get('/listings/contact', (req, res) => {
 app.post('/listings', (req, res) => {
   const newListing = req.body;
   if(req.isAuthenticated()) {
-    db.getAccountInformation({id: req.user.id})
+    Account.findOne({ where: {id: req.user.id}})
       .then(account => account.getArtist())
       .then(artist => db.makeListing(artist.id, newListing))
       .then(() => {
