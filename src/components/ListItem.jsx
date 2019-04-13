@@ -34,7 +34,6 @@ class ListItem extends React.Component {
         }
     }
 
-
     render() {
         const {listing, artists, isLoggedIn} = this.props;
         const { contactInfo } = this.state;
@@ -55,16 +54,16 @@ class ListItem extends React.Component {
             </Popover>
         )
         return (
-        <div className="list-group-item d-flex w-100 justify-content-between bg-light" >
-            <div className="row">
-                <div className="col-md-3">
-                    <img alt="" style={{maxHeight: '180px', maxWidth: '180px'}} src={listing.image_url} />
+        <div className="list-group-item bg-light" >
+            <div className="row d-flex w-100 justify-content-between">
+                <div className="col-md-3 flex-grow-1">
+                    <img className="img-fluid" alt="" style={{maxHeight: '180px', maxWidth: '180px'}} src={listing.image_url} />
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-4 flex-grow-1">
                     <h3>{listing.title}</h3>
                     <p className="text-body">{listing.description}</p>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-3 flex-grow-1">
                     <div className="row"><h6>Poster:&nbsp;</h6>{bandData.name}</div>
                     <div className="row"><h6>Type:&nbsp;</h6>{listing.type}</div>
                     <div className="row"><h6>City:&nbsp;</h6>{bandData.city}</div>
@@ -72,7 +71,7 @@ class ListItem extends React.Component {
                     <div className="row"><h6>Venue:&nbsp;</h6>{listing.venue}</div>
                     <div className="row"><h6>Date:&nbsp;</h6>{listing.date}</div>
                 </div>
-                <div className="col-md-2">
+                <div className="col-md-2 flex-grow-1">
                     <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
                         <button type="button" onClick={this.handleClick} className="btn btn-secondary">Respond to this Listing</button>
                     </OverlayTrigger>
