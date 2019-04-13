@@ -9,7 +9,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 const db = require('../database/index');
-const { sequelize, Account } = require('../database/config');
+const { sequelize, Account, Listing, Artist } = require('../database/config');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 // require('../mockData/addMochData')();
@@ -89,8 +89,8 @@ app.get('/listings', (req, res) => {
 
 app.get('/listings/contact', (req, res) => {
   const {id} = req.query;
-  db.getListings({id})
-    .then(listing => db.getArtist({id: listing[0].artistId}))
+  Listing.findOne({ where: {id}})
+    .then(listing => Artist.findOne({ where: {id: listing.artistId}}))
     .then((artist) => {
       res.send(artist);
   })
