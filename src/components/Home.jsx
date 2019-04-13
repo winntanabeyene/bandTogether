@@ -39,7 +39,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const { listings, artists, isLoggedIn, handleNewListing } = this.props;
+    const { listings, artists, isLoggedIn, handleNewListing, changeProfile } = this.props;
     const { showForm, showSearch } = this.state;
     return (
       <div className="jumbotron">
@@ -60,7 +60,7 @@ class Home extends React.Component {
           </div>
         </div>
         <div className="row">
-          <ListView isLoggedIn={isLoggedIn} listings={listings} artists={artists}/>
+          <ListView changeProfile={changeProfile} isLoggedIn={isLoggedIn} listings={listings} artists={artists}/>
         </div>
       </div>
     )

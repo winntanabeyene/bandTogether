@@ -145,7 +145,7 @@ class App extends React.Component {
 
   changeProfile(currentProfile){
     this.setState({currentProfile: currentProfile})
-
+    this.changeView('profile');
   }
 
   changeView(view) {
@@ -161,7 +161,7 @@ class App extends React.Component {
         <Navbar handleLogout={this.handleLogout} userProfile={userProfile} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} changeView={this.changeView} view={view} />
         <div className="row">
           <div className="col-md-12">
-            {view === 'home' && <Home handleNewListing={this.handleNewListing} isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
+            {view === 'home' && <Home handleNewListing={this.handleNewListing} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
             {view === 'profile' && <Profile changeView={this.changeView} isLoggedIn={isLoggedIn} listings={listings} artists={artists} currentProfile={currentProfile} />}
             {view === 'login' && <Login isLoggedIn={isLoggedIn} handleLogin={this.handleLogin} changeView={this.changeView} />}
             {view === 'register' && <Register handleSignup={this.handleSignup} isLoggedIn={isLoggedIn} changeView={this.changeView}/>}
