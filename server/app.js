@@ -173,6 +173,7 @@ app.post('/signup', (req, res) => {
 
 app.patch('/artist', (req, res) => {
   const details = req.body;
+  console.log(details);
   if(req.isAuthenticated()) {
     db.getAccountInformation({id: req.user.id})
       .then(account => account.getArtist())

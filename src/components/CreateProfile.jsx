@@ -8,7 +8,6 @@ class CreateProfile extends React.Component {
             valueCity: '',
             valueState: '',
             valueGenre: '',
-            valueSolo: '',
             valueBirthdate: '',
             valueImageUrl:'',
             valueBio:'',
@@ -26,10 +25,10 @@ class CreateProfile extends React.Component {
     }
 
     handleSubmit(event) {
-      const {changeView} = this.props;
+      const {changeView, handlePatchProfile, getCurrentProfile} = this.props;
      const { 
         valueName, valueCity, valueState, valueGenre, 
-        valueSolo, valueBirthdate, valueImageUrl, valueBio, 
+        valueBirthdate, valueImageUrl, valueBio, 
         valueBandcampUrl, valueSpotifyUrl, valueFacebookUrl, 
         valueHomepageUrl, valueEmail, valuePhoneNum, valueFacebookContact } = this.state;
     const newArtist = {
@@ -37,7 +36,6 @@ class CreateProfile extends React.Component {
         city: valueCity,
         state: valueState,
         genre: valueGenre,
-        solo: valueSolo,
         birthdate: valueBirthdate,
         image_url: valueImageUrl,
         bio: valueBio,
@@ -49,13 +47,13 @@ class CreateProfile extends React.Component {
         contact_num: valuePhoneNum,
         contact_facebook: valueFacebookContact
     }
-    console.log(newArtist);
+    getCurrentProfile(newArtist);
+    handlePatchPreview(newArtist);
     this.setState({
       valueName: '', 
       valueCity: '', 
       valueState: '', 
       valueGenre: '',
-      valueSolo: '', 
       valueBirthdate: '', 
       valueImageUrl: '', 
       valueBio: '', 
@@ -92,11 +90,6 @@ class CreateProfile extends React.Component {
       case 'genre':
         this.setState({
           valueGenre: value
-        });
-        break;
-      case 'solo':
-        this.setState({
-          valueSolo: value
         });
         break;
       case 'date':
@@ -156,7 +149,7 @@ render() {
     const { toggleForm } = this.props;
     const { 
         valueName, valueCity, valueState, valueGenre, 
-        valueSolo, valueBirthdate, valueImageUrl, valueBio, 
+       valueBirthdate, valueImageUrl, valueBio, 
         valueBandcampUrl, valueSpotifyUrl, valueFacebookUrl, 
         valueHomepageUrl, valueEmail, valuePhoneNum, valueFacebookContact } = this.state;
     return (
@@ -185,12 +178,6 @@ render() {
                     <label>
                         Genre:
               <input value={valueGenre} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="genre" placeholder="Enter genre"/>
-                    </label>
-                </div>
-               <div className="form-group">
-                    <label>
-                        Solo:
-              <input value={valueSolo} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="solo" placeholder="Are you a solo artist" />
                     </label>
                 </div>
                 <div className="form-group">

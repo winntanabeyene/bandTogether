@@ -40,7 +40,7 @@ class Home extends React.Component {
 
   render() {
     const { listings, artists, isLoggedIn, handleNewListing } = this.props;
-    const { showForm } = this.state;
+    const { showForm, showSearch } = this.state;
     return (
       <div className="jumbotron">
         <div className="row">
