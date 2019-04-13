@@ -136,7 +136,7 @@ class App extends React.Component {
       } else {
         return axios.get(`/artist/${userProfile.name}`)
         .then((profile) => {
-          this.setState({currentProfile: profile.data})
+          this.setState({currentProfile: profile.data, userProfile: profile.data})
           
         })
       }
