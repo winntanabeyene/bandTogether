@@ -1,4 +1,5 @@
 import React from 'react';
+import Alert from 'react-bootstrap/Alert';
 class Register extends React.Component {
     constructor(props) {
         super(props);
@@ -10,7 +11,7 @@ class Register extends React.Component {
             artist: '',
             password1: '',
             password2: '',
-
+            signupFail: false,
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,32 +20,38 @@ class Register extends React.Component {
 
     handleSubmit(event) {
      const { username, email, city, solo, artist, password1, password2} = this.state;
-     const{ changeView} = this.props;
+     const{ handleSignup } = this.props;
      if (password1 === password2){
          const newAccount = {
              username,
              email,
              password1,
              password2,
-         }
-         const newProfile = {
+             contact_email: email,
              name: artist,
              city,
              solo,
          }
-         console.log(newAccount, newProfile);
-         this.setState({
-             username: '', 
-             email: '', 
-             city: '', 
-             solo: '', 
-             artist: '', 
-             password1: '', 
-             password2:''
-           
-         });
+         handleSignup(newAccount)
+          .then(() => {
+            this.setState({
+              username: '', 
+              email: '', 
+              city: '', 
+              solo: '1', 
+              artist: '', 
+              password1: '', 
+              password2:''
+            });
+          })
+          .catch((error) => {
+            console.error(error);
+            this.setState({ signupFail: true });
+            setTimeout(() => {
+              this.setState({ signupFail: false });
+            }, 7000)
+          })
          event.preventDefault();
-         changeView('createprofile')
      }else {
         this.setState({
             password1: '',
@@ -104,7 +111,7 @@ class Register extends React.Component {
 
 render() {
     const { changeView } = this.props;
-    const{ username, email, city, solo, artist, password1, password2} = this.state
+    const{ username, email, city, solo, artist, password1, password2, signupFail} = this.state
     return (
 <div className="row mt-5">
     <div className="col-md-6 m-auto">
@@ -112,9 +119,15 @@ render() {
             <h1 className="text-center mb-3">
                Register
             </h1>
-            <form onSubmit={this.handleSubmit} href="#">
+            {signupFail && (
+              <Alert variant="danger">
+                <Alert.Heading>Failed to Sign Up</Alert.Heading>
+                <p>Check that all fields are correct or that an account doesn't already exist with that username.</p>
+              </Alert>
+            )}
+            <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
-                    <label for="name">Username</label>
+                    <label>Username</label>
                     <input
                         onChange={this.handleChange}
                         type="name"
@@ -126,7 +139,7 @@ render() {
                     />
                 </div>
                 <div className="form-group">
-                    <label for="email">Email</label>
+                    <label>Email</label>
                     <input
                         onChange={this.handleChange}
                         type="email"
@@ -138,7 +151,7 @@ render() {
                     />
                 </div>
                 <div className="form-group">
-                    <label for="city">City</label>
+                    <label>City</label>
                     <input
                         onChange={this.handleChange}
                         type="text"
@@ -150,7 +163,7 @@ render() {
                     />
                 </div>
                 <div className="form-group">
-                    <label for="artist">Artist Name</label>
+                    <label>Artist Name</label>
                     <input
                         onChange={this.handleChange}
                         type="text"
@@ -165,13 +178,13 @@ render() {
                     <p>Solo Artist or Band?</p>
                     <div>
                         <input onClick={this.handleChange} type='radio' id='solo' name="soloOrBand" value={"1"} defaultChecked />
-                        <label style={{margin: '0 10px 0 10px'}} for='solo'>Solo Artist</label>
+                        <label style={{margin: '0 10px 0 10px'}}>Solo Artist</label>
                         <input onClick={this.handleChange} type='radio' id='band' name="soloOrBand" value={"0"} />
-                        <label style={{margin: '0 10px 0 10px'}} for='band'>Band</label>
+                        <label style={{margin: '0 10px 0 10px'}}>Band</label>
                     </div>
                 </div>
                 <div className="form-group">
-                    <label for="password">Password</label>
+                    <label>Password</label>
                     <input
                         onChange={this.handleChange}
                         type="password"
@@ -183,7 +196,7 @@ render() {
                     />
                 </div>
                 <div className="form-group">
-                    <label for="password2">Confirm Password</label>
+                    <label>Confirm Password</label>
                     <input
                         onChange={this.handleChange}
                         type="password"
