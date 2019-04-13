@@ -22,7 +22,7 @@ const editArtistValues = ['name', 'solo', 'city', 'state', 'genre', 'birthday', 
 const makeObject = (object, propsToTake, allowNull = false) => {
   let returnObject = {};
   for(let key in object) {
-    if(object[key] !== null && object[key] !== undefined || allowNull) {
+    if(object[key] !== null && object[key] !== undefined && object[key] !== ''|| allowNull) {
       if (propsToTake.indexOf(key) !== -1) {
         returnObject[key] = object[key];
       }
