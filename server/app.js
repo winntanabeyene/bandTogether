@@ -225,6 +225,25 @@ app.post('/signup', (req, res) => {
   };
 });
 
+app.patch('/artist', (req, res) => {
+  const details = req.body;
+  console.log(details);
+  if(req.isAuthenticated()) {
+    db.getAccountInformation({id: req.user.id})
+      .then(account => account.getArtist())
+      .then(artist => db.updateArtistDetails(artist.id, details))
+      .then(() => {
+        res.sendStatus(201);
+      })
+      .catch(err => {
+        console.error(err);
+        res.send(500);
+      })
+  } else {
+    res.sendStatus(403);
+  }
+});
+
 // Logs in an account (requires a username and password)
 app.post('/login', passport.authenticate('local', { successRedirect: "/success", failureRedirect: "/failure" }));
 

@@ -25,10 +25,9 @@ class Profile extends React.Component {
     render() {
         const { showForm } = this.state;
         const {profileId} = this.state
-        const { changeView, accounts, artists, listings } = this.props;
-        const profile = artists.filter((artist) =>{
-            return (artist.id === profileId )
-        }).pop();
+        const { changeView, accounts, artists, listings, isLoggedIn, currentProfile } = this.props;
+        console.log(artists);
+        const profile = artists[0];
         let events = [];
         events = listings.filter((listing) => {
             return (listing.artistId === profile.id)

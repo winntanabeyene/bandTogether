@@ -20,6 +20,7 @@ class App extends React.Component {
       view: 'home', 
       isLoggedIn: false,
       city: "",
+      currentProfile: {},
     };
     
     this.changeView = this.changeView.bind(this);
@@ -29,6 +30,8 @@ class App extends React.Component {
     this.handleLogout = this.handleLogout.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
     this.handleNewListing = this.handleNewListing.bind(this);
+    this.handlePatchProfile = this.handlePatchProfile.bind(this);
+    this.getCurrentProfile = this.getCurrentProfile.bind(this);
   }
 
   componentDidMount(){
@@ -118,6 +121,23 @@ class App extends React.Component {
       })
   }
 
+  handlePatchProfile(profilePatch){
+    return axios.patch('/artist', profilePatch)
+    .then ((response) => {
+      if (response.status !== 201) {
+          const error = { info: response.data };
+          throw error;
+      } else {
+
+      }
+    })
+  }
+
+  getCurrentProfile(currentProfile){
+    this.setState({currentProfile: currentProfile})
+
+  }
+
   changeView(view) {
     this.setState({
       view: view,
@@ -135,7 +155,7 @@ class App extends React.Component {
             {view === 'profile' && <Profile changeView={this.changeView} isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
             {view === 'login' && <Login isLoggedIn={isLoggedIn} handleLogin={this.handleLogin} changeView={this.changeView} />}
             {view === 'register' && <Register handleSignup={this.handleSignup} isLoggedIn={isLoggedIn} changeView={this.changeView}/>}
-            {view === 'createprofile' && <CreateProfile changeView={this.changeView} />}
+            {view === 'createprofile' && <CreateProfile changeView={this.changeView} handlePatchProfile={this.handlePatchProfile} getCurrentProfile={this.getCurrentProfile} />}
           </div>
         </div>
       </div>
