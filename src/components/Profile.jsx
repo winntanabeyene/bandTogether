@@ -27,7 +27,8 @@ class Profile extends React.Component {
         const {profileId} = this.state
         const { changeView, accounts, artists, listings, isLoggedIn, currentProfile } = this.props;
         console.log(artists);
-        const profile = artists[0];
+        const profile = currentProfile;
+        console.log(currentProfile);
         let events = [];
         events = listings.filter((listing) => {
             return (listing.artistId === profile.id)
