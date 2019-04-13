@@ -23,10 +23,19 @@ class Home extends React.Component {
       // Used to sort listings
       sort: '',
       showForm: false,
+      showSearch: false,
       city: '',
     };
 
     this.toggleForm = this.toggleForm.bind(this);
+    this.toggleSearch = this.toggleSearch.bind(this);
+  }
+
+  toggleSearch() {
+    const currentState = this.state.showSearch;
+    this.setState({
+      showSearch: !currentState,
+    })
   }
 
   toggleForm() {
@@ -43,7 +52,8 @@ class Home extends React.Component {
       <div className="jumbotron">
         <div className="row">
           <div className="col-md-12">
-            <Search />
+            {!showSearch && <button className="btn btn-dark btn-lg btn-block" type="button" onClick={this.toggleSearch}>Search Settings</button>}
+            {showSearch && <Search toggleSearch={this.toggleSearch}/>}
           </div>
         </div>
         {!isLoggedIn && (

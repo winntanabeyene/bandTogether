@@ -47,9 +47,10 @@ class Search extends React.Component {
   }
 
   render() {
+    const { toggleSearch } = this.props;
     const { valueCity, valueSearch } = this.state;
     return (
-      <div className="jumbotron bg-secondary"> 
+      <div className="jumbotron bg-secondary" style={{ paddingBottom: "10px"}}> 
         <div className="row">
           <div className="col-md-4">
             <form onSubmit={this.handleCity}>
@@ -103,6 +104,9 @@ class Search extends React.Component {
               </div>
             </div>
           </div>
+        </div>
+        <div className="row" style={{ marginTop: "50px" }}>
+          <button type="button" className="btn btn-block btn-dark" onClick={toggleSearch}>Close</button>
         </div>
       </div>
     )

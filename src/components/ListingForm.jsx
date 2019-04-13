@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 import React from 'react';
 
 class ListingForm extends React.Component {

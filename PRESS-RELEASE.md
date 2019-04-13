@@ -1,4 +1,5 @@
 # Project Name
+Band Together
 
 <!--
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -18,27 +19,36 @@ Once the project moves into development, the press release can be used as a touc
 
 ## Heading
   > Name the product in a way the reader (i.e. your target customers) will understand.
+  Band Together is a social networking service for musicians and bands.
 
 ## Sub-Heading
   > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  For local and touring bands and musicians who want to connect with other artists to set up shows/add members.
 
 ## Summary
   > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  Band Together makes it easier to connect with other local musicians for gigs. Going on tour? Search Band Together's listings in a specific city, and connect with a band in that city for a show! Need a new drummer? Post a listing looking for a new drummer! With Band Together, networking in local music has never been easier. 
+  
 
 ## Problem
   > Describe the problem your product solves.
+  One of the biggest struggles in local music today is networking. Having to search for bands to play with in cities you might be touring in can be a pain.
 
 ## Solution
   > Describe how your product elegantly solves the problem.
+  Band Together makes it easier to find bands/artists in specific cities who want to play shows.
 
 ## Quote from You
   > A quote from a spokesperson in your company.
 
 ## How to Get Started
   > Describe how easy it is to get started.
+  Sign up for an account, fill out your profile details, and make a listing! Or, you can browse through listings other artists have made and connect with them!
 
 ## Customer Quote
   > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  "Thanks to Band Together, my music network has expanded across the United States! Now, I can find a band to play with anywhere!"
 
 ## Closing and Call to Action
   > Wrap it up and give pointers where the reader should go next.
+  If you are a local musician struggling to network, give Band Together a try! Sign up and start posting today!
