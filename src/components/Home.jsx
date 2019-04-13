@@ -15,15 +15,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // Used to filter out listings by type
-      filterGig: false,
-      filterBand: false,
-      filterMates: false,
-      filterMember: false,
-      // Used to sort listings
-      sort: '',
       showForm: false,
-      city: '',
     };
 
     this.toggleForm = this.toggleForm.bind(this);

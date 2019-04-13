@@ -9,19 +9,17 @@ import Home from './components/Home.jsx';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx'
 import CreateProfile from './components/CreateProfile.jsx'
-import listings from '../mockData/listing';
-import artists from '../mockData/artist';
-
 
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      artists: artists,
-      listings: listings,
+      artists: [],
+      listings: [],
       view: 'home', 
       isLoggedIn: false,
+      city: "",
     };
     
     this.changeView = this.changeView.bind(this);
@@ -125,7 +123,7 @@ class App extends React.Component {
       view: view,
     })
   }
-
+  
   render() {
     const {listings, artists, view, isLoggedIn} = this.state
     return (
