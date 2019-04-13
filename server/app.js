@@ -4,16 +4,15 @@ const session = require('express-session');
 const uuid = require('uuid/v4');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
-
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-
 const db = require('../database/index');
 const { sequelize, Account, Listing, Artist } = require('../database/config');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
-// require('../mockData/addMochData')();
-
+/**
+ * PASSPORT SETUP
+ */
 passport.use(new LocalStrategy((username, password, done) => {
   Account.findOne({ where: { username: username }})
     .then((account) => {
@@ -44,18 +43,28 @@ passport.deserializeUser((id, done) => {
       done(err, false);
     })
 })
+/**
+ * END PASSPORT SETUP
+ */
 
-// Does not export anything yet. Just there to test the sequelize database.
+// Imports environment variables from the .env file
 require('dotenv').config();
 
-
+/**
+ * EXPRESS SERVER SETUP
+ */
 const app = express();
-
 app.use(express.static(path.join(__dirname, '../dist')));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
+/**
+ * END EXPRESS SERVER SETUP
+ */
 
-// sets up the session storage in sequelize database
+
+/**
+ * EXPRESS-SESSION SETUP
+ */
 const sessionStorage = new SequelizeStore({
   db: sequelize,
 });
@@ -70,12 +79,20 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }));
+/**
+ * END EXPRESS-SESSION SETUP
+ */
 
-// Passport Init
+
+// Passport Initialization
 app.use(passport.initialize());
 app.use(passport.session());
 
+/**
+ * LISTINGS ENDPOINTS
+ */
 
+// Gets all listings
 app.get('/listings', (req, res) => {
   db.getListings()
     .then((listings) => {
@@ -87,6 +104,7 @@ app.get('/listings', (req, res) => {
   })
 });
 
+//Gets artist info for a specific listing by listingId
 app.get('/listings/contact', (req, res) => {
   const {id} = req.query;
   Listing.findOne({ where: {id}})
@@ -100,6 +118,7 @@ app.get('/listings/contact', (req, res) => {
   })
 });
 
+//Creates a new listing, using the logged in user's id as the artistId for the listing
 app.post('/listings', (req, res) => {
   const newListing = req.body;
   if(req.isAuthenticated()) {
@@ -117,18 +136,15 @@ app.post('/listings', (req, res) => {
     res.sendStatus(403);
   }
 });
+/**
+ * END LISTINGS ENDPOINTS
+ */
 
-app.get('/artist/:artistname', (req, res) => {
-  const { artistname } = req.params;
-  db.getArtist({name: artistname})
-    .then(profile => {
-      res.send(profile);
-    })
-    .catch(err => {
-      res.sendStatus(500);
-    })
-});
 
+/**
+ * ARTIST ENDPOINTS
+ */
+//Gets all artists' info
 app.get('/artist', (reg, res) => {
   db.getAllArtists()
   .then((artists) => {
@@ -140,6 +156,44 @@ app.get('/artist', (reg, res) => {
   })
 });
 
+// Gets artist info by artist's name
+app.get('/artist/:artistname', (req, res) => {
+  const { artistname } = req.params;
+  db.getArtist({name: artistname})
+    .then(profile => {
+      res.send(profile);
+    })
+    .catch(err => {
+      res.sendStatus(500);
+    })
+});
+
+// Updates the artist info for the currently logged in account
+app.patch('/artist', (req, res) => {
+  const details = req.body;
+  if(req.isAuthenticated()) {
+    db.getAccountInformation({id: req.user.id})
+      .then(account => account.getArtist())
+      .then(artist => db.updateArtistDetails(artist.id, details))
+      .then(() => {
+        res.sendStatus(201);
+      })
+      .catch(err => {
+        console.error(err);
+        res.send(500);
+      })
+  } else {
+    res.sendStatus(403);
+  }
+});
+/**
+ * END ARTIST ENDPOINTS
+ */
+
+/**
+ * AUTHENTICATION ENDPOINTS
+ */
+//Creates a new account and logs in that account
 app.post('/signup', (req, res) => {
   const { password1, password2, username, email, solo, contact_email, city, name } = req.body;
   if(!password1 || !username || !email || solo === undefined || !contact_email || !city || !name){
@@ -190,21 +244,26 @@ app.patch('/artist', (req, res) => {
   }
 });
 
+// Logs in an account (requires a username and password)
 app.post('/login', passport.authenticate('local', { successRedirect: "/success", failureRedirect: "/failure" }));
 
+// Logs out an account
 app.post('/logout', (req, res) => {
   req.logout();
   res.send('success');
 })
 
+// A successful login redirects here, letting the client know that the login was successful.
 app.get('/success', (req, res) => {
   res.send('Logged in!');
 })
 
+// A failed login redirects here, letting the client know that the login was unsuccessful.
 app.get('/failure', (req, res) => {
   res.send('Failed to log in');
 })
 
+// Tells the client whether or not the user is currently logged in.
 app.get('/checkauth', (req, res) => {
   if (req.isAuthenticated()) {
     res.send("true");
@@ -212,7 +271,14 @@ app.get('/checkauth', (req, res) => {
     res.send("false");
   }
 });
+/**
+ * END AUTHENTICATION ENDPOINTS
+ */
 
+
+/**
+ * SERVER INITIALIZATION
+ */
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {

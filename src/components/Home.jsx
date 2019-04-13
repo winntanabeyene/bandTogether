@@ -44,21 +44,21 @@ class Home extends React.Component {
     return (
       <div className="jumbotron">
         <div className="row">
-          <div className="col-md-12">
+          <div className="col-md-12" style={{marginBottom: "20px"}}>
             {!showSearch && <button className="btn btn-dark btn-lg btn-block" type="button" onClick={this.toggleSearch}>Search Settings</button>}
             {showSearch && <Search toggleSearch={this.toggleSearch}/>}
+            {!isLoggedIn && (
+              <OverlayTrigger trigger="click" placement="top" overlay={popover}>
+                <button className="btn btn-dark btn-lg btn-block" type="button">Create a Listing</button>
+              </OverlayTrigger>
+            )}
+            {isLoggedIn && 
+              ((!showForm && <button className="btn btn-dark btn-lg btn-block" type="button" onClick={this.toggleForm}>Create a Listing</button>)
+              ||
+              (showForm && <ListingForm handleNewListing={handleNewListing} toggleForm={this.toggleForm} />))
+            }
           </div>
         </div>
-        {!isLoggedIn && (
-          <OverlayTrigger trigger="click" placement="top" overlay={popover}>
-            <button className="btn btn-dark btn-lg btn-block" type="button">Create a Listing</button>
-          </OverlayTrigger>
-        )}
-        {isLoggedIn && 
-          ((!showForm && <button className="btn btn-dark btn-lg btn-block" type="button" onClick={this.toggleForm}>Create a Listing</button>)
-          ||
-          (showForm && <ListingForm handleNewListing={handleNewListing} toggleForm={this.toggleForm} />))
-        }
         <div className="row">
           <ListView isLoggedIn={isLoggedIn} listings={listings} artists={artists}/>
         </div>
