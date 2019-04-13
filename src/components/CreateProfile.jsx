@@ -36,7 +36,7 @@ class CreateProfile extends React.Component {
         city: valueCity,
         state: valueState,
         genre: valueGenre,
-        birthdate: valueBirthdate,
+        birthday: valueBirthdate,
         image_url: valueImageUrl,
         bio: valueBio,
         bandcamp_url: valueBandcampUrl,
@@ -239,8 +239,7 @@ render() {
               <input value={valueFacebookContact} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="fbcontact" placeholder="Enter Facebook contact" />
                     </label>
                 </div>
-                <button className="btn btn-dark" type="submit">Submit Your Profile</button>
-                <button type="button" className="btn btn-dark" onClick={toggleForm}>Close</button>
+                <button className="btn btn-dark" type="submit">Update Profile</button>
             </form>
         </div>
     )

@@ -46,7 +46,7 @@ class App extends React.Component {
 
   getListings() {
     return axios.get('/artist')
-      .then((artists)=> { this.setState({artists: artists.data}) })
+      .then((artists)=> { this.setState({artists: artists.data, currentProfile: artists.data[0]}) })
       .then(() => {
         return axios.get('/listings')
         .then((listings) => { this.setState({listings: listings.data}) })
@@ -128,7 +128,12 @@ class App extends React.Component {
           const error = { info: response.data };
           throw error;
       } else {
-
+        return axios.get(`/artist/${profilePatch.name}`)
+        .then((profile) => {
+          console.log(profile);
+          this.setState({currentProfile: profile.data[0]})
+          
+        })
       }
     })
   }
@@ -145,14 +150,14 @@ class App extends React.Component {
   }
   
   render() {
-    const {listings, artists, view, isLoggedIn} = this.state
+    const {listings, artists, view, isLoggedIn, currentProfile} = this.state
     return (
       <div className="container-fluid">
         <Navbar handleLogout={this.handleLogout} isLoggedIn={isLoggedIn} changeView={this.changeView} view={view} />
         <div className="row">
           <div className="col-md-12">
             {view === 'home' && <Home handleNewListing={this.handleNewListing} isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
-            {view === 'profile' && <Profile changeView={this.changeView} isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
+            {view === 'profile' && <Profile changeView={this.changeView} isLoggedIn={isLoggedIn} listings={listings} artists={artists} currentProfile={currentProfile} />}
             {view === 'login' && <Login isLoggedIn={isLoggedIn} handleLogin={this.handleLogin} changeView={this.changeView} />}
             {view === 'register' && <Register handleSignup={this.handleSignup} isLoggedIn={isLoggedIn} changeView={this.changeView}/>}
             {view === 'createprofile' && <CreateProfile changeView={this.changeView} handlePatchProfile={this.handlePatchProfile} getCurrentProfile={this.getCurrentProfile} />}
