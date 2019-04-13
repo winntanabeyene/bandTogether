@@ -26,24 +26,33 @@ class App extends React.Component {
     
     this.changeView = this.changeView.bind(this);
     this.checkAuth = this.checkAuth.bind(this);
+    this.getListings = this.getListings.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
+    this.handleNewListing = this.handleNewListing.bind(this);
   }
 
   componentDidMount(){
     return this.checkAuth()
       .then(() => {
-        return axios.get('/artist')
-          .then((artists)=> { this.setState({artists: artists.data}) })
-          .then(() => {
-            return axios.get('/listings')
-            .then((listings) => { this.setState({listings: listings.data}) })
-          })
-            .catch((err) => {
-            console.error(err)
-          });
+        return this.getListings();
       })
+      .catch((error) => {
+        console.error(error);
+      })
+  }
+
+  getListings() {
+    return axios.get('/artist')
+      .then((artists)=> { this.setState({artists: artists.data}) })
+      .then(() => {
+        return axios.get('/listings')
+        .then((listings) => { this.setState({listings: listings.data}) })
+      })
+        .catch((err) => {
+        console.error(err)
+      });
   }
 
   checkAuth() {
@@ -99,6 +108,18 @@ class App extends React.Component {
       })
   }
 
+  handleNewListing(newListing) {
+    return axios.post('/listings', newListing)
+      .then((response) => {
+        if (response.status !== 201) {
+          const error = { info: response.data };
+          throw error;
+        } else {
+          return this.getListings();
+        }
+      })
+  }
+
   changeView(view) {
     this.setState({
       view: view,
@@ -112,7 +133,7 @@ class App extends React.Component {
         <Navbar handleLogout={this.handleLogout} isLoggedIn={isLoggedIn} changeView={this.changeView} view={view} />
         <div className="row">
           <div className="col-md-12">
-            {view === 'home' && <Home isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
+            {view === 'home' && <Home handleNewListing={this.handleNewListing} isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
             {view === 'profile' && <Profile changeView={this.changeView} isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
             {view === 'login' && <Login isLoggedIn={isLoggedIn} handleLogin={this.handleLogin} changeView={this.changeView} />}
             {view === 'register' && <Register handleSignup={this.handleSignup} isLoggedIn={isLoggedIn} changeView={this.changeView}/>}

@@ -37,7 +37,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const { listings, artists, isLoggedIn } = this.props;
+    const { listings, artists, isLoggedIn, handleNewListing } = this.props;
     const { showForm } = this.state;
     return (
       <div className="jumbotron">
@@ -54,7 +54,7 @@ class Home extends React.Component {
         {isLoggedIn && 
           ((!showForm && <button className="btn btn-dark btn-lg btn-block" type="button" onClick={this.toggleForm}>Create a Listing</button>)
           ||
-          (showForm && <ListingForm toggleForm={this.toggleForm} />))
+          (showForm && <ListingForm handleNewListing={handleNewListing} toggleForm={this.toggleForm} />))
         }
         <div className="row">
           <ListView isLoggedIn={isLoggedIn} listings={listings} artists={artists}/>

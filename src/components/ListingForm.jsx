@@ -17,6 +17,7 @@ class ListingForm extends React.Component {
   }
 
   handleSubmit(event) {
+    const { handleNewListing } = this.props;
     const { valueEName, valueDate, valueDescr, valueVenue, valueImg, valueType } = this.state;
     const newListing = {
       title: valueEName,
@@ -26,15 +27,17 @@ class ListingForm extends React.Component {
       type: valueType,
       image_url: valueImg
     }
-    console.log(newListing);
-    this.setState({
-      valueEName: '',
-      valueDate: '',
-      valueDescr: '',
-      valueVenue: '',
-      valueImg: '',
-      valueType: '',
-    });
+    handleNewListing(newListing)
+      .then(() => {
+        this.setState({
+          valueEName: '',
+          valueDate: '',
+          valueDescr: '',
+          valueVenue: '',
+          valueImg: '',
+          valueType: '',
+        });
+      })
     event.preventDefault();
   }
 
