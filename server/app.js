@@ -11,7 +11,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const db = require('../database/index');
 const { sequelize, Account } = require('../database/config');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-// 
+
 // require('../mockData/addMochData')();
 
 passport.use(new LocalStrategy((username, password, done) => {
@@ -130,7 +130,7 @@ app.get('/artist/:artistname', (req, res) => {
 });
 
 app.get('/artist', (reg, res) => {
-  db.getArtists()
+  db.getAllArtists()
   .then((artists) => {
     res.send(artists)
   })
@@ -155,10 +155,14 @@ app.post('/signup', (req, res) => {
       contact_email,
     };
     db.makeAccount(newAccount)
-      .then(account => db.makeArtist(account.id, newAccount))
-      .then(() => {
-        res.redirect("/");
-      })
+      .then(account => db.makeArtist(account.id, newAccount)
+        .then(() => {
+          req.login(account, (err) => {
+            if (err) throw err;
+            res.send('success')
+          });
+        })
+      )
       .catch((error) => {
         res.status(500).send("Account already exists!");
       })

@@ -2,7 +2,8 @@ const data = [
     {
         id: 5,
         title: 'Singer/Songwriter night' ,
-        date: '01012019',        
+        date: '2019-01-01',
+        city: 'New Orleans',        
         artistId: 2,
         description: 'ut ornare lectus sit amet est placerat in egestas erat imperdiet sed euismod nisi porta lorem mollis aliquam ut porttitor leo a diam sollicitudin tempor id eu nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam eget felis ',
         venue: 'The Purple Cat',
@@ -12,7 +13,8 @@ const data = [
     {
         id: 1,
         title: 'Shock and Awesome',
-        date: '01012019',
+        date: '2019-01-01',
+        city: 'New Orleans',  
         artistId: 3,
         description: 'ut ornare lectus sit amet est placerat in egestas erat imperdiet sed euismod nisi porta lorem mollis aliquam ut porttitor leo a diam sollicitudin tempor id eu nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam eget felis ',
         venue: 'Passed Out Lounge',
@@ -22,7 +24,8 @@ const data = [
     {
         id: 2,
         title: '4:20 Eve',
-        date: '01012019',
+        date: '2019-01-01',
+        city: 'New Orleans',  
         artistId: 4,
         description: 'ut ornare lectus sit amet est placerat in egestas erat imperdiet sed euismod nisi porta lorem mollis aliquam ut porttitor leo a diam sollicitudin tempor id eu nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam eget felis ',
         venue: 'Sylverlyte',
@@ -32,7 +35,8 @@ const data = [
     {
         id: 3,
         title: 'Barron All Tour 2019',
-        date: '01012019',
+        date: '2019-01-01',
+        city: 'New Orleans',  
         artistId: 1,
         description: 'ut ornare lectus sit amet est placerat in egestas erat imperdiet sed euismod nisi porta lorem mollis aliquam ut porttitor leo a diam sollicitudin tempor id eu nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam eget felis ',
         venue: 'Warehouse 42',
@@ -42,7 +46,8 @@ const data = [
     {
         id: 4,
         title: `Lil Momma's Swingin' BBQ cookcoff ` ,
-        date: '01012019',
+        date: '2019-01-01',
+        city: 'New Orleans',  
         artistId: 5,
         description: 'ut ornare lectus sit amet est placerat in egestas erat imperdiet sed euismod nisi porta lorem mollis aliquam ut porttitor leo a diam sollicitudin tempor id eu nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam eget felis ',
         venue: 'Westin Park',

@@ -28,6 +28,7 @@ class App extends React.Component {
     this.checkAuth = this.checkAuth.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleSignup = this.handleSignup.bind(this);
   }
 
   componentDidMount(){
@@ -82,6 +83,22 @@ class App extends React.Component {
       })
   }
 
+  handleSignup(signupObj) {
+    return axios.post('/signup', signupObj)
+      .then((response) => {
+        const info = response.data;
+        if (info === 'success') {
+          return this.checkAuth()
+            .then(() => {
+              this.changeView('createprofile');
+            })
+        } else {
+          const error = { info: 'Failed to sign up'};
+          throw error;
+        }
+      })
+  }
+
   changeView(view) {
     this.setState({
       view: view,
@@ -98,7 +115,7 @@ class App extends React.Component {
             {view === 'home' && <Home isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
             {view === 'profile' && <Profile isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
             {view === 'login' && <Login isLoggedIn={isLoggedIn} handleLogin={this.handleLogin} changeView={this.changeView} />}
-            {view === 'register' && <Register isLoggedIn={isLoggedIn} changeView={this.changeView}/>}
+            {view === 'register' && <Register handleSignup={this.handleSignup} isLoggedIn={isLoggedIn} changeView={this.changeView}/>}
             {view === 'createprofile' && <CreateProfile changeView={this.changeView} />}
           </div>
         </div>
