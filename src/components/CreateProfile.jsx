@@ -47,8 +47,7 @@ class CreateProfile extends React.Component {
         contact_num: valuePhoneNum,
         contact_facebook: valueFacebookContact
     }
-    getCurrentProfile(newArtist);
-    handlePatchPreview(newArtist);
+    handlePatchProfile(newArtist);
     this.setState({
       valueName: '', 
       valueCity: '', 
