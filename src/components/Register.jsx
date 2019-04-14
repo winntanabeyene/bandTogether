@@ -36,7 +36,13 @@ class Register extends React.Component {
     }
 
     handleSubmit(event) {
-     const { username, email, city, solo, artist, password1, password2} = this.state;
+     const { username, email, city, solo, artist, password1, password2, validEmail} = this.state;
+     if (!validEmail) {
+       this.setState({signupFail: true});
+       setTimeout(() => {
+         this.setState({signupFail: false});
+       }, 5000)
+     }
      const{ handleSignup } = this.props;
      if (password1 === password2){
          const newAccount = {
@@ -139,7 +145,8 @@ render() {
             {signupFail && (
               <Alert variant="danger">
                 <Alert.Heading>Failed to Sign Up</Alert.Heading>
-                <p>Check that all fields are correct or that an account doesn't already exist with that username.</p>
+                {validEmail && <p>Check that all fields are correct or that an account doesn't already exist with that username.</p>}
+                {!validEmail && <p>Your email address is invalid.</p>}
               </Alert>
             )}
             <form onSubmit={this.handleSubmit}>
