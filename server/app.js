@@ -159,7 +159,7 @@ app.get('/artist', (reg, res) => {
 // Gets artist info by artist's name
 app.get('/artist/:artistname', (req, res) => {
   const { artistname } = req.params;
-  db.getArtist({name: artistname})
+  Artist.findOne({ where: {name: artistname}})
     .then(profile => {
       res.send(profile);
     })
@@ -172,8 +172,10 @@ app.get('/artist/:artistname', (req, res) => {
 app.patch('/artist', (req, res) => {
   const details = req.body;
   if(req.isAuthenticated()) {
-    db.getAccountInformation({id: req.user.id})
-      .then(account => account.getArtist())
+    Account.findOne({ where: {id: req.user.id}})
+      .then(account => {
+        return account.getArtist()
+      })
       .then(artist => db.updateArtistDetails(artist.id, details))
       .then(() => {
         res.sendStatus(201);
@@ -266,7 +268,12 @@ app.get('/failure', (req, res) => {
 // Tells the client whether or not the user is currently logged in.
 app.get('/checkauth', (req, res) => {
   if (req.isAuthenticated()) {
-    res.send("true");
+    console.log(req.user);
+    const userId = req.user.id;
+    Artist.findOne({where:{accountId: userId}})
+      .then((artist) => {
+        res.send(artist);
+      })
   } else {
     res.send("false");
   }

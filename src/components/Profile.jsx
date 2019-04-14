@@ -1,9 +1,5 @@
 import React from 'react';
-import SCPlayer from 'react-soundcloud-player';
-import BandcampPlayer from 'react-bandcamp';
-import SpotifyPlayer from 'react-spotify-player';
 import ListView from './ListView';
-import CreateProfile from './CreateProfile';
 
 class Profile extends React.Component {
     constructor(props) {
@@ -14,26 +10,21 @@ class Profile extends React.Component {
         };
         this.toggleForm = this.toggleForm.bind(this);
     }
-    toggleForm() {
-    const currentState = this.state.showForm;
-    this.setState({
-      showForm: !currentState,
-    });
-  }
+        toggleForm() {
+        const currentState = this.state.showForm;
+        this.setState({
+            showForm: !currentState,
+        });
+    }
 
 
     render() {
-        const { showForm } = this.state;
-        const {profileId} = this.state
-        const { changeView, accounts, artists, listings, isLoggedIn, currentProfile } = this.props;
-        console.log(artists);
+        const { changeView, artists, listings, isLoggedIn, currentProfile, userProfile } = this.props;
         const profile = currentProfile;
-        console.log(currentProfile);
         let events = [];
         events = listings.filter((listing) => {
             return (listing.artistId === profile.id)
         })
-        // console.log(performer)
         
         return (
             <div className="jumbotron">
@@ -78,7 +69,7 @@ class Profile extends React.Component {
                         </div>
                     </div>
                     <div>
-                        <button type="button" className="btn btn-secondary" onClick={() => {changeView('createprofile')}}>Edit Profile</button>
+                        {userProfile === currentProfile && isLoggedIn && <button type="button" className="btn btn-secondary" onClick={() => {changeView('createprofile')}}>Edit Profile</button>}
                     </div>
                 </div>
             </div>

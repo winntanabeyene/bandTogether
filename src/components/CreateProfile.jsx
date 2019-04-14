@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import Alert from 'react-bootstrap/Alert';
 
 class CreateProfile extends React.Component {
     constructor(props) {
@@ -15,20 +17,38 @@ class CreateProfile extends React.Component {
             valueFacebookUrl:'',
             valueHomepageUrl:'',
             valuePhoneNum: '',
-        
+            validEmail: false,
+            validNum: false,        
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.validateEmail = this.validateEmail.bind(this);
+    }
+
+    validateEmail() {
+      const { valueEmail } = this.state;
+      axios.get(`https://api.trumail.io/v2/lookups/json?email=${valueEmail}`)
+        .then(({data}) => {
+          const emailValid = data;
+          if (!emailValid.deliverable) {
+            this.setState({validEmail: false});
+          } else if (emailValid.deliverable) {
+            this.setState({validEmail: true})
+          }
+        })
+
     }
 
     handleSubmit(event) {
-      const {changeView, handlePatchProfile, getCurrentProfile} = this.props;
-     const { 
+
+      const {changeView, handlePatchProfile} = this.props;
+      const { 
         valueCity, valueState, valueGenre, 
         valueBirthdate, valueImageUrl, valueBio, 
         valueBandcampUrl, valueSpotifyUrl, valueFacebookUrl, 
         valueHomepageUrl, valuePhoneNum, } = this.state;
-    const newArtist = {
+      const newArtist = {
+        name: valueName,
         city: valueCity,
         state: valueState,
         genre: valueGenre,
@@ -155,7 +175,7 @@ render() {
                 <div className="form-group">
                     <label className='col-md-12'>
                         Date Formed:
-                        <input value={valueBirthdate} onChange={this.handleChange} className="form-control form-control-md" type="text" id="date" placeholder="Enter date formed" />
+              <input value={valueBirthdate} onChange={this.handleChange} className="form-control form-control-sm" type="date" id="date" placeholder="Enter date formed" />
                     </label>
                 </div>
               </div>
@@ -197,8 +217,22 @@ render() {
                 <div className="form-group">
                     <label className='col-md-12'>
                         Homepage URL:
-                       <input value={valueHomepageUrl} onChange={this.handleChange} className="form-control form-control-md" type="text" id="homepage" placeholder="Enter an Homepage url" />
+              <input value={valueHomepageUrl} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="homepage" placeholder="Enter an Homepage url" />
                     </label>
+                </div>
+                <div className="form-group">
+                    <label>
+                        Contact Email:
+              <input value={valueEmail} onBlur={this.validateEmail} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="email" placeholder="Enter contact email" />
+                    </label>
+                    {!validEmail && 
+                    <Alert variant='danger'>
+                      That's not a valid email!
+                    </Alert>}
+                    {validEmail && 
+                    <Alert variant='success'>
+                      That's a valid email!
+                    </Alert>}
                 </div>
               </div>
                  <div className="form-group">
