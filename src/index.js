@@ -42,7 +42,6 @@ class App extends React.Component {
     this.changeProfile = this.changeProfile.bind(this);
     this.setFilters = this.setFilters.bind(this);
     this.filterListings = this.filterListings.bind(this);
-    setTimeout(() => {console.log(this.state.listings.map(listing => listing.type))}, 500);
   }
 
   setFilters(filterName) {
@@ -52,7 +51,6 @@ class App extends React.Component {
       filters: newFilters,
     })
     setTimeout(this.filterListings, 100);
-    console.log(this.state.filters)
   };
 
   filterListings() {
