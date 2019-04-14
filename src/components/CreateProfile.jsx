@@ -182,7 +182,7 @@ render() {
                 <div className="form-group">
                     <label>
                         Date Formed:
-              <input value={valueBirthdate} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="date" placeholder="Enter date formed" />
+              <input value={valueBirthdate} onChange={this.handleChange} className="form-control form-control-sm" type="date" id="date" placeholder="Enter date formed" />
                     </label>
                 </div>
                 <div className="form-group">
