@@ -87,7 +87,7 @@ class App extends React.Component {
       .then((artists)=> { this.setState({artists: artists.data, }) })
       .then(() => {
         return axios.get('/listings')
-        .then((listings) => { this.setState({listings: listings.data}) })
+        .then(this.filterListings);
       })
         .catch((err) => {
         console.error(err)
