@@ -60,27 +60,27 @@ class Search extends React.Component {
               </div>
             </form>
               <br />
-            <form onSubmit={this.handleSearch}>
+            {/* <form onSubmit={this.handleSearch}>
               <div className="row" style={{ justifyContent: 'center' }}>
                 <input type="text" placeholder="Search Here" id="search" value={valueSearch} onChange={this.handleChange}></input>&nbsp;
                 <button className="btn btn-sm btn-dark">Search</button>
               </div>
-            </form>
+            </form> */}
           </div>
           <div className="col-md-8">
             <div className="row" style={{ justifyContent: 'center' }}>
               <h3 className="text-white">Filter By:&nbsp;</h3>
               <div className="btn-group btn-group-toggle" data-toggle="buttons">
-                <label className="btn btn-sm btn-dark">
+                <label className="btn btn-sm btn-dark" onClick={() => {this.props.setFilters("gig")}}>
                   <input type="checkbox" autoComplete="off" />Looking For Gig
                 </label>
-                <label className="btn btn-sm btn-dark">
+                <label className="btn btn-sm btn-dark" onClick={() => {this.props.setFilters("fill")}}>
                   <input type="checkbox" autoComplete="off" />Looking For Fill
                 </label>
-                <label className="btn btn-sm btn-dark">
+                <label className="btn btn-sm btn-dark" onClick={() => {this.props.setFilters("bandmates")}}>
                   <input type="checkbox" autoComplete="off" />Looking For Bandmates
                 </label>
-                <label className="btn btn-sm btn-dark">
+                <label className="btn btn-sm btn-dark" onClick={() => {this.props.setFilters("member")}}>
                   <input type="checkbox" autoComplete="off" />Looking For Member
                 </label>
               </div>
