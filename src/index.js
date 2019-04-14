@@ -17,11 +17,18 @@ class App extends React.Component {
     this.state = {
       artists: [],
       listings: [],
+      filteredListings: [],
       view: 'home', 
       isLoggedIn: false,
       city: "",
       currentProfile: {},
       userProfile: {},
+      filters: {
+        gig: false,
+        fill: false,
+        bandmates: false,
+        member: false,
+      }
     };
     
     this.changeView = this.changeView.bind(this);
@@ -33,12 +40,42 @@ class App extends React.Component {
     this.handleNewListing = this.handleNewListing.bind(this);
     this.handlePatchProfile = this.handlePatchProfile.bind(this);
     this.changeProfile = this.changeProfile.bind(this);
+    this.setFilters = this.setFilters.bind(this);
+    this.filterListings = this.filterListings.bind(this);
+    setTimeout(() => {console.log(this.state.listings.map(listing => listing.type))}, 500);
+  }
+
+  setFilters(filterName) {
+    const newFilters = Object.assign({}, this.state.filters);
+    newFilters[filterName] = !this.state.filters[filterName];
+    this.setState({
+      filters: newFilters,
+    })
+    setTimeout(this.filterListings, 100);
+    console.log(this.state.filters)
+  };
+
+  filterListings() {
+    let filteredListings;
+    const {gig, fill, member, bandmates} = this.state.filters;
+    if(!gig && !fill && !member && !bandmates) {
+      filteredListings = this.state.listings;
+    } else {
+      filteredListings = this.state.listings.filter(listing => (gig && listing.type === "Band for Gig") 
+      || (fill && listing.type === "Band for Fill") 
+      || (member && listing.type === "Band for Member") 
+      || (bandmates && listing.type === "Musician for Band"))
+    }
+    this.setState({filteredListings});
   }
 
   componentDidMount(){
     return this.checkAuth()
       .then(() => {
         return this.getListings();
+      })
+      .then(() => {
+        return this.setState({filteredListings: this.state.listings})
       })
       .catch((error) => {
         console.error(error);
@@ -50,7 +87,7 @@ class App extends React.Component {
       .then((artists)=> { this.setState({artists: artists.data, }) })
       .then(() => {
         return axios.get('/listings')
-        .then((listings) => { this.setState({listings: listings.data}) })
+        .then(this.filterListings);
       })
         .catch((err) => {
         console.error(err)
@@ -155,13 +192,13 @@ class App extends React.Component {
   }
   
   render() {
-    const {listings, artists, view, isLoggedIn, currentProfile, userProfile} = this.state
+    const {filteredListings, listings, artists, view, isLoggedIn, currentProfile, userProfile} = this.state
     return (
       <div className="container-fluid">
         <Navbar handleLogout={this.handleLogout} userProfile={userProfile} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} changeView={this.changeView} view={view} />
         <div className="row">
           <div className="col-md-12">
-            {view === 'home' && <Home handleNewListing={this.handleNewListing} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} listings={listings} artists={artists} />}
+            {view === 'home' && <Home setFilters={this.setFilters} handleNewListing={this.handleNewListing} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} listings={filteredListings} artists={artists} />}
             {view === 'profile' && <Profile changeView={this.changeView} isLoggedIn={isLoggedIn} listings={listings} artists={artists} userProfile={userProfile} currentProfile={currentProfile} />}
             {view === 'login' && <Login isLoggedIn={isLoggedIn} handleLogin={this.handleLogin} changeView={this.changeView} />}
             {view === 'register' && <Register handleSignup={this.handleSignup} isLoggedIn={isLoggedIn} changeView={this.changeView}/>}

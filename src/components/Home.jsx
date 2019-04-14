@@ -49,7 +49,7 @@ class Home extends React.Component {
         <div className="row">
           <div className="col-md-12" style={{marginBottom: "20px"}}>
             {!showSearch && <button className="btn btn-dark btn-lg btn-block" type="button" onClick={this.toggleSearch}>Search Settings</button>}
-            {showSearch && <Search toggleSearch={this.toggleSearch}/>}
+            {showSearch && <Search toggleSearch={this.toggleSearch} setFilters={this.props.setFilters}/>}
             {!isLoggedIn && (
               <OverlayTrigger trigger="click" placement="top" overlay={popover}>
                 <button className="btn btn-dark btn-lg btn-block" type="button">Create a Listing</button>
