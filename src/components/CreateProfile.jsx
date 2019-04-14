@@ -32,7 +32,15 @@ class CreateProfile extends React.Component {
 
     validateEmail() {
       const { valueEmail } = this.state;
-      console.log('Checking valid email!')
+      axios.get(`https://api.trumail.io/v2/lookups/json?email=${valueEmail}`)
+        .then(({data}) => {
+          const emailValid = data;
+          if (!emailValid.deliverable) {
+            this.setState({validEmail: false});
+          } else if (emailValid.deliverable) {
+            this.setState({validEmail: true})
+          }
+        })
 
     }
 
@@ -238,6 +246,14 @@ render() {
                         Contact Email:
               <input value={valueEmail} onBlur={this.validateEmail} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="email" placeholder="Enter contact email" />
                     </label>
+                    {!validEmail && 
+                    <Alert variant='danger'>
+                      That's not a valid email!
+                    </Alert>}
+                    {validEmail && 
+                    <Alert variant='success'>
+                      That's a valid email!
+                    </Alert>}
                 </div>
                 <div className="form-group">
                     <label>
