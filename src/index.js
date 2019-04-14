@@ -42,6 +42,7 @@ class App extends React.Component {
     this.changeProfile = this.changeProfile.bind(this);
     this.setFilters = this.setFilters.bind(this);
     this.filterListings = this.filterListings.bind(this);
+    setTimeout(() => {console.log(this.state.listings.map(listing => listing.type))}, 500);
   }
 
   setFilters(filterName) {
@@ -62,7 +63,7 @@ class App extends React.Component {
     } else {
       filteredListings = this.state.listings.filter(listing => (gig && listing.type === "Band for Gig") 
       || (fill && listing.type === "Band for Fill") 
-      || (member && listing.type === "Looking for Member") 
+      || (member && listing.type === "Band for Member") 
       || (bandmates && listing.type === "Musician for Band"))
     }
     this.setState({filteredListings});
