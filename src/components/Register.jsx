@@ -1,5 +1,6 @@
 import React from 'react';
 import Alert from 'react-bootstrap/Alert';
+import axios from 'axios';
 class Register extends React.Component {
     constructor(props) {
         super(props);
@@ -12,11 +13,27 @@ class Register extends React.Component {
             password1: '',
             password2: '',
             signupFail: false,
+            validEmail: false,
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.validateEmail = this.validateEmail.bind(this);
     }
 
+
+    validateEmail() {
+      const { email } = this.state;
+      return axios.get(`https://api.trumail.io/v2/lookups/json?email=${email}`)
+        .then(({data}) => {
+          const emailValid = data;
+          if (!emailValid.deliverable) {
+            this.setState({validEmail: false});
+          } else if (emailValid.deliverable) {
+            this.setState({validEmail: true})
+          }
+        })
+
+    }
 
     handleSubmit(event) {
      const { username, email, city, solo, artist, password1, password2} = this.state;
@@ -111,7 +128,7 @@ class Register extends React.Component {
 
 render() {
     const { changeView } = this.props;
-    const{ username, email, city, solo, artist, password1, password2, signupFail} = this.state
+    const{ username, email, city, validEmail, artist, password1, password2, signupFail} = this.state
     return (
 <div className="row mt-5">
     <div className="col-md-6 m-auto">
@@ -142,6 +159,7 @@ render() {
                     <label>Email</label>
                     <input
                         onChange={this.handleChange}
+                        onBlur={this.validateEmail}
                         type="email"
                         id="email"
                         name="email"
@@ -149,6 +167,14 @@ render() {
                         placeholder="Enter Email"
                         value={email}
                     />
+                    {!validEmail && 
+                    <Alert variant='danger'>
+                      That's not a valid email!
+                    </Alert>}
+                    {validEmail && 
+                    <Alert variant='success'>
+                      That's a valid email!
+                    </Alert>}
                 </div>
                 <div className="form-group">
                     <label>City</label>
