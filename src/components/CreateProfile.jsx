@@ -4,7 +4,6 @@ class CreateProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            valueName: '',
             valueCity: '',
             valueState: '',
             valueGenre: '',
@@ -15,9 +14,7 @@ class CreateProfile extends React.Component {
             valueSpotifyUrl: '',
             valueFacebookUrl:'',
             valueHomepageUrl:'',
-            valueEmail: '',
             valuePhoneNum: '',
-            valueFacebookContact: '',
         
         };
         this.handleChange = this.handleChange.bind(this);
@@ -27,12 +24,11 @@ class CreateProfile extends React.Component {
     handleSubmit(event) {
       const {changeView, handlePatchProfile, getCurrentProfile} = this.props;
      const { 
-        valueName, valueCity, valueState, valueGenre, 
+        valueCity, valueState, valueGenre, 
         valueBirthdate, valueImageUrl, valueBio, 
         valueBandcampUrl, valueSpotifyUrl, valueFacebookUrl, 
-        valueHomepageUrl, valueEmail, valuePhoneNum, valueFacebookContact } = this.state;
+        valueHomepageUrl, valuePhoneNum, } = this.state;
     const newArtist = {
-        name: valueName,
         city: valueCity,
         state: valueState,
         genre: valueGenre,
@@ -43,13 +39,10 @@ class CreateProfile extends React.Component {
         spotify_url: valueSpotifyUrl,
         facebook_url: valueFacebookUrl,
         homepage_url: valueHomepageUrl,
-        contact_email: valueEmail,
         contact_num: valuePhoneNum,
-        contact_facebook: valueFacebookContact
     }
     handlePatchProfile(newArtist);
-    this.setState({
-      valueName: '', 
+    this.setState({ 
       valueCity: '', 
       valueState: '', 
       valueGenre: '',
@@ -60,9 +53,7 @@ class CreateProfile extends React.Component {
       valueSpotifyUrl: '', 
       valueFacebookUrl: '', 
       valueHomepageUrl: '', 
-      valueEmail: '', 
       valuePhoneNum: '', 
-      valueFacebookContact: ''
     });
     event.preventDefault();
     changeView('profile');
@@ -71,11 +62,6 @@ class CreateProfile extends React.Component {
   handleChange(event) {
     const { value } = event.target;
     switch(event.target.id) {
-      case 'name':
-        this.setState({
-          valueName: value
-        });
-        break;
       case 'city':
         this.setState({
           valueCity: value
@@ -126,19 +112,9 @@ class CreateProfile extends React.Component {
           valueHomepageUrl: value
         });
         break;
-      case 'email':
-        this.setState({
-          valueEmail: value
-        });
-        break;
       case 'phone':
         this.setState({
           valuePhoneNum: value
-        });
-        break;
-      case 'fbcontact':
-        this.setState({
-          valueFacebookContact: value
         });
         break;
     }
@@ -147,96 +123,88 @@ class CreateProfile extends React.Component {
 render() {
     const { toggleForm } = this.props;
     const { 
-        valueName, valueCity, valueState, valueGenre, 
+        valueCity, valueState, valueGenre, 
        valueBirthdate, valueImageUrl, valueBio, 
         valueBandcampUrl, valueSpotifyUrl, valueFacebookUrl, 
-        valueHomepageUrl, valueEmail, valuePhoneNum, valueFacebookContact } = this.state;
+        valueHomepageUrl, valuePhoneNum } = this.state;
     return (
         <div className="jumbotron text-center text-white bg-secondary" style={{ paddingTop: '10px', paddingBottom: '10px' }}>
             <h3>Create a Listing</h3>
             <form onSubmit={this.handleSubmit}>
+              <div className='row justify-content-center'>
                 <div className="form-group">
-                    <label>
-                        Artist Name:
-              <input value={valueName} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="name" placeholder="Enter artist name"/>
-                    </label>
-                </div>
-                <div className="form-group">
-                    <label>
+                    <label className='col-md-12'>
                         City:
-              <input value={valueCity} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="city" placeholder="Enter city"/>
+                      <input value={valueCity} onChange={this.handleChange} className="form-control form-control-md" type="text" id="city" placeholder="Enter city"/>
                     </label>
                 </div>
                 <div className="form-group">
-                    <label>
+                    <label className='col-md-12'>
                         State:
-              <input value={valueState} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="state" placeholder="Enter state"/>
+                      <input value={valueState} onChange={this.handleChange} className="form-control form-control-md" type="text" id="state" placeholder="Enter state"/>
                     </label>
                 </div>
+              </div>
+              <div className='row justify-content-center'>
                 <div className="form-group">
-                    <label>
+                    <label className='col-md-12'>
                         Genre:
-              <input value={valueGenre} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="genre" placeholder="Enter genre"/>
+                          <input value={valueGenre} onChange={this.handleChange} className="form-control form-control-md" type="text" id="genre" placeholder="Enter genre"/>
                     </label>
                 </div>
                 <div className="form-group">
-                    <label>
+                    <label className='col-md-12'>
                         Date Formed:
-              <input value={valueBirthdate} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="date" placeholder="Enter date formed" />
+                        <input value={valueBirthdate} onChange={this.handleChange} className="form-control form-control-md" type="text" id="date" placeholder="Enter date formed" />
                     </label>
                 </div>
+              </div>
+              <div className='row justify-content-center'>
                 <div className="form-group">
-                    <label>
+                    <label className='col-md-12'>
                         Image URL:
-              <input value={valueImageUrl} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="img" placeholder="Enter artist image url" />
+                        <input value={valueImageUrl} onChange={this.handleChange} className="form-control form-control-md" type="text" id="img" placeholder="Enter artist image url" />
                     </label>
                 </div>
                 <div className="form-group">
-                    <label>
-                        Bio:
-              <input value={valueBio} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="bio" placeholder="Enter artist biography" />
-                    </label>
-                </div>
-                <div className="form-group">
-                    <label>
-                        BandCamp URL:
-              <input value={valueBandcampUrl} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="bandcamp" placeholder="Enter Bandcamp url" />
-                    </label>
-                </div>
-                <div className="form-group">
-                    <label>
-                        Spotify URL:
-              <input value={valueSpotifyUrl} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="spotify" placeholder="Enter Spotify url" />
-                    </label>
-                </div>
-                <div className="form-group">
-                    <label>
-                        Facebook URL:
-              <input value={valueFacebookUrl} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="facebook" placeholder="Enter Facebook url" />
-                    </label>
-                </div>
-                <div className="form-group">
-                    <label>
-                        Homepage URL:
-              <input value={valueHomepageUrl} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="homepage" placeholder="Enter an Homepage url" />
-                    </label>
-                </div>
-                <div className="form-group">
-                    <label>
-                        Contact Email:
-              <input value={valueEmail} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="email" placeholder="Enter contact email" />
-                    </label>
-                </div>
-                <div className="form-group">
-                    <label>
+                    <label className='col-md-12'>
                         Contact Number:
-              <input value={valuePhoneNum} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="phone" placeholder="Enter contact phone number" />
+                      <input value={valuePhoneNum} onChange={this.handleChange} className="form-control form-control-md" type="text" id="phone" placeholder="Enter contact phone number" />
+                    </label>
+                </div>
+              </div>
+              <div className='row justify-content-center'>
+                <div className="form-group">
+                    <label className='col-md-12'>
+                        BandCamp URL:
+                        <input value={valueBandcampUrl} onChange={this.handleChange} className="form-control form-control-md" type="text" id="bandcamp" placeholder="Enter Bandcamp url" />
                     </label>
                 </div>
                 <div className="form-group">
-                    <label>
-                        Facebook Contact Info:
-              <input value={valueFacebookContact} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="fbcontact" placeholder="Enter Facebook contact" />
+                    <label className='col-md-12'>
+                        Spotify URL:
+                        <input value={valueSpotifyUrl} onChange={this.handleChange} className="form-control form-control-md" type="text" id="spotify" placeholder="Enter Spotify url" />
+                    </label>
+                </div>
+              </div>
+              <div className='row justify-content-center'>
+                <div className="form-group">
+                    <label className='col-md-12'>
+                        Facebook URL:
+                        <input value={valueFacebookUrl} onChange={this.handleChange} className="form-control form-control-md" type="text" id="facebook" placeholder="Enter Facebook url" />
+                    </label>
+                </div>
+                <div className="form-group">
+                    <label className='col-md-12'>
+                        Homepage URL:
+                       <input value={valueHomepageUrl} onChange={this.handleChange} className="form-control form-control-md" type="text" id="homepage" placeholder="Enter an Homepage url" />
+                    </label>
+                </div>
+              </div>
+                 <div className="form-group">
+                    <label className='col-md-6'>
+                        Bio:
+                        <input value={valueBio} onChange={this.handleChange} className="form-control form-control-md" type="text" id="bio" placeholder="Enter artist biography" />
                     </label>
                 </div>
                 <button className="btn btn-dark" type="submit">Update Profile</button>
