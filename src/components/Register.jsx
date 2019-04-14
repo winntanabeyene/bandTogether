@@ -140,7 +140,7 @@ render() {
     <div className="col-md-6 m-auto">
         <div className="card card-body">
             <h1 className="text-center mb-3">
-               Register
+              Register
             </h1>
             {signupFail && (
               <Alert variant="danger">
