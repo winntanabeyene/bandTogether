@@ -9,6 +9,7 @@ const Navbar = (props) => {
       <nav className="navbar fixed-top navbar-dark bg-dark">
         <a href="#!" onClick={() => {changeView('home')}} className="navbar-brand">Band Together</a>
         <div className="dropdown show">
+          <span className="text-white font-weight-bolder">Navigation:&nbsp;&nbsp;</span>
           <a className="btn btn-secondary dropdown-toggle" href="#!" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {view !== 'createprofile' && view[0].toUpperCase() + view.slice(1)}
             {view === 'createprofile' && "Create Profile"}

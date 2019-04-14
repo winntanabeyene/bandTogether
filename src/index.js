@@ -85,7 +85,7 @@ class App extends React.Component {
       .then((artists)=> { this.setState({artists: artists.data, }) })
       .then(() => {
         return axios.get('/listings')
-        .then(({data}) => this.setState({listing: data}));
+        .then((listings) => this.setState({listings: listings.data}));
       })
         .catch((err) => {
         console.error(err)
@@ -156,7 +156,10 @@ class App extends React.Component {
           const error = { info: response.data };
           throw error;
         } else {
-          return this.getListings();
+          return this.getListings()
+          .then(() => {
+            return this.setState({filteredListings: this.state.listings})
+          });
         }
       })
   }

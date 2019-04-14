@@ -43,6 +43,9 @@ class Home extends React.Component {
     const { showForm, showSearch } = this.state;
     return (
       <div className="jumbotron">
+        <div className='row justify-content-center'>
+          <img  src='https://i.imgur.com/VvaYR3a.png'/>
+        </div>
         <div className="row">
           <div className="col-md-12" style={{marginBottom: "20px"}}>
             {!showSearch && <button className="btn btn-dark btn-lg btn-block" type="button" onClick={this.toggleSearch}>Search Settings</button>}
