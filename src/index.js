@@ -18,6 +18,14 @@ class App extends React.Component {
       artists: [],
       listings: [],
       filteredListings: [],
+      /**
+       * Possible view values are:
+       * 'home': Main view of the app
+       * 'profile': Artist profile page
+       * 'login': Login screen
+       * 'register': Sign up screen
+       * 'createprofile': Create/edit profile screen
+       */
       view: 'home', 
       isLoggedIn: false,
       city: "",
@@ -42,9 +50,13 @@ class App extends React.Component {
     this.changeProfile = this.changeProfile.bind(this);
     this.setFilters = this.setFilters.bind(this);
     this.filterListings = this.filterListings.bind(this);
-    this.resetFilters = this.resetFilters.bind(this);
   }
 
+  /**
+   * Sets the filter for the listings based on listing type.
+   * 
+   * @param {String} filterName The name of the filter to use.
+   */
   setFilters(filterName) {
     const newFilters = Object.assign({}, this.state.filters);
     newFilters[filterName] = !this.state.filters[filterName];
@@ -54,6 +66,9 @@ class App extends React.Component {
     setTimeout(this.filterListings, 100);
   };
 
+  /**
+   * Filters the listings based on type.
+   */
   filterListings() {
     let filteredListings;
     const {gig, fill, member, bandmates} = this.state.filters;
@@ -68,6 +83,11 @@ class App extends React.Component {
     this.setState({filteredListings});
   }
 
+  /**
+   * On mount, the app checks the authentication status of the current user, 
+   * finds listings and artists from the server,
+   * then sets the listings on the state.
+   */
   componentDidMount(){
     return this.checkAuth()
       .then(() => {
@@ -81,6 +101,9 @@ class App extends React.Component {
       })
   }
 
+  /**
+   * Retrieves the listings and artist info from the server.
+   */
   getListings() {
     return axios.get('/artist')
       .then((artists)=> { this.setState({artists: artists.data, }) })
@@ -93,6 +116,9 @@ class App extends React.Component {
       });
   }
 
+  /**
+   * Queries the server for the authentation status of the current user.
+   */
   checkAuth() {
     return axios.get('/checkauth')
     .then((response) => {
@@ -108,6 +134,12 @@ class App extends React.Component {
     })
   }
 
+  /**
+   * Attempts to log in the user using the information they provided.
+   * If successful, redirects the user to the 'home' view.
+   * 
+   * @param {Object} loginObj An object containing the attemped username and password that the user entered.
+   */
   handleLogin(loginObj) {
     return axios.post('/login', loginObj)
       .then((response) => {
@@ -124,6 +156,9 @@ class App extends React.Component {
       })
   }
 
+  /**
+   * Logs out the currently logged-in user.
+   */
   handleLogout() {
     return axios.post('/logout')
       .then(() => {
@@ -134,6 +169,12 @@ class App extends React.Component {
       })
   }
 
+  /**
+   * Attempts to sign up the user with the information they provided. 
+   * If successful, the user is redirected to the 'create profile' view to enter their profile information.
+   * 
+   * @param {Object} signupObj An object containing the signup information given by the user,
+   */
   handleSignup(signupObj) {
     return axios.post('/signup', signupObj)
       .then((response) => {
@@ -150,6 +191,11 @@ class App extends React.Component {
       })
   }
 
+  /**
+   * Creates a listing based on the information given. 
+   * 
+   * @param {Object} newListing An object containing the info needed to make a new listing.
+   */
   handleNewListing(newListing) {
     return axios.post('/listings', newListing)
       .then((response) => {
@@ -165,6 +211,11 @@ class App extends React.Component {
       })
   }
 
+  /**
+   * Takes in information that the user wants to update and updates the corresponding profile.
+   * 
+   * @param {Object} profilePatch Profile information to be updated.
+   */
   handlePatchProfile(profilePatch){
     const { userProfile } = this.state;
     return axios.patch('/artist', profilePatch)
@@ -182,11 +233,21 @@ class App extends React.Component {
     })
   }
 
-  changeProfile(currentProfile){
-    this.setState({currentProfile: currentProfile})
+  /**
+   * Changes the currently selected profile in state.
+   * 
+   * @param {Object} profileObj An object containing profile information.
+   */
+  changeProfile(profileObj){
+    this.setState({currentProfile: profileObj})
     this.changeView('profile');
   }
 
+  /**
+   * Changes the view of the app. 
+   * 
+   * @param {String} view A string representing the view.
+   */
   changeView(view) {
     this.setState({
       view: view,
@@ -200,7 +261,7 @@ class App extends React.Component {
         <Navbar handleLogout={this.handleLogout} userProfile={userProfile} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} changeView={this.changeView} view={view} />
         <div className="row">
           <div className="col-md-12">
-            {view === 'home' && <Home filters={filters} setFilters={this.setFilters} resetFilters={this.resetFilters} handleNewListing={this.handleNewListing} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} listings={filteredListings} artists={artists} />}
+            {view === 'home' && <Home filters={filters} setFilters={this.setFilters} handleNewListing={this.handleNewListing} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} listings={filteredListings} artists={artists} />}
             {view === 'profile' && <Profile changeView={this.changeView} isLoggedIn={isLoggedIn} listings={listings} artists={artists} userProfile={userProfile} currentProfile={currentProfile} />}
             {view === 'login' && <Login isLoggedIn={isLoggedIn} handleLogin={this.handleLogin} changeView={this.changeView} />}
             {view === 'register' && <Register handleSignup={this.handleSignup} isLoggedIn={isLoggedIn} changeView={this.changeView}/>}
@@ -214,6 +275,6 @@ class App extends React.Component {
 
 ReactDOM.render(
 <div>
-    <Favicon url="http://www.iconj.com/ico/k/y/ky8gheq1tw.ico" type="image/x-icon"/>
+  <Favicon url="http://www.iconj.com/ico/k/y/ky8gheq1tw.ico" type="image/x-icon"/>
   <App />
 </div>, document.getElementById('app'));
