@@ -9,6 +9,7 @@ class Search extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     // sets up the filterByBar so that it shades the correct filter buttons on render
     this.gig = `btn btn-sm btn-dark${this.props.filters.gig ? ' active' : ''}`;
@@ -46,6 +47,11 @@ class Search extends React.Component {
     }
   }
 
+  handleSubmit(e) {
+    this.props.setFilters();
+    e.preventDefault();
+  }
+
   handleSearch(event) {
     const { valueSearch } = this.state;
     console.log(valueSearch);
@@ -57,13 +63,13 @@ class Search extends React.Component {
   }
 
   render() {
-    const { toggleSearch, sort, setSort, setSearchCityValue, setFilters, searchCityValue} = this.props;
+    const { toggleSearch, sort, setSort, setSearchCityValue, searchCityValue} = this.props;
     // const { valueSearch } = this.state;
     return (
       <div className="jumbotron bg-secondary" style={{ paddingBottom: "10px"}}> 
         <div className="row">
           <div className="col-md-4">
-            <form onSubmit={setFilters}>
+            <form onSubmit={this.handleSubmit}>
               <div className="row" style={{ justifyContent: 'center' }}>
                 <input type="text" placeholder="Enter a City Name" id="city" value={searchCityValue} onChange={setSearchCityValue}></input>&nbsp;
                 <button className="btn btn-sm btn-dark">Change City</button>
