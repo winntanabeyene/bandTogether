@@ -23,6 +23,7 @@ class App extends React.Component {
       city: "",
       currentProfile: {},
       userProfile: {},
+      searchCityValue: '',
       filters: {
         gig: false,
         fill: false,
@@ -41,31 +42,44 @@ class App extends React.Component {
     this.handlePatchProfile = this.handlePatchProfile.bind(this);
     this.changeProfile = this.changeProfile.bind(this);
     this.setFilters = this.setFilters.bind(this);
-    this.filterListings = this.filterListings.bind(this);
-    this.resetFilters = this.resetFilters.bind(this);
+    this.setSearchCityValue = this.setSearchCityValue.bind(this);
   }
 
   setFilters(filterName) {
     const newFilters = Object.assign({}, this.state.filters);
-    newFilters[filterName] = !this.state.filters[filterName];
-    this.setState({
-      filters: newFilters,
-    })
-    setTimeout(this.filterListings, 100);
-  };
-
-  filterListings() {
     let filteredListings;
-    const {gig, fill, member, bandmates} = this.state.filters;
+    if(filterName) {
+      newFilters[filterName] = !this.state.filters[filterName];
+    }
+    const {gig, fill, member, bandmates} = newFilters;
     if(!gig && !fill && !member && !bandmates) {
       filteredListings = this.state.listings;
     } else {
-      filteredListings = this.state.listings.filter(listing => (gig && listing.type === "Band for Gig") 
+      filteredListings = this.state.listings.filter(listing => 
+        (gig && listing.type === "Band for Gig") 
       || (fill && listing.type === "Band for Fill") 
       || (member && listing.type === "Band for Member") 
       || (bandmates && listing.type === "Musician for Band"))
     }
-    this.setState({filteredListings});
+    console.log('ran set filters')
+    if(this.state.searchCityValue) {
+      console.log('ran search city filter')
+      const artistAddedListings = filteredListings.map(listing => {
+        const listingArtist = this.state.artists.reduce((seed, artist) => artist.id === listing.artistId ? artist : seed);
+        listing.city = listingArtist.city;
+        return listing;
+      })
+      filteredListings = filteredListings.filter((listing, index) => artistAddedListings[index].city.toUpperCase() === this.state.searchCityValue.toUpperCase())
+    }
+    this.setState({
+      filters: newFilters,
+      filteredListings,
+    })
+  };
+
+  setSearchCityValue(e) {
+    console.log('set the search city vlaue');
+    this.setState({searchCityValue: e.target.value});
   }
 
   componentDidMount(){
@@ -200,7 +214,7 @@ class App extends React.Component {
         <Navbar handleLogout={this.handleLogout} userProfile={userProfile} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} changeView={this.changeView} view={view} />
         <div className="row">
           <div className="col-md-12">
-            {view === 'home' && <Home filters={filters} setFilters={this.setFilters} resetFilters={this.resetFilters} handleNewListing={this.handleNewListing} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} listings={filteredListings} artists={artists} />}
+            {view === 'home' && <Home filters={filters} setSearchCityValue={this.setSearchCityValue} setFilters={this.setFilters} handleNewListing={this.handleNewListing} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} listings={filteredListings} artists={artists} />}
             {view === 'profile' && <Profile changeView={this.changeView} isLoggedIn={isLoggedIn} listings={listings} artists={artists} userProfile={userProfile} currentProfile={currentProfile} />}
             {view === 'login' && <Login isLoggedIn={isLoggedIn} handleLogin={this.handleLogin} changeView={this.changeView} />}
             {view === 'register' && <Register handleSignup={this.handleSignup} isLoggedIn={isLoggedIn} changeView={this.changeView}/>}

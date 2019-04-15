@@ -9,7 +9,7 @@ class Search extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleCity = this.handleCity.bind(this);
+    // this.handleCity = this.handleCity.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
 
     // sets up the filterByBar so that it shades the correct filter buttons on render
@@ -52,15 +52,15 @@ class Search extends React.Component {
     }
   }
 
-  handleCity(event) {
-    const { valueCity } = this.state;
-    console.log(valueCity);
-    this.setState({
-      valueCity: '',
-    })
-    // call a function to change currentCity state on home component
-    event.preventDefault();
-  }
+  // handleCity(event) {
+  //   const { valueCity } = this.state;
+  //   console.log(valueCity);
+  //   this.setState({
+  //     valueCity: '',
+  //   })
+  //   // call a function to change currentCity state on home component
+  //   event.preventDefault();
+  // }
 
   handleSearch(event) {
     const { valueSearch } = this.state;
@@ -73,15 +73,15 @@ class Search extends React.Component {
   }
 
   render() {
-    const { toggleSearch, sort, setSort} = this.props;
+    const { toggleSearch, sort, setSort, setCitySearchValue, setFilters} = this.props;
     const { valueCity, /* valueSearch */ } = this.state;
     return (
       <div className="jumbotron bg-secondary" style={{ paddingBottom: "10px"}}> 
         <div className="row">
           <div className="col-md-4">
-            <form onSubmit={this.handleCity}>
+            <form onSubmit={setFilters}>
               <div className="row" style={{ justifyContent: 'center' }}>
-                <input type="text" placeholder="Enter a City Name" id="city" value={valueCity} onChange={this.handleChange}></input>&nbsp;
+                <input type="text" placeholder="Enter a City Name" id="city" onChange={setCitySearchValue}></input>&nbsp;
                 <button className="btn btn-sm btn-dark">Change City</button>
               </div>
             </form>
