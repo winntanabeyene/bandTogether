@@ -51,7 +51,6 @@ class App extends React.Component {
     this.changeProfile = this.changeProfile.bind(this);
     this.setFilters = this.setFilters.bind(this);
     this.setSearchCityValue = this.setSearchCityValue.bind(this);
-    this.filterListings = this.filterListings.bind(this);
   }
 
   /**
@@ -61,17 +60,6 @@ class App extends React.Component {
    */
   setFilters(filterName) {
     const newFilters = Object.assign({}, this.state.filters);
-    newFilters[filterName] = !this.state.filters[filterName];
-    this.setState({
-      filters: newFilters,
-    })
-    setTimeout(this.filterListings, 100);
-  };
-
-  /**
-   * Filters the listings based on type.
-   */
-  filterListings() {
     let filteredListings;
     if(filterName) {
       newFilters[filterName] = !this.state.filters[filterName];
