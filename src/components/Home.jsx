@@ -93,7 +93,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const { /* listings, */ artists, isLoggedIn, handleNewListing, changeProfile, filters, setCitySearchValue } = this.props;
+    const { artists, isLoggedIn, handleNewListing, changeProfile, filters, setSearchCityValue, searchCityValue } = this.props;
     const { listings, showForm, showSearch, sort } = this.state;
     return (
       <div className="jumbotron">
@@ -103,7 +103,7 @@ class Home extends React.Component {
         <div className="row">
           <div className="col-md-12" style={{marginBottom: "20px"}}>
             {!showSearch && <button className="btn btn-dark btn-lg btn-block" type="button" onClick={this.toggleSearch}>Search Settings</button>}
-            {showSearch && <Search toggleSearch={this.toggleSearch} filters={filters} setCitySearchValue={setCitySearchValue} setFilters={this.props.setFilters} setSort={this.setSort} sort={sort}/>}
+            {showSearch && <Search toggleSearch={this.toggleSearch} filters={filters} searchCityValue={searchCityValue} setSearchCityValue={setSearchCityValue} setFilters={this.props.setFilters} setSort={this.setSort} sort={sort}/>}
             {!isLoggedIn && (
               <OverlayTrigger trigger="click" placement="top" overlay={popover}>
                 <button className="btn btn-dark btn-lg btn-block" type="button">Create a Listing</button>

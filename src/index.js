@@ -61,9 +61,7 @@ class App extends React.Component {
       || (member && listing.type === "Band for Member") 
       || (bandmates && listing.type === "Musician for Band"))
     }
-    console.log('ran set filters')
     if(this.state.searchCityValue) {
-      console.log('ran search city filter')
       const artistAddedListings = filteredListings.map(listing => {
         const listingArtist = this.state.artists.reduce((seed, artist) => artist.id === listing.artistId ? artist : seed);
         listing.city = listingArtist.city;
@@ -77,9 +75,12 @@ class App extends React.Component {
     })
   };
 
-  setSearchCityValue(e) {
-    console.log('set the search city vlaue');
-    this.setState({searchCityValue: e.target.value});
+  setSearchCityValue(e, clearSearch = false) {
+    if(clearSearch) {
+      this.setState({searchCityValue: ''});
+    } else {
+      this.setState({searchCityValue: e.target.value});
+    }
   }
 
   componentDidMount(){
@@ -208,13 +209,13 @@ class App extends React.Component {
   }
   
   render() {
-    const {filteredListings, listings, artists, view, isLoggedIn, currentProfile, userProfile, filters} = this.state
+    const {filteredListings, listings, artists, view, isLoggedIn, currentProfile, userProfile, filters, searchCityValue } = this.state
     return (
       <div className="container-fluid">
         <Navbar handleLogout={this.handleLogout} userProfile={userProfile} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} changeView={this.changeView} view={view} />
         <div className="row">
           <div className="col-md-12">
-            {view === 'home' && <Home filters={filters} setSearchCityValue={this.setSearchCityValue} setFilters={this.setFilters} handleNewListing={this.handleNewListing} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} listings={filteredListings} artists={artists} />}
+            {view === 'home' && <Home filters={filters} searchCityValue={searchCityValue} setSearchCityValue={this.setSearchCityValue} setFilters={this.setFilters} handleNewListing={this.handleNewListing} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} listings={filteredListings} artists={artists} />}
             {view === 'profile' && <Profile changeView={this.changeView} isLoggedIn={isLoggedIn} listings={listings} artists={artists} userProfile={userProfile} currentProfile={currentProfile} />}
             {view === 'login' && <Login isLoggedIn={isLoggedIn} handleLogin={this.handleLogin} changeView={this.changeView} />}
             {view === 'register' && <Register handleSignup={this.handleSignup} isLoggedIn={isLoggedIn} changeView={this.changeView}/>}
