@@ -42,7 +42,7 @@ class Home extends React.Component {
     const artistAddedListings = this.props.listings.map(listing => {
       const listingArtist = this.props.artists.reduce((seed, artist) => artist.id === listing.artistId ? artist : seed);
       listing.artistName = listingArtist.name;
-      listing.genre = listingArtist.genre;
+      listing.genre = listingArtist.genre || '';
       return listing;
     })
     let sortProperty, listings;
