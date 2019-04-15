@@ -11,7 +11,7 @@ class Login extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-}
+  }
 
 
   handleChange(event) {
@@ -28,7 +28,7 @@ class Login extends React.Component {
         });
         break;
     }
-}
+  }
 
 
   handleSubmit(event) {
