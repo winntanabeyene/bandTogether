@@ -18,8 +18,6 @@ class Home extends React.Component {
       showForm: false,
       showSearch: false,
       city: '',
-      // listing.date bandData.genre bandData.name listing.title
-      // "date" "genre" "band name" "event name"
       sort: 'date',
       listings: props.listings,
     };
