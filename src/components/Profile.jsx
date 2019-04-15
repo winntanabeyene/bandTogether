@@ -31,7 +31,8 @@ class Profile extends React.Component {
                 <div>
                     <div className="row">
                         <div className='col-md-4'>
-                            <img className="img-fluid" alt="" style={{ maxHeight: "300px" }} src={profile.image_url}/>
+                            <img className="img-fluid" alt="" style={{ maxHeight: "300px" }} src={profile.image_url}/><br />
+                            {userProfile === currentProfile && isLoggedIn && <button type="button" className="btn btn-secondary" onClick={() => {changeView('createprofile')}}>Edit Profile</button>}
                         </div>
                         <div className='col-md-8'>
                             <div className="container">
@@ -67,9 +68,6 @@ class Profile extends React.Component {
                         <div className='col-md-9'>
                             <ListView listings={events} artists={artists} isLoggedIn={isLoggedIn} />
                         </div>
-                    </div>
-                    <div>
-                        {userProfile === currentProfile && isLoggedIn && <button type="button" className="btn btn-secondary" onClick={() => {changeView('createprofile')}}>Edit Profile</button>}
                     </div>
                 </div>
             </div>

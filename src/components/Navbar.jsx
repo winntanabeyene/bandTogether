@@ -17,7 +17,7 @@ const Navbar = (props) => {
 
           <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <a className="dropdown-item" onClick={() => { changeView('home') }} href="#!">Home</a>
-            <a className="dropdown-item" onClick={() => { changeView('profile'); changeProfile(userProfile); }} href="#!">Profile</a>
+            {isLoggedIn && <a className="dropdown-item" onClick={() => { changeView('profile'); changeProfile(userProfile); }} href="#!">Profile</a>}
             {!isLoggedIn && <a className="dropdown-item" onClick={() => { changeView('login') }} href="#!">Login</a>}
             {isLoggedIn && <a className="dropdown-item" onClick={handleLogout} href="#!">Logout</a>}
           </div>
