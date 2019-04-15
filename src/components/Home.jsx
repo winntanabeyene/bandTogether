@@ -28,7 +28,8 @@ class Home extends React.Component {
     const currentState = this.state.showSearch;
     this.setState({
       showSearch: !currentState,
-    })
+    });
+    this.props.resetFilters();
   }
 
   toggleForm() {
@@ -44,7 +45,7 @@ class Home extends React.Component {
     return (
       <div className="jumbotron">
         <div className='row justify-content-center'>
-          <img  src='https://i.imgur.com/VvaYR3a.png'/>
+          <img src='https://i.imgur.com/VvaYR3a.png'/>
         </div>
         <div className="row">
           <div className="col-md-12" style={{marginBottom: "20px"}}>
