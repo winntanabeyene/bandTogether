@@ -28,7 +28,7 @@ class App extends React.Component {
         fill: false,
         bandmates: false,
         member: false,
-      }
+      },
     };
     
     this.changeView = this.changeView.bind(this);
@@ -43,18 +43,6 @@ class App extends React.Component {
     this.setFilters = this.setFilters.bind(this);
     this.filterListings = this.filterListings.bind(this);
     this.resetFilters = this.resetFilters.bind(this);
-  }
-
-  resetFilters() {
-    this.setState({
-      filters: {
-        gig: false,
-        fill: false,
-        bandmates: false,
-        member: false,
-      }
-    })
-    setTimeout(this.filterListings, 100);
   }
 
   setFilters(filterName) {
@@ -206,13 +194,13 @@ class App extends React.Component {
   }
   
   render() {
-    const {filteredListings, listings, artists, view, isLoggedIn, currentProfile, userProfile} = this.state
+    const {filteredListings, listings, artists, view, isLoggedIn, currentProfile, userProfile, filters} = this.state
     return (
       <div className="container-fluid">
         <Navbar handleLogout={this.handleLogout} userProfile={userProfile} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} changeView={this.changeView} view={view} />
         <div className="row">
           <div className="col-md-12">
-            {view === 'home' && <Home setFilters={this.setFilters} resetFilters={this.resetFilters} handleNewListing={this.handleNewListing} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} listings={filteredListings} artists={artists} />}
+            {view === 'home' && <Home filters={filters} setFilters={this.setFilters} resetFilters={this.resetFilters} handleNewListing={this.handleNewListing} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} listings={filteredListings} artists={artists} />}
             {view === 'profile' && <Profile changeView={this.changeView} isLoggedIn={isLoggedIn} listings={listings} artists={artists} userProfile={userProfile} currentProfile={currentProfile} />}
             {view === 'login' && <Login isLoggedIn={isLoggedIn} handleLogin={this.handleLogin} changeView={this.changeView} />}
             {view === 'register' && <Register handleSignup={this.handleSignup} isLoggedIn={isLoggedIn} changeView={this.changeView}/>}
