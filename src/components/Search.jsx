@@ -13,6 +13,10 @@ class Search extends React.Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
+  isClassActive(sortValue) {
+      return `btn btn-sm btn-dark${sortValue === this.props.sort ? ' active': ''}`
+  }
+
   handleChange(event) {
     const { id, value } = event.target;
     if (id === 'city') {
@@ -47,8 +51,8 @@ class Search extends React.Component {
   }
 
   render() {
-    const { toggleSearch } = this.props;
-    const { valueCity, valueSearch } = this.state;
+    const { toggleSearch, sort, setSort} = this.props;
+    const { valueCity, /* valueSearch */ } = this.state;
     return (
       <div className="jumbotron bg-secondary" style={{ paddingBottom: "10px"}}> 
         <div className="row">
@@ -89,17 +93,17 @@ class Search extends React.Component {
             <div className="row" style={{ justifyContent: 'center' }}>
               <h3 className="text-white">Sort By:&nbsp;</h3>
               <div className="btn-group btn-group-toggle" data-toggle="buttons">
-                <label className="btn btn-sm btn-dark active">
-                  <input type="radio" autoComplete="off" defaultChecked/>Date
+                <label className={this.isClassActive('date')} onClick={() => {setSort('date')}}>
+                  <input type="radio" autoComplete="off" checked={sort === 'date'}/>Date
                 </label>
-                <label className="btn btn-sm btn-dark">
-                  <input type="radio" autoComplete="off" />Genre
+                <label className={this.isClassActive('genre')} onClick={() => {setSort('genre')}}>
+                  <input type="radio" autoComplete="off" checked={sort === "genre"}/>Genre
                 </label>
-                <label className="btn btn-sm btn-dark">
-                  <input type="radio" autoComplete="off" />Band Name
+                <label className={this.isClassActive('band name')} onClick={() => {setSort('band name')}}>
+                  <input type="radio" autoComplete="off" checked={sort === "band name"}/>Band Name
                 </label>
-                <label className="btn btn-sm btn-dark">
-                  <input type="radio" autoComplete="off" />Event Name
+                <label className={this.isClassActive('event name')} onClick={() => {setSort('event name')}}>
+                  <input type="radio" autoComplete="off" checked={sort === "event name"}/>Event Name
                 </label>
               </div>
             </div>

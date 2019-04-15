@@ -18,17 +18,72 @@ class Home extends React.Component {
       showForm: false,
       showSearch: false,
       city: '',
+      sort: 'date',
+      listings: props.listings,
     };
 
     this.toggleForm = this.toggleForm.bind(this);
     this.toggleSearch = this.toggleSearch.bind(this);
+    this.setSort = this.setSort.bind(this);
+  }
+
+  componentDidUpdate(prevProp, prevState, snapshot) {
+    if(prevProp.listings !== this.props.listings) {
+      this.setSort(this.state.sort);
+    }
+  }
+
+  setSort(sort) {
+    const artistAddedListings = this.props.listings.map(listing => {
+      const listingArtist = this.props.artists.reduce((seed, artist) => artist.id === listing.artistId ? artist : seed);
+      listing.artistName = listingArtist.name;
+      listing.genre = listingArtist.genre;
+      return listing;
+    })
+    let sortProperty, listings;
+    if(sort === 'date') {
+      listings = artistAddedListings.sort((a, b) => {
+        // the date is a string like so: '<year>-<month>-<day>'.
+        // this function splits the date and checks to see what events will come first in order to return a sort value.
+        const aArray = a.date.split('-');
+        const bArray = b.date.split('-');
+        if(aArray[0] === bArray[0]) {
+          if(aArray[1] === bArray[1]) {
+            if (aArray[2] > bArray[2]) {
+              return 1;
+            }
+          } else if (aArray[1] > bArray[1]) {
+            return 1;
+          }
+        } else if (aArray[0] > bArray[0]) {
+          return 1;
+        }
+        return -1;
+      });
+    } else {
+      if(sort === 'event name') {
+        sortProperty = 'title';
+      }
+      if(sort === 'band name') {
+        sortProperty = 'artistName';
+      }
+      if(sort === 'genre') {
+        sortProperty = 'genre';
+      }
+      listings = artistAddedListings.sort((a, b) => a[sortProperty].toUpperCase() > b[sortProperty].toUpperCase() ? 1 : -1)
+    }
+    this.setState({
+      sort,
+      listings,
+    })
   }
 
   toggleSearch() {
     const currentState = this.state.showSearch;
     this.setState({
       showSearch: !currentState,
-    })
+    });
+    this.props.resetFilters();
   }
 
   toggleForm() {
@@ -39,17 +94,17 @@ class Home extends React.Component {
   }
 
   render() {
-    const { listings, artists, isLoggedIn, handleNewListing, changeProfile } = this.props;
-    const { showForm, showSearch } = this.state;
+    const { /* listings, */ artists, isLoggedIn, handleNewListing, changeProfile } = this.props;
+    const { listings, showForm, showSearch, sort } = this.state;
     return (
       <div className="jumbotron">
         <div className='row justify-content-center'>
-          <img  src='https://i.imgur.com/VvaYR3a.png'/>
+          <img src='https://i.imgur.com/VvaYR3a.png' alt="Band Together"/>
         </div>
         <div className="row">
           <div className="col-md-12" style={{marginBottom: "20px"}}>
             {!showSearch && <button className="btn btn-dark btn-lg btn-block" type="button" onClick={this.toggleSearch}>Search Settings</button>}
-            {showSearch && <Search toggleSearch={this.toggleSearch} setFilters={this.props.setFilters}/>}
+            {showSearch && <Search toggleSearch={this.toggleSearch} setFilters={this.props.setFilters} setSort={this.setSort} sort={sort}/>}
             {!isLoggedIn && (
               <OverlayTrigger trigger="click" placement="top" overlay={popover}>
                 <button className="btn btn-dark btn-lg btn-block" type="button">Create a Listing</button>
