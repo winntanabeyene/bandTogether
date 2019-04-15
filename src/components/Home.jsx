@@ -33,6 +33,11 @@ class Home extends React.Component {
     }
   }
 
+  /**
+   * Sets what the listings are sorted by.
+   * 
+   * @param {String} sort A string representing what to sort by.
+   */
   setSort(sort) {
     const artistAddedListings = this.props.listings.map(listing => {
       const listingArtist = this.props.artists.reduce((seed, artist) => artist.id === listing.artistId ? artist : seed);
@@ -78,14 +83,19 @@ class Home extends React.Component {
     })
   }
 
+  /**
+   * Toggles the Search component.
+   */
   toggleSearch() {
     const currentState = this.state.showSearch;
     this.setState({
       showSearch: !currentState,
     });
-    // this.props.resetFilters();
   }
 
+  /**
+   * Toggles the Submit Listing form component.
+   */
   toggleForm() {
     const currentState = this.state.showForm;
     this.setState({
