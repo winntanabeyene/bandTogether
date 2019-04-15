@@ -50,7 +50,6 @@ class App extends React.Component {
     this.changeProfile = this.changeProfile.bind(this);
     this.setFilters = this.setFilters.bind(this);
     this.filterListings = this.filterListings.bind(this);
-    this.resetFilters = this.resetFilters.bind(this);
   }
 
   /**
@@ -137,6 +136,7 @@ class App extends React.Component {
 
   /**
    * Attempts to log in the user using the information they provided.
+   * If successful, redirects the user to the 'home' view.
    * 
    * @param {Object} loginObj An object containing the attemped username and password that the user entered.
    */
@@ -261,7 +261,7 @@ class App extends React.Component {
         <Navbar handleLogout={this.handleLogout} userProfile={userProfile} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} changeView={this.changeView} view={view} />
         <div className="row">
           <div className="col-md-12">
-            {view === 'home' && <Home filters={filters} setFilters={this.setFilters} resetFilters={this.resetFilters} handleNewListing={this.handleNewListing} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} listings={filteredListings} artists={artists} />}
+            {view === 'home' && <Home filters={filters} setFilters={this.setFilters} handleNewListing={this.handleNewListing} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} listings={filteredListings} artists={artists} />}
             {view === 'profile' && <Profile changeView={this.changeView} isLoggedIn={isLoggedIn} listings={listings} artists={artists} userProfile={userProfile} currentProfile={currentProfile} />}
             {view === 'login' && <Login isLoggedIn={isLoggedIn} handleLogin={this.handleLogin} changeView={this.changeView} />}
             {view === 'register' && <Register handleSignup={this.handleSignup} isLoggedIn={isLoggedIn} changeView={this.changeView}/>}
@@ -275,6 +275,6 @@ class App extends React.Component {
 
 ReactDOM.render(
 <div>
-    <Favicon url="http://www.iconj.com/ico/k/y/ky8gheq1tw.ico" type="image/x-icon"/>
+  <Favicon url="http://www.iconj.com/ico/k/y/ky8gheq1tw.ico" type="image/x-icon"/>
   <App />
 </div>, document.getElementById('app'));
