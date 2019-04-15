@@ -4,12 +4,10 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      valueCity: '',
       valueSearch: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleCity = this.handleCity.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
 
     // sets up the filterByBar so that it shades the correct filter buttons on render
@@ -41,25 +39,11 @@ class Search extends React.Component {
 
   handleChange(event) {
     const { id, value } = event.target;
-    if (id === 'city') {
-      this.setState({
-        valueCity: value,
-      });
-    } else if (id === 'search') {
+    if (id === 'search') {
       this.setState({
         valueSearch: value,
       });
     }
-  }
-
-  handleCity(event) {
-    const { valueCity } = this.state;
-    console.log(valueCity);
-    this.setState({
-      valueCity: '',
-    })
-    // call a function to change currentCity state on home component
-    event.preventDefault();
   }
 
   handleSearch(event) {
@@ -73,16 +57,17 @@ class Search extends React.Component {
   }
 
   render() {
-    const { toggleSearch, sort, setSort} = this.props;
-    const { valueCity, /* valueSearch */ } = this.state;
+    const { toggleSearch, sort, setSort, setSearchCityValue, setFilters, searchCityValue} = this.props;
+    // const { valueSearch } = this.state;
     return (
       <div className="jumbotron bg-secondary" style={{ paddingBottom: "10px"}}> 
         <div className="row">
           <div className="col-md-4">
-            <form onSubmit={this.handleCity}>
+            <form onSubmit={setFilters}>
               <div className="row" style={{ justifyContent: 'center' }}>
-                <input type="text" placeholder="Enter a City Name" id="city" value={valueCity} onChange={this.handleChange}></input>&nbsp;
+                <input type="text" placeholder="Enter a City Name" id="city" value={searchCityValue} onChange={setSearchCityValue}></input>&nbsp;
                 <button className="btn btn-sm btn-dark">Change City</button>
+                <button className="btn btn-sm btn-dark" onClick={() => {setSearchCityValue(undefined, true)}}>Clear City</button>
               </div>
             </form>
               <br />
