@@ -11,9 +11,31 @@ class Search extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleCity = this.handleCity.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+
+    // sets up the filterByBar so that it shades the correct filter buttons on render
+    this.gig = `btn btn-sm btn-dark${this.props.filters.gig ? ' active' : ''}`;
+    this.fill = `btn btn-sm btn-dark${this.props.filters.fill ? ' active' : ''}`;
+    this.bandmates = `btn btn-sm btn-dark${this.props.filters.bandmates ? ' active' : ''}`;
+    this.member = `btn btn-sm btn-dark${this.props.filters.member ? ' active' : ''}`;
+    this.filterByBar = (
+        <div className="btn-group btn-group-toggle" data-toggle="buttons">
+          <label className={this.gig} onClick={() => {this.props.setFilters("gig")}}>
+            <input type="checkbox" autoComplete="off" />Looking For Gig
+          </label>
+          <label className={this.fill} onClick={() => {this.props.setFilters("fill")}}>
+            <input type="checkbox" autoComplete="off" />Looking For Fill
+          </label>
+          <label className={this.bandmates} onClick={() => {this.props.setFilters("bandmates")}}>
+            <input type="checkbox" autoComplete="off" />Looking For Bandmates
+          </label>
+          <label className={this.member} onClick={() => {this.props.setFilters("member")}}>
+            <input type="checkbox" autoComplete="off" />Looking For Member
+          </label>
+        </div>
+      );
   }
 
-  isClassActive(sortValue) {
+  isSortActive(sortValue) {
       return `btn btn-sm btn-dark${sortValue === this.props.sort ? ' active': ''}`
   }
 
@@ -74,35 +96,22 @@ class Search extends React.Component {
           <div className="col-md-8">
             <div className="row" style={{ justifyContent: 'center' }}>
               <h3 className="text-white">Filter By:&nbsp;</h3>
-              <div className="btn-group btn-group-toggle" data-toggle="buttons">
-                <label className="btn btn-sm btn-dark" onClick={() => {this.props.setFilters("gig")}}>
-                  <input type="checkbox" autoComplete="off" />Looking For Gig
-                </label>
-                <label className="btn btn-sm btn-dark" onClick={() => {this.props.setFilters("fill")}}>
-                  <input type="checkbox" autoComplete="off" />Looking For Fill
-                </label>
-                <label className="btn btn-sm btn-dark" onClick={() => {this.props.setFilters("bandmates")}}>
-                  <input type="checkbox" autoComplete="off" />Looking For Bandmates
-                </label>
-                <label className="btn btn-sm btn-dark" onClick={() => {this.props.setFilters("member")}}>
-                  <input type="checkbox" autoComplete="off" />Looking For Member
-                </label>
-              </div>
+              {this.filterByBar}
             </div>
             <br />
             <div className="row" style={{ justifyContent: 'center' }}>
               <h3 className="text-white">Sort By:&nbsp;</h3>
               <div className="btn-group btn-group-toggle" data-toggle="buttons">
-                <label className={this.isClassActive('date')} onClick={() => {setSort('date')}}>
+                <label className={this.isSortActive('date')} onClick={() => {setSort('date')}}>
                   <input type="radio" autoComplete="off" checked={sort === 'date'}/>Date
                 </label>
-                <label className={this.isClassActive('genre')} onClick={() => {setSort('genre')}}>
+                <label className={this.isSortActive('genre')} onClick={() => {setSort('genre')}}>
                   <input type="radio" autoComplete="off" checked={sort === "genre"}/>Genre
                 </label>
-                <label className={this.isClassActive('band name')} onClick={() => {setSort('band name')}}>
+                <label className={this.isSortActive('band name')} onClick={() => {setSort('band name')}}>
                   <input type="radio" autoComplete="off" checked={sort === "band name"}/>Band Name
                 </label>
-                <label className={this.isClassActive('event name')} onClick={() => {setSort('event name')}}>
+                <label className={this.isSortActive('event name')} onClick={() => {setSort('event name')}}>
                   <input type="radio" autoComplete="off" checked={sort === "event name"}/>Event Name
                 </label>
               </div>
