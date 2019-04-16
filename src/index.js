@@ -81,6 +81,7 @@ class App extends React.Component {
         return listing;
       })
       filteredListings = filteredListings.filter((listing, index) => artistAddedListings[index].city.toUpperCase() === this.state.searchCityValue.toUpperCase())
+      // Patrick Ryan
     }
     this.setState({
       filters: newFilters,
