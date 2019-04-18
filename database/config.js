@@ -115,12 +115,43 @@ Listing.init({
   underscored: true,
 });
 
+//// PATRICK COMMENTS DB 
+class Comment extends Model { };
+Comment.init({
+  artist_id: Sequelize.INTEGER,
+  account_id: Sequelize.INTEGER,
+  name: Sequelize.STRING,
+  comment: Sequelize.STRING(700),
+}, {
+    sequelize,
+    modelName: 'comment',
+    freezeTableName: true,
+    underscored: true,
+  });
+
+class ListingComment extends Model { };
+ListingComment.init({
+  listing_id: Sequelize.INTEGER,
+  account_id: Sequelize.INTEGER,
+  name: Sequelize.STRING,
+  comment: Sequelize.STRING(700),
+}, {
+    sequelize,
+    modelName: 'ListingComment',
+    freezeTableName: true,
+    underscored: true,
+  });
+  ///////////////////////////////
+
+
+
 Artist.belongsTo(Account);
 Account.hasOne(Artist);
 
 Artist.hasMany(Listing);
 
 // must sync to create tabels and associations.
+// {force:true}
 sequelize.sync()
   .then(() => {
   })
@@ -130,5 +161,7 @@ module.exports = {
   Account,
   Artist,
   Listing,
-  sequelize
+  sequelize, 
+  Comment,
+  ListingComment
 };

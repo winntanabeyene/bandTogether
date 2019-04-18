@@ -61,7 +61,7 @@ class Search extends React.Component {
     // call a function to search listings
     event.preventDefault();
   }
-
+ 
   render() {
     const { toggleSearch, sort, setSort, setSearchCityValue, searchCityValue} = this.props;
     // const { valueSearch } = this.state;
