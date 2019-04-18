@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
@@ -9,6 +10,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const db = require('../database/index');
 const { sequelize, Account, Listing, Artist } = require('../database/config');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const Axios = require('axios');
+
 
 /**
  * PASSPORT SETUP

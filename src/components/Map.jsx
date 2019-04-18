@@ -25,16 +25,11 @@ getMap(){
 
 getCoordinates(){
 
-Axios.
-
 
 }
 
 
 render() {
-
-
-
 
 
 
