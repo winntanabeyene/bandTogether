@@ -9,6 +9,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const db = require('../database/index');
 const { sequelize, Account, Listing, Artist } = require('../database/config');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const client = require('twilio')('AC3073180ec99e009a4931ac9559a455e4','e8ce680d7d8d2801517054fd0d2fdb27')
 
 /**
  * PASSPORT SETUP
@@ -281,7 +282,16 @@ app.get('/checkauth', (req, res) => {
 /**
  * END AUTHENTICATION ENDPOINTS
  */
-
+//testing messaging api
+// app.get('/test',(req,res)=>{
+//   client.messages
+//   .create({
+//     body: 'HEllo its working',
+//     from: '+14044713243',
+//     to: '+6785926777'
+//   })
+//   .then((err) => console.log(err));
+// });
 
 /**
  * SERVER INITIALIZATION
