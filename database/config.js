@@ -105,7 +105,10 @@ Listing.init({
   date: Sequelize.STRING,
   description: Sequelize.STRING(700),
   venue: Sequelize.STRING,
+  address: Sequelize.STRING,
   city: Sequelize.STRING,
+  state: Sequelize.STRING,
+  zip_code: Sequelize.STRING,
   type: Sequelize.STRING,
   image_url: Sequelize.STRING,
 }, {

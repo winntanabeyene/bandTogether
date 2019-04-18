@@ -11,6 +11,10 @@ class ListingForm extends React.Component {
       valueVenue: '',
       valueImg: '',
       valueType: '',
+      valueAddress: '',
+      valueCity: '',
+      valueState: '',
+      valueZipCode: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -19,14 +23,19 @@ class ListingForm extends React.Component {
 
   handleSubmit(event) {
     const { handleNewListing } = this.props;
-    const { valueEName, valueDate, valueDescr, valueVenue, valueImg, valueType } = this.state;
+    const { valueEName, valueDate, valueDescr, valueVenue, valueImg, valueType, valueAddress, valueCity, valueState, valueZipCode } = this.state;
     const newListing = {
       title: valueEName,
       date: valueDate,
       description: valueDescr,
       venue: valueVenue,
       type: valueType,
-      image_url: valueImg
+      image_url: valueImg,
+      address: valueAddress,
+      city: valueCity,
+      state: valueState,
+      zip_code: valueZipCode
+
     }
     handleNewListing(newListing)
       .then(() => {
@@ -37,6 +46,10 @@ class ListingForm extends React.Component {
           valueVenue: '',
           valueImg: '',
           valueType: '',
+          valueAddress: '',
+          valueCity: '',
+          valueState: '',
+          valueZipCode: ''
         });
       })
     event.preventDefault();
@@ -65,6 +78,26 @@ class ListingForm extends React.Component {
           valueVenue: value
         });
         break;
+      case 'address':
+        this.setState({
+          valueAddress: value
+        })
+        break;
+      case 'city':
+        this.setState({
+          valueCity: value
+        })
+        break;
+      case 'state':
+        this.setState({
+          valueState: value
+        })
+        break;
+      case 'zip-code':
+        this.setState({
+          valueZipCode: value
+        })
+        break;
       case 'type':
         this.setState({
           valueType: value
@@ -80,7 +113,7 @@ class ListingForm extends React.Component {
 
   render() {
     const { toggleForm } = this.props;
-    const { valueEName, valueDate, valueDescr, valueVenue, valueImg, valueType } = this.state;
+    const { valueEName, valueDate, valueDescr, valueVenue, valueImg, valueType, valueAddress, valueCity, valueState, valueZipCode } = this.state;
     return (
       <div className="jumbotron text-center text-white bg-secondary" style={{ paddingTop: '10px', paddingBottom: '10px' }}>
         <h3>Create a Listing</h3>
@@ -106,7 +139,31 @@ class ListingForm extends React.Component {
           <div className="form-group">
             <label>
               Venue:
-              <input value={valueVenue} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="venue" placeholder="Enter an venue (if applicable)"/>
+              <input value={valueVenue} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="venue" placeholder="Enter a venue (if applicable)"/>
+            </label>
+          </div>
+          <div className="form-group">
+            <label>
+              Address:
+              <input value={valueAddress} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="address" placeholder="Enter street and number"/>
+            </label>
+          </div>
+          <div className="form-group">
+            <label>
+              City:
+              <input value={valueCity} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="city" placeholder="Enter city"/>
+            </label>
+          </div>
+          <div className="form-group">
+            <label>
+              State:
+              <input value={valueState} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="state" placeholder="Enter state"/>
+            </label>
+          </div>
+          <div className="form-group">
+            <label>
+              Zip code:
+              <input value={valueZipCode} onChange={this.handleChange} className="form-control form-control-sm" type="text" id="zip-code" placeholder="Enter zip code"/>
             </label>
           </div>
           <div className="form-group">
