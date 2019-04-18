@@ -41,15 +41,7 @@ class ListingComments extends React.Component {
 
     return (
       <div>
-        {/* <button type="button" onClick={this.handleClick()} className="btn btn-secondary">See listing comments!</button> */}
         <CommentModal listing={this.props.listing} userProfile={this.props.userProfile} listingComments={this.state.listingComments}/>
-        <form onSubmit={(event) => this.submitComment(event)}>
-          <input placeholder="Add new comment..." required={true}
-            onChange={(event) => { this.handleChange(event.target.value) }} value={this.state.commentValue} />
-          <div>
-            <input type="submit" value="Submit" />
-          </div>
-        </form>
       </div>
     )
   }
