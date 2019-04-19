@@ -9,6 +9,7 @@ import Home from './components/Home.jsx';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx'
 import CreateProfile from './components/CreateProfile.jsx'
+import Map from './components/Map.jsx'
 
 
 class App extends React.Component {

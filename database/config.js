@@ -99,6 +99,7 @@ Artist.init({
 
 // holds the listings for bands to get together. Has a one-to-many relationship as the target with Artist. Col name of
 // foriegn key will be artist_id.
+//figure out should I get city Lat and Long here or later?
 class Listing extends Model {};
 Listing.init({
   title: Sequelize.STRING,
@@ -109,6 +110,10 @@ Listing.init({
   city: Sequelize.STRING,
   state: Sequelize.STRING,
   zip_code: Sequelize.STRING,
+  latitude: Sequelize.STRING,
+  longitude: Sequelize.STRING,
+  cityLat: Sequelize.STRING,
+  cityLon: Sequelize.STRING,
   type: Sequelize.STRING,
   image_url: Sequelize.STRING,
 }, {
