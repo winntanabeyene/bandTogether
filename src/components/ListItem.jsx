@@ -2,10 +2,10 @@ import React from 'react';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import axios from 'axios';
-import { timingSafeEqual } from 'crypto';
+// import { timingSafeEqual } from 'crypto';
 // require('dotenv').config();
-// const accountSid = process.env.ACCOUNTSID;
-// const authToken = process.env.AUTHTOKEN;
+const accountSid = process.env.ACCOUNTSID;
+const authToken = process.env.AUTHTOKEN;
 // const client = require('twilio')(accountSid, authToken);
 
 
@@ -16,6 +16,7 @@ class ListItem extends React.Component {
       shown: false,
       contactInfo: {},
       bandData: {},
+      userProfile:{}
     };
     
     this.handleClick = this.handleClick.bind(this);
@@ -63,16 +64,7 @@ class ListItem extends React.Component {
       this.setState({contactInfo: {}, shown: false});
     }
   }
-  //handles sending a message to event owner once im interested is clicked
-  sendMessage(){
-    client.messages
-    .create({
-       body: `Client has showed interest in your post on bandTogether for ${this.props.listing.title} , please contact ${this.state.contactInfo.name} asap!`,
-       from: '+14044713243',
-       to: '+16785926777'
-     })
-    .then(message => console.log(message.sid));
-  }
+
 
   //handles the message being seen when client clicks on interested
   messageClick() {
@@ -85,13 +77,25 @@ class ListItem extends React.Component {
           const contactInfo = {
             name: artistData.name,
           }
-          this.sendMessage();
+           this.sendMessage();
           this.setState({contactInfo, shown: true});
         })
     } else {
       this.setState({contactInfo: {}, shown: false});
     }
   }
+
+sendMessage(){
+  console.log('Hello, we in send mssg');
+
+  const body = {
+userNum: this.props.userProfile,
+artistNum: this.state.contactInfo.number
+  }
+  // console.log(body, 'this is the body');
+  console.log(this.props, this.state)
+  return axios.post('/to', body)
+}
 
   render() {
     const {listing, isLoggedIn} = this.props;
@@ -147,7 +151,7 @@ class ListItem extends React.Component {
         </div>
         <div className="col-md-5 flex-grow-1">
           <OverlayTrigger trigger="click" placement="bottom" overlay={popoverMssg}>
-            <button type="button" onClick={this.handleClick} className="btn btn-secondary">Click here if Interested!</button>
+            <button type="button" onClick={this.messageClick} className="btn btn-secondary">Click here if Interested!</button>
           </OverlayTrigger>
         </div>
       </div>

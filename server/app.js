@@ -287,21 +287,21 @@ app.get('/checkauth', (req, res) => {
 
 //MESSAGES SET UP
 app.post('/to',(req,res)=>{
-  console.log(req, 'this is req');
-  console.log(res,'this is res');
-  res.send('this is res');
+  const artistNum = req.body.artistNum;
+  const userNum = req.body.userNum;
+  client.messages
+    .create({
+       body: "Client has showed interest in your post on bandTogether for 'POSTNAME' , please contact 'CLIENT USERNAME' asap!",
+       from: '+14044713243',
+       to: `+1${userNum}`
+     })
+    .then(message => console.log(message.sid));
 })
 
 
 
 
-// client.messages
-//     .create({
-//        body: "Client has showed interest in your post on bandTogether for 'POSTNAME' , please contact 'CLIENT USERNAME' asap!",
-//        from: '+14044713243',
-//        to: '+16785926777'
-//      })
-//     .then(message => console.log(message.sid));
+
 //   //5129057682-arn
   //5047109310-pat
 
