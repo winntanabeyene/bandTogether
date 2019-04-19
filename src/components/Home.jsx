@@ -4,6 +4,7 @@ import Search from './Search.jsx';
 import ListingForm from './ListingForm';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Map from './Map.jsx'
 
 
 const popover = (
@@ -127,6 +128,9 @@ class Home extends React.Component {
             }
           </div>
         </div>
+            <div id="map-div">
+            <Map listings={listings} />
+            </div>
         <div className="row">
           <ListView changeProfile={changeProfile} isLoggedIn={isLoggedIn} listings={listings} artists={artists} userProfile={userProfile}/>
         </div>
