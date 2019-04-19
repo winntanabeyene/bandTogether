@@ -12,6 +12,13 @@ const sequelize = new Sequelize('bandtogether', USER, PASSWORD, {
   dialect: 'mysql',
 });
 
+// const sequelize = new Sequelize('bandtogether', 'bandtogether', process.env.AWSPASS, {
+//   host: 'bandtogether.co5uhag2jtpo.us-east-2.rds.amazonaws.com',
+//   port: 3306,
+//   dialect: 'mysql'
+// });
+
+
 // checks to see if sequelize has correctly connected to the database and give an error if it hasn't.
 sequelize
   .authenticate()
@@ -155,7 +162,7 @@ Artist.hasMany(Listing);
 
 // must sync to create tabels and associations.
 // {force:true}
-sequelize.sync()
+sequelize.sync({force:true})
   .then(() => {
   })
   .catch(err => {console.error(err)});
