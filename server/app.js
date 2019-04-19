@@ -9,8 +9,10 @@ const LocalStrategy = require('passport-local').Strategy;
 const db = require('../database/index');
 const { sequelize, Account, Listing, Artist } = require('../database/config');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-const client = require('twilio')('AC3073180ec99e009a4931ac9559a455e4','e8ce680d7d8d2801517054fd0d2fdb27')
-
+require('dotenv').config();
+const accountSid = process.env.ACCOUNTSID;
+const authToken = process.env.AUTHTOKEN;
+const client = require('twilio')(accountSid, authToken);
 /**
  * PASSPORT SETUP
  */
@@ -282,6 +284,28 @@ app.get('/checkauth', (req, res) => {
 /**
  * END AUTHENTICATION ENDPOINTS
  */
+
+//MESSAGES SET UP
+app.post('/to',(req,res)=>{
+  console.log(req, 'this is req');
+  console.log(res,'this is res');
+  res.send('this is res');
+})
+
+
+
+
+// client.messages
+//     .create({
+//        body: "Client has showed interest in your post on bandTogether for 'POSTNAME' , please contact 'CLIENT USERNAME' asap!",
+//        from: '+14044713243',
+//        to: '+16785926777'
+//      })
+//     .then(message => console.log(message.sid));
+//   //5129057682-arn
+  //5047109310-pat
+
+
 //testing messaging api
 // app.get('/test',(req,res)=>{
 //   client.messages

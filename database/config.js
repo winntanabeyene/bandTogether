@@ -124,6 +124,7 @@ Account.hasOne(Artist);
 Artist.hasMany(Listing);
 
 // must sync to create tabels and associations.
+//{force:true}se
 sequelize.sync()
   .then(() => {
   })
