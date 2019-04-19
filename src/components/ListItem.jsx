@@ -2,7 +2,8 @@ import React from 'react';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import axios from 'axios';
-
+import ListingComments from './ListingComments';
+import Modal from 'react-bootstrap/Modal';
 
 
 class ListItem extends React.Component {
@@ -19,6 +20,7 @@ class ListItem extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props.userProfile)
     const bandData = this.props.artists.filter((artist) => {
       return (artist.id === this.props.listing.artistId);
     }).pop();
@@ -57,7 +59,7 @@ class ListItem extends React.Component {
   }
 
   render() {
-    const {listing, isLoggedIn} = this.props;
+    const {listing, isLoggedIn, userProfile} = this.props;
     const { contactInfo, bandData } = this.state;
     const popover = (
       <Popover id="popover-basic">
@@ -94,6 +96,7 @@ class ListItem extends React.Component {
           <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
             <button type="button" onClick={this.handleClick} className="btn btn-secondary">Respond to this Listing</button>
           </OverlayTrigger>
+          <ListingComments userProfile={userProfile} listing={listing}/>
         </div>
       </div>
     </div>

@@ -105,7 +105,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const { artists, isLoggedIn, handleNewListing, changeProfile, filters, setSearchCityValue, searchCityValue } = this.props;
+    const { artists, isLoggedIn, handleNewListing, changeProfile, filters, setSearchCityValue, searchCityValue, userProfile } = this.props;
     const { listings, showForm, showSearch, sort } = this.state;
     return (
       <div className="jumbotron">
@@ -132,7 +132,7 @@ class Home extends React.Component {
             <Map listings={listings} />
             </div>
         <div className="row">
-          <ListView changeProfile={changeProfile} isLoggedIn={isLoggedIn} listings={listings} artists={artists}/>
+          <ListView changeProfile={changeProfile} isLoggedIn={isLoggedIn} listings={listings} artists={artists} userProfile={userProfile}/>
         </div>
       </div>
     )
