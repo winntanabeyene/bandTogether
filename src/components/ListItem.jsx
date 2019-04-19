@@ -84,15 +84,14 @@ class ListItem extends React.Component {
       this.setState({contactInfo: {}, shown: false});
     }
   }
-
+//handles the message being sent to event owner when someone is interested in listing
 sendMessage(){
-  console.log('Hello, we in send mssg');
-
   const body = {
-userNum: this.props.userProfile,
-artistNum: this.state.contactInfo.number
+postTitle: this.props.listing.title,
+artistNum: this.state.bandData.contact_num,
+clientName: this.props.userProfile.name,
+clientNum: this.props.userProfile.contact_num
   }
-  // console.log(body, 'this is the body');
   console.log(this.props, this.state)
   return axios.post('/to', body)
 }

@@ -288,12 +288,14 @@ app.get('/checkauth', (req, res) => {
 //MESSAGES SET UP
 app.post('/to',(req,res)=>{
   const artistNum = req.body.artistNum;
-  const userNum = req.body.userNum;
+  const postTitle = req.body.postTitle;
+  const clientName = req.body.clientName;
+const clientNum = req.body.clientNum;
   client.messages
     .create({
-       body: "Client has showed interest in your post on bandTogether for 'POSTNAME' , please contact 'CLIENT USERNAME' asap!",
+       body: `Client has showed interest in your post on bandTogether for ${postTitle} , please contact ${clientName} at ${clientNum} asap!`,
        from: '+14044713243',
-       to: `+1${userNum}`
+       to: `+1${artistNum}`
      })
     .then(message => console.log(message.sid));
 })

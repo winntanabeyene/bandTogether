@@ -128,6 +128,7 @@ class Home extends React.Component {
           </div>
         </div>
         <div className="row">
+        {console.log(userProfile)}
           <ListView changeProfile={changeProfile} isLoggedIn={isLoggedIn} listings={listings} artists={artists} userProfile={userProfile}/>
         </div>
       </div>
