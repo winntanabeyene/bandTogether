@@ -12,6 +12,13 @@ const sequelize = new Sequelize('bandtogether', USER, PASSWORD, {
   dialect: 'mysql',
 });
 
+// const sequelize = new Sequelize('bandtogether', 'bandtogether', process.env.AWSPASS, {
+//   host: 'bandtogether.co5uhag2jtpo.us-east-2.rds.amazonaws.com',
+//   port: 3306,
+//   dialect: 'mysql'
+// });
+
+
 // checks to see if sequelize has correctly connected to the database and give an error if it hasn't.
 sequelize
   .authenticate()
@@ -99,6 +106,7 @@ Artist.init({
 
 // holds the listings for bands to get together. Has a one-to-many relationship as the target with Artist. Col name of
 // foriegn key will be artist_id.
+//figure out should I get city Lat and Long here or later?
 class Listing extends Model {};
 Listing.init({
   title: Sequelize.STRING,
@@ -109,6 +117,10 @@ Listing.init({
   city: Sequelize.STRING,
   state: Sequelize.STRING,
   zip_code: Sequelize.STRING,
+  latitude: Sequelize.FLOAT,
+  longitude: Sequelize.FLOAT,
+  cityLat: Sequelize.FLOAT,
+  cityLon: Sequelize.FLOAT,
   type: Sequelize.STRING,
   image_url: Sequelize.STRING,
 }, {
@@ -118,13 +130,43 @@ Listing.init({
   underscored: true,
 });
 
+//// PATRICK COMMENTS DB 
+class Comment extends Model { };
+Comment.init({
+  artist_id: Sequelize.INTEGER,
+  account_id: Sequelize.INTEGER,
+  name: Sequelize.STRING,
+  comment: Sequelize.STRING(700),
+}, {
+    sequelize,
+    modelName: 'comment',
+    freezeTableName: true,
+    underscored: true,
+  });
+
+class ListingComment extends Model { };
+ListingComment.init({
+  listing_id: Sequelize.INTEGER,
+  account_id: Sequelize.INTEGER,
+  name: Sequelize.STRING,
+  comment: Sequelize.STRING(700),
+}, {
+    sequelize,
+    modelName: 'ListingComment',
+    freezeTableName: true,
+    underscored: true,
+  });
+  ///////////////////////////////
+
+
+
 Artist.belongsTo(Account);
 Account.hasOne(Artist);
 
 Artist.hasMany(Listing);
 
 // must sync to create tabels and associations.
-//{force:true}se
+// {force:true}
 sequelize.sync()
   .then(() => {
   })
@@ -134,5 +176,7 @@ module.exports = {
   Account,
   Artist,
   Listing,
-  sequelize
+  sequelize, 
+  Comment,
+  ListingComment
 };

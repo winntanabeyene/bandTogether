@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
@@ -7,12 +8,14 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const db = require('../database/index');
-const { sequelize, Account, Listing, Artist } = require('../database/config');
+const { sequelize, Account, Listing, Artist, Comment, ListingComment } = require('../database/config');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 require('dotenv').config();
 const accountSid = process.env.ACCOUNTSID;
 const authToken = process.env.AUTHTOKEN;
 const client = require('twilio')(accountSid, authToken);
+const Axios = require('axios');
+
 /**
  * PASSPORT SETUP
  */
@@ -91,6 +94,43 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+/**
+ * GEOLOCATION ENDPOINTS
+ */
+
+app.get('/geolocation/map', (req, res) => {
+
+  const centerOfUs =  [39.8283, -98.5795];
+
+
+  const map = tomtom.L.map('map', {
+    key: process.env.MAP_KEY,
+    basePath: '../sdk',
+    center: centerOfUs,
+    zoom: 10
+  });
+
+  res.send(map);
+
+
+})
+
+
+
+
+
+
+
+
+
+
+/**
+ * END GEOLOCATION ENDPOINTS
+ */
+
+
+
 /**
  * LISTINGS ENDPOINTS
  */
@@ -121,15 +161,35 @@ app.get('/listings/contact', (req, res) => {
   })
 });
 
+
+
 //Creates a new listing, using the logged in user's id as the artistId for the listing
 app.post('/listings', (req, res) => {
   const newListing = req.body;
+
+  
+  const address = `${req.body.address} ${req.body.city}, ${req.body.state} ${req.body.zip_code}`
+
+
   if(req.isAuthenticated()) {
     Account.findOne({ where: {id: req.user.id}})
       .then(account => account.getArtist())
-      .then(artist => db.makeListing(artist.id, newListing))
-      .then(() => {
-        res.sendStatus(201);
+      .then(artist => {
+        
+        Axios.get(`https://api.tomtom.com/search/2/geocode/${address}.json`, {
+          params: {
+            limit: 1,
+            key: process.env.MAP_KEY      
+          }
+        })
+          .then((response) => {
+            newListing.latitude = response.data.results[0].position.lat;
+            newListing.longitude = response.data.results[0].position.lon;
+            db.makeListing(artist.id, newListing)
+          })
+          .then(() => {
+            res.sendStatus(201);
+          })
       })
       .catch(err => {
         console.error(err);
@@ -281,6 +341,95 @@ app.get('/checkauth', (req, res) => {
     res.send("false");
   }
 });
+//////////////////// Patrick Comments ///////////////////////////////////////////
+app.post('/comments/:artistId/:accountId', (req, res)=>{
+  const comment = req.body.comment;
+  const name = req.body.name
+  const accountId = req.params.accountId;
+  const artistId = req.params.artistId;
+    Comment.create({
+        artist_id: artistId,
+        account_id: accountId,
+        name: name,
+        comment: comment,
+    })
+    .then((result)=>{
+      return Comment.findAll({
+        where: {
+          artist_id: artistId,
+        }
+      })
+    .then((data) => {
+      res.send(data);
+    })
+    })
+    .catch((err)=>{
+      res.send(err);
+    })
+});
+
+app.get('/comments/:artistId/:accountId', (req, res)=>{
+    var artistId = req.params.artistId;
+    Comment.findAll({
+      where: {
+        artist_id: artistId,
+      }
+    })
+    .then((data)=>{
+      res.send(data);
+    })
+    .catch((err)=>{
+      res.send(err);
+    })
+})
+
+app.post('/comments/listing/:listingId/:accountId', (req, res) => {
+  const comment = req.body.comment;
+  const name = req.body.name
+  const listingId = req.params.listingId;
+  const accountId = req.params.accountId;
+  ListingComment.create({
+    listing_id: listingId,
+    account_id: accountId,
+    name: name,
+    comment: comment,
+  })
+    .then((result) => {
+      return ListingComment.findAll({
+        where: {
+          listing_id: listingId,
+        }
+      })
+        .then((data) => {
+          res.send(data);
+        })
+    })
+    .catch((err) => {
+      res.send(err);
+    })
+});
+
+app.get('/comments/listing/:listingId/:accountId', (req, res) => {
+  const comment = req.body.comment;
+  const name = req.body.name
+  const listingId = req.params.listingId;
+  const accountId = req.params.accountId;
+
+  ListingComment.findAll({
+    where: {
+      listing_id: listingId,
+    }
+  })
+  .then((data) => {
+    res.send(data);
+    })
+  .catch((err) => {
+    res.send(err);
+  })
+});
+
+
+
 /**
  * END AUTHENTICATION ENDPOINTS
  */

@@ -2,11 +2,8 @@ import React from 'react';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import axios from 'axios';
-// import { timingSafeEqual } from 'crypto';
-// require('dotenv').config();
-const accountSid = process.env.ACCOUNTSID;
-const authToken = process.env.AUTHTOKEN;
-// const client = require('twilio')(accountSid, authToken);
+import ListingComments from './ListingComments';
+import Modal from 'react-bootstrap/Modal';
 
 
 class ListItem extends React.Component {
@@ -26,6 +23,7 @@ class ListItem extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props.userProfile)
     const bandData = this.props.artists.filter((artist) => {
       return (artist.id === this.props.listing.artistId);
     }).pop();
@@ -97,7 +95,7 @@ clientNum: this.props.userProfile.contact_num
 }
 
   render() {
-    const {listing, isLoggedIn} = this.props;
+    const {listing, isLoggedIn, userProfile} = this.props;
     const { contactInfo, bandData } = this.state;
     const popover = (
       <Popover id="popover-basic">
@@ -152,6 +150,7 @@ clientNum: this.props.userProfile.contact_num
           <OverlayTrigger trigger="click" placement="bottom" overlay={popoverMssg}>
             <button type="button" onClick={this.messageClick} className="btn btn-secondary">Click here if Interested!</button>
           </OverlayTrigger>
+          <ListingComments userProfile={userProfile} listing={listing}/>
         </div>
       </div>
     </div>

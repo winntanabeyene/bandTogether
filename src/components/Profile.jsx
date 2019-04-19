@@ -1,5 +1,7 @@
 import React from 'react';
 import ListView from './ListView';
+import Comments from './Comments'
+import WallModal from './WallModal'
 
 class Profile extends React.Component {
   constructor(props) {
@@ -41,6 +43,7 @@ class Profile extends React.Component {
           </div>
           <div className='row'>
             <div className='col-md-3'>
+            <WallModal currentProfile={this.props.currentProfile} userProfile={userProfile}/>
               <h1 className="display-4">Links</h1>
               <div>
                 <h3>Bandcamp:</h3>
@@ -60,11 +63,11 @@ class Profile extends React.Component {
               </div>
             </div>
             <div className='col-md-9'>
-            {console.log(userProfile)}
-              <ListView listings={events} artists={artists} isLoggedIn={isLoggedIn} userProfile={userProfile}/>
+              <ListView listings={events} artists={artists} isLoggedIn={isLoggedIn} userProfile={userProfile} />
             </div>
           </div>
         </div>
+        {/* <Comments currentProfile={this.props.currentProfile} userProfile={userProfile}></Comments> */}
       </div>
     )
   }

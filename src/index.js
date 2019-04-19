@@ -9,6 +9,7 @@ import Home from './components/Home.jsx';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx'
 import CreateProfile from './components/CreateProfile.jsx'
+import Map from './components/Map.jsx'
 
 
 class App extends React.Component {
@@ -81,6 +82,7 @@ class App extends React.Component {
         return listing;
       })
       filteredListings = filteredListings.filter((listing, index) => artistAddedListings[index].city.toUpperCase() === this.state.searchCityValue.toUpperCase())
+      // Patrick Ryan
     }
     this.setState({
       filters: newFilters,
@@ -122,7 +124,7 @@ class App extends React.Component {
       .then((artists)=> { this.setState({artists: artists.data, }) })
       .then(() => {
         return axios.get('/listings')
-        .then((listings) => this.setState({listings: listings.data}));
+        .then((listings) => this.setState({listings: listings.data})); // patrick ryan 
       })
         .catch((err) => {
         console.error(err)
@@ -252,7 +254,7 @@ class App extends React.Component {
    * @param {Object} profileObj An object containing profile information.
    */
   changeProfile(profileObj){
-    this.setState({currentProfile: profileObj})
+    this.setState({currentProfile: profileObj}) // patrick ryan
     this.changeView('profile');
   }
 
@@ -266,6 +268,10 @@ class App extends React.Component {
       view: view,
     })
   }
+
+  getComments(artistId){
+    axios.post(`/comments/${artistId}`)
+  }
   
   render() {
     const {filteredListings, listings, artists, view, isLoggedIn, currentProfile, userProfile, filters, searchCityValue } = this.state
@@ -274,7 +280,7 @@ class App extends React.Component {
         <Navbar handleLogout={this.handleLogout} userProfile={userProfile} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} changeView={this.changeView} view={view} />
         <div className="row">
           <div className="col-md-12">
-            {view === 'home' && <Home filters={filters} searchCityValue={searchCityValue} setSearchCityValue={this.setSearchCityValue} setFilters={this.setFilters} handleNewListing={this.handleNewListing} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} listings={filteredListings} userProfile={userProfile} artists={artists} />}
+            {view === 'home' && <Home filters={filters} searchCityValue={searchCityValue} setSearchCityValue={this.setSearchCityValue} setFilters={this.setFilters} handleNewListing={this.handleNewListing} changeProfile={this.changeProfile} isLoggedIn={isLoggedIn} listings={filteredListings} artists={artists} userProfile={userProfile}/>}
             {view === 'profile' && <Profile changeView={this.changeView} isLoggedIn={isLoggedIn} listings={listings} artists={artists} userProfile={userProfile} currentProfile={currentProfile} />}
             {view === 'login' && <Login isLoggedIn={isLoggedIn} handleLogin={this.handleLogin} changeView={this.changeView} />}
             {view === 'register' && <Register handleSignup={this.handleSignup} isLoggedIn={isLoggedIn} changeView={this.changeView}/>}

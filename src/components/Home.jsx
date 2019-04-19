@@ -4,6 +4,7 @@ import Search from './Search.jsx';
 import ListingForm from './ListingForm';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Map from './Map.jsx'
 
 
 const popover = (
@@ -111,8 +112,11 @@ class Home extends React.Component {
         <div className='row justify-content-center'>
           <img src='https://i.imgur.com/VvaYR3a.png' alt="Band Together"/>
         </div>
-        <div className="row">
-          <div className="col-md-12" style={{marginBottom: "20px"}}>
+
+        <div className="row" id="menu-map">
+          
+
+          <div className="col-md-5" style={{marginBottom: "20px"}}>
             {!showSearch && <button className="btn btn-dark btn-lg btn-block" type="button" onClick={this.toggleSearch}>Search Settings</button>}
             {showSearch && <Search toggleSearch={this.toggleSearch} filters={filters} searchCityValue={searchCityValue} setSearchCityValue={setSearchCityValue} setFilters={this.props.setFilters} setSort={this.setSort} sort={sort}/>}
             {!isLoggedIn && (
@@ -126,9 +130,17 @@ class Home extends React.Component {
               (showForm && <ListingForm handleNewListing={handleNewListing} toggleForm={this.toggleForm} />))
             }
           </div>
+
+
+        <div className="col-md-7 justify-content-center">
+          <div id="map-div">
+            <Map listings={listings} />
+          </div>
         </div>
+        
+      </div>
+
         <div className="row">
-        {console.log(userProfile)}
           <ListView changeProfile={changeProfile} isLoggedIn={isLoggedIn} listings={listings} artists={artists} userProfile={userProfile}/>
         </div>
       </div>
