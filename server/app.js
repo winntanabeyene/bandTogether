@@ -124,12 +124,30 @@ app.get('/listings/contact', (req, res) => {
 //Creates a new listing, using the logged in user's id as the artistId for the listing
 app.post('/listings', (req, res) => {
   const newListing = req.body;
+
+  
+  const address = `${req.body.address} ${req.body.city}, ${req.body.state} ${req.body.zip_code}`
+
+
   if(req.isAuthenticated()) {
     Account.findOne({ where: {id: req.user.id}})
       .then(account => account.getArtist())
-      .then(artist => db.makeListing(artist.id, newListing))
-      .then(() => {
-        res.sendStatus(201);
+      .then(artist => {
+        
+        Axios.get(`https://api.tomtom.com/search/2/geocode/${address}.json`, {
+          params: {
+            limit: 1,
+            key: process.env.MAP_KEY      
+          }
+        })
+          .then((response) => {
+            newListing.latitude = response.data.results[0].position.lat.toString();
+            newListing.longitude = response.data.results[0].position.lon.toString();
+            db.makeListing(artist.id, newListing)
+          })
+          .then(() => {
+            res.sendStatus(201);
+          })
       })
       .catch(err => {
         console.error(err);

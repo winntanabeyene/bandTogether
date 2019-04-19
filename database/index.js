@@ -188,7 +188,7 @@ const getArtist = (filter) => {
 
 // start of listing Middleware
 
-const listingValues = ['title', 'date', 'description', 'venue', 'address', 'city', 'state', 'zip_code', 'type', 'image_url'];
+const listingValues = ['title', 'date', 'description', 'venue', 'address', 'city', 'state', 'zip_code', 'latitude', 'longitude', 'type', 'image_url'];
 
 /**
  * Makes a new listing.
@@ -197,7 +197,7 @@ const listingValues = ['title', 'date', 'description', 'venue', 'address', 'city
  * @returns {object} - sequelize promise with the artist of the listing.
  */
 const makeListing = (id, newListing) => {
-  const {title, date, description, venue, address, city, state, zip_code} = newListing;
+  const {title, date, description, venue, address, city, state, zip_code, latitude, longitude} = newListing;
   if (!title || !date || !description || !venue) {
     console.error("Attempted to make a listing without required fields.");
     return;
