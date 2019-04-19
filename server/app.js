@@ -12,7 +12,6 @@ const { sequelize, Account, Listing, Artist } = require('../database/config');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const Axios = require('axios');
 
-
 /**
  * PASSPORT SETUP
  */
@@ -91,6 +90,43 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+/**
+ * GEOLOCATION ENDPOINTS
+ */
+
+app.get('/geolocation/map', (req, res) => {
+
+  const centerOfUs =  [39.8283, -98.5795];
+
+
+  const map = tomtom.L.map('map', {
+    key: process.env.MAP_KEY,
+    basePath: '../sdk',
+    center: centerOfUs,
+    zoom: 10
+  });
+
+  res.send(map);
+
+
+})
+
+
+
+
+
+
+
+
+
+
+/**
+ * END GEOLOCATION ENDPOINTS
+ */
+
+
+
 /**
  * LISTINGS ENDPOINTS
  */
@@ -141,8 +177,8 @@ app.post('/listings', (req, res) => {
           }
         })
           .then((response) => {
-            newListing.latitude = response.data.results[0].position.lat.toString();
-            newListing.longitude = response.data.results[0].position.lon.toString();
+            newListing.latitude = response.data.results[0].position.lat;
+            newListing.longitude = response.data.results[0].position.lon;
             db.makeListing(artist.id, newListing)
           })
           .then(() => {
