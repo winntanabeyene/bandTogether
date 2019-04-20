@@ -442,7 +442,7 @@ app.post('/to',(req,res)=>{
 const clientNum = req.body.clientNum;
   client.messages
     .create({
-       body: `Client has showed interest in your post on bandTogether for ${postTitle} , please contact ${clientName} at ${clientNum} asap!`,
+       body: `A user has showed interest in your post on bandTogether for ${postTitle} , please contact ${clientName} at ${clientNum} asap!`,
        from: '+14044713243',
        to: `+1${artistNum}`
      })
