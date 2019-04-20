@@ -37,8 +37,8 @@ componentDidMount(){
    // navigator.geolocation.getCurrentPosition( position => {
      // console.log(position.coords.latitude, position.coords.longitude);
       
-    const userLatitude = position.coords.latitude || 29.9511;
-    const userLongitude = position.coords.longitude || -90.0715;
+    const userLatitude =  29.9511;
+    const userLongitude = -90.0715;
       
       const map =  window.tomtom.L.map('map', {
       key: 'pcm5jnIlZGFDyxHe5t8sQKodDJhrd6FL',
