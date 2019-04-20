@@ -2,13 +2,13 @@ const Sequelize = require('sequelize');
 require('dotenv').config();
 
 const USER = process.env.SQL_USER || 'root';
-const PASSWORD = process.env.SQL_PASSWORD || 'password';
+const PASSWORD = process.env.SQL_PASSWORD || '';
 
 // Creates connection. As a matter of flexiblity, security, and habit the password has been moved to .env
 // May move user name to .env incase of same reasons stated for password 
 const sequelize = new Sequelize('bandtogether', USER, PASSWORD, {
   host: 'localhost',
-  // port: 3306, // default port for mysql. There incase anyone needs it.
+   port: 3306, // default port for mysql. There incase anyone needs it.
   dialect: 'mysql',
 });
 
@@ -167,7 +167,7 @@ Artist.hasMany(Listing);
 
 // must sync to create tabels and associations.
 // {force:true}
-sequelize.sync({force:true})
+sequelize.sync()
   .then(() => {
   })
   .catch(err => {console.error(err)});
