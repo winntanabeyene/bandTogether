@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 require('dotenv').config();
 
 const USER = process.env.SQL_USER || 'root';
-const PASSWORD = process.env.SQL_PASSWORD || 'password';
+const PASSWORD = process.env.SQL_PASSWORD || '';
 const DB_HOST = process.env.DB_HOST
 
 // Creates connection. As a matter of flexiblity, security, and habit the password has been moved to .env
