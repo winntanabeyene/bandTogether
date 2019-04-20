@@ -94,6 +94,7 @@ render() {
 
   return(
     <div>
+      Hello World
     <div id="map">
     </div>
     </div>
